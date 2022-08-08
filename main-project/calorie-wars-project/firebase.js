@@ -5,12 +5,12 @@ import * as firebase from "firebase";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCLA4vnLFaVow25ylLUkb57NhmnN6qk1vE",
-  authDomain: "fir-auth-65294.firebaseapp.com",
-  projectId: "fir-auth-65294",
-  storageBucket: "fir-auth-65294.appspot.com",
-  messagingSenderId: "105428798939",
-  appId: "1:105428798939:web:49a9375f32ea94d4dfebfe"
+  apiKey: "AIzaSyBCNqPInFWtlMeoPZuFOginbwHSdNiHg_I",
+  authDomain: "calorie-wars.firebaseapp.com",
+  projectId: "calorie-wars",
+  storageBucket: "calorie-wars.appspot.com",
+  messagingSenderId: "576414371498",
+  appId: "1:576414371498:web:d4f7fb899d080982d78ad3",
 };
 
 // Initialize Firebase
@@ -18,9 +18,9 @@ let app;
 if (firebase.apps.length === 0) {
   app = firebase.initializeApp(firebaseConfig);
 } else {
-  app = firebase.app()
+  app = firebase.app();
 }
 
-const auth = firebase.auth()
+const auth = firebase.auth();
 
 export { auth };
