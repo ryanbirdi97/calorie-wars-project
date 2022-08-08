@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Text, View, StyleSheet, Button } from "react-native";
 import { BarCodeScanner } from "expo-barcode-scanner";
+import { searchProductByBarcode } from "../barcodeLookupAPI";
 
 export default function ScanBarcode() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [data, setData] = useState("");
+  const [barcodeData, setBarcodeData] = useState("");
+  const [product_name, setProduct_name] = useState("");
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
@@ -16,9 +18,17 @@ export default function ScanBarcode() {
     getBarCodeScannerPermissions();
   }, []);
 
+  useEffect(() => {
+    if (barcodeData !== "") {
+      searchProductByBarcode(barcodeData).then(({ product_name }) => {
+        setProduct_name(product_name);
+      });
+    }
+  }, [barcodeData]);
+
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    setData(data);
+    setBarcodeData(data);
   };
 
   if (hasPermission === null) {
@@ -34,7 +44,10 @@ export default function ScanBarcode() {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && <Text>scanned with data: {data}</Text>}
+      {scanned && (
+        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
+      )}
+      {scanned && <Text>scanned with data: {barcodeData}</Text>}
     </View>
   );
 }
