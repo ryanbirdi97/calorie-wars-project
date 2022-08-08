@@ -14,24 +14,27 @@ import { auth } from "../firebase";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [page, setPage] = useState("Login");
 
   const navigation = useNavigation();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        navigation.navigate("Home");
+        console.log(page);
+        navigation.navigate(page);
       }
     });
 
     return unsubscribe;
-  }, []);
+  }, [page]);
 
   const handleSignUp = () => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
+        setPage("ProfilePage");
         console.log("Registered with:", user.email);
       })
       .catch((error) => alert(error.message));
@@ -42,6 +45,7 @@ export default function Login() {
       .signInWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
+        setPage("Home");
         console.log("Logged in with:", user.email);
       })
       .catch((error) => alert(error.message));
