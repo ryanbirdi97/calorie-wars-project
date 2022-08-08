@@ -4,14 +4,8 @@ const barcodeLookupAPI = axios.create({
   baseURL: "https://world.openfoodfacts.org/api/v2/search/",
 });
 
-const searchProductByBarcode = (barcode) => {
+export const searchProductByBarcode = (barcode) => {
   return barcodeLookupAPI.get(barcode).then((resp) => {
-    for (let i = 0; i < Object.keys(resp.data.products[0]).length; i++) {
-      if (Object.keys(resp.data.products[0])[i].match(/ser/i)) {
-        //console.log(Object.keys(resp.data.products[0])[i]);
-      }
-    }
-    //console.log(Object.keys(resp.data.products[0]));
     /*
     energy_unit: 'kcal',
     energy_value: 2,
@@ -23,12 +17,14 @@ const searchProductByBarcode = (barcode) => {
       energy_unit: obj.nutriments.energy_unit,
       serving_size: obj.serving_size,
     };
-    console.log(retObj);
+    /*
     console.log(
       "Total calories consumed: ",
       (retObj.energy * +retObj.serving_size.replace(/[a-z]+/i, "")) / 100
     );
+    */
+    return retObj;
   });
 };
 
-const res = searchProductByBarcode("5060335635174");
+// const res = searchProductByBarcode("5060335635174");
