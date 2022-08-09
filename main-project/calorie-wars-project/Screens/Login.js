@@ -46,6 +46,7 @@ export default function Login() {
       .then((userCredentials) => {
         const user = userCredentials.user;
         setPage("Home");
+        navigation.navigate("Home");
         console.log("Logged in with:", user.email);
       })
       .catch((error) => alert(error.message));

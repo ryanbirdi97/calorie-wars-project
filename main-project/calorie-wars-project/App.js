@@ -6,8 +6,7 @@ import ScanBarcode from "./Components/ScanBarcode";
 
 import Login from "./Screens/Login";
 import Home from "./Screens/Home";
-
-import { Provider as PaperProvider } from "react-native-paper";
+import ProfilePage from "./Screens/ProfilePage";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,9 +15,10 @@ export default function App() {
     <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="ScanBarcode" component={ScanBarcode} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Home" component={Home} />
+          <Stack.Screen name="ProfilePage" component={ProfilePage} />
+          <Stack.Screen name="ScanBarcode" component={ScanBarcode} />
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>
