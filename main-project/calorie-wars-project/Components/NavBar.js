@@ -1,13 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import React from "react";
 import { useNavigation } from "@react-navigation/core";
-import { BottomNavigation } from "react-native-paper";
-
-const HomeRoute = () => <Text>Home</Text>;
-
-const LeaderboardRoute = () => <Text>Leaderboard</Text>;
-
-const SignOutRoute = () => <Text>Sign Out</Text>;
 
 const NavBar = () => {
   const navigation = useNavigation();
