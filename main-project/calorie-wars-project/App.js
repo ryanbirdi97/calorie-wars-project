@@ -7,6 +7,7 @@ import ScanBarcode from "./Components/ScanBarcode";
 import Login from "./Screens/Login";
 import Home from "./Screens/Home";
 import ProfilePage from "./Screens/ProfilePage";
+import ScanBarcode from "./Components/ScanBarcode";
 
 const Stack = createNativeStackNavigator();
 
