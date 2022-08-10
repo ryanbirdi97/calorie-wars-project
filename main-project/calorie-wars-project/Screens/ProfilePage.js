@@ -94,6 +94,49 @@ export default function ProfilePage() {
         <TouchableOpacity
           onPress={() => {
             setImageUri(
+              'https://cn.i.cdn.ti-platform.com/content/2167/we-baby-bears/showpage/fr/webabybears-icon.8db091e9.8db091e9.png'
+            );
+          }}
+        >
+          <Image
+            source={{
+              uri: 'https://cn.i.cdn.ti-platform.com/content/2167/we-baby-bears/showpage/fr/webabybears-icon.8db091e9.8db091e9.png',
+            }}
+            style={styles.avatarstyling}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            setImageUri(
+              'https://media.istockphoto.com/vectors/panda-in-welcoming-gesture-vector-id531507581?k=20&m=531507581&s=612x612&w=0&h=tfI8JVXgRzZDXq9mZBcltma2qE6UllK4q702bSKzljo='
+            );
+          }}
+        >
+          <Image
+            source={{
+              uri: 'https://media.istockphoto.com/vectors/panda-in-welcoming-gesture-vector-id531507581?k=20&m=531507581&s=612x612&w=0&h=tfI8JVXgRzZDXq9mZBcltma2qE6UllK4q702bSKzljo=',
+            }}
+            style={styles.avatarstyling}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            setImageUri('https://cdn.pixabay.com/photo/2013/07/13/11/44/penguin-158551__340.png');
+          }}
+        >
+          <Image
+            source={{
+              uri: 'https://cdn.pixabay.com/photo/2013/07/13/11/44/penguin-158551__340.png',
+            }}
+            style={styles.avatarstyling}
+          />
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={() => {
+            setImageUri(
               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUbyFsE5kJewme6YK54wS22BydCrT8P-kS4z1ToAl1&s'
             );
           }}
@@ -102,7 +145,7 @@ export default function ProfilePage() {
             source={{
               uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUbyFsE5kJewme6YK54wS22BydCrT8P-kS4z1ToAl1&s',
             }}
-            style={{ width: 60, height: 60 }}
+            style={styles.avatarstyling}
           />
         </TouchableOpacity>
 
@@ -117,7 +160,7 @@ export default function ProfilePage() {
             source={{
               uri: 'https://st2.depositphotos.com/1793519/5479/i/600/depositphotos_54794153-stock-photo-girl-holding-pink-heart.jpg',
             }}
-            style={{ width: 60, height: 60 }}
+            style={styles.avatarstyling}
           />
         </TouchableOpacity>
       </View>
@@ -127,7 +170,7 @@ export default function ProfilePage() {
           source={{
             uri: imageUri,
           }}
-          style={{ width: 60, height: 60 }}
+          style={styles.avatarstyling}
         />
         <Text>Email: {auth.currentUser?.email}</Text>
         <View style={styles.textstyle}>
@@ -203,21 +246,19 @@ export default function ProfilePage() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 5.3,
+    flex: 7,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  inputContainer: {
-    width: '80%',
   },
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 8,
     paddingVertical: 8,
     borderRadius: 10,
-    marginTop: 3,
-    // height: 25,
+    marginTop: 15,
+    height: '40%',
     width: '40%',
+
     fontSize: 16,
   },
   buttonContainer: {
@@ -254,8 +295,13 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
   },
+  avatarstyling: {
+    width: 60,
+    height: 60,
+    margin: 5,
+  },
   textstyle: {
-    flex: 1,
+    flex: 2,
     flexDirection: 'row',
   },
 });
