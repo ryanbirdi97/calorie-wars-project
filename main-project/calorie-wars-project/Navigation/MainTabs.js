@@ -9,7 +9,7 @@ const Tab = createMaterialBottomTabNavigator();
 
 export default function MainTabs() {
   return (
-    <Tab.Navigator initialRouteName={'Home'}>
+    <Tab.Navigator initialRouteName={'ProfilePage'}>
       <Tab.Screen
         name="Home"
         component={Home}

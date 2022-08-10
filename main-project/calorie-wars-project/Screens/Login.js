@@ -34,7 +34,7 @@ export default function Login({ setLoadPage }) {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const user = userCredentials.user;
-        setPage('MainTabs');
+        setPage('ProfilePage');
         navigation.navigate('MainTabs');
         console.log('Registered with:', user.email);
       })
