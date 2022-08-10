@@ -11,7 +11,7 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  StyleSheet,
+  StyleSheet,ScrollView
 } from 'react-native';
 
 const Tab = createMaterialBottomTabNavigator();

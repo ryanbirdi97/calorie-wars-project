@@ -1,15 +1,82 @@
 import { useNavigation } from '@react-navigation/core';
 import React from 'react';
-import { Text, TouchableOpacity, View, Image, StyleSheet } from 'react-native';
+
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  StyleSheet,
+  TextInput,
+  ScrollView,
+} from 'react-native';
 import { auth } from '../firebase';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { useState } from 'react';
 
 export default function ProfilePage() {
   const navigation = useNavigation();
 
+  const [username, setUsername] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [calorieGoal, setCalorieGoal] = useState(0);
+  const [stepGoal, setStepGoal] = useState(0);
+  const [imageUri, setImageUri] = useState(
+    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/2048px-OOjs_UI_icon_userAvatar.svg.png'
+  );
   const handleSubmit = () => {
     // setPage('MainTabs');
-    navigation.navigate('Home');
+    console.log(username);
+    if (username !== '' && newPassword !== '' && calorieGoal > 0 && stepGoal > 0) {
+      navigation.navigate('Home');
+    } else {
+      alert('Please enter details!');
+    }
+  };
+
+  const handleUsername = () => {
+    if (username !== '') {
+      // update username in database here....
+
+      console.log('updateUsername in database');
+    } else {
+      alert('Enter username to update!!');
+    }
+  };
+
+  const handlePassword = () => {
+    if (newPassword !== '') {
+      // update Password in database here....
+
+      console.log('updatePassword in database');
+    } else {
+      alert('Enter Password to update!!');
+    }
+  };
+
+  const handleCalorieGoal = () => {
+    if (calorieGoal > 0) {
+      // update Password in database here....
+
+      console.log('updatecalorieGoal in database');
+    } else {
+      alert('Calorie Goal cannot be less than 1');
+    }
+  };
+
+  const handleStepGoal = () => {
+    if (stepGoal > 0) {
+      // update Password in database here....
+
+      console.log('updateStepGoal in database');
+    } else {
+      alert('Step Goal cannot be less than 1');
+    }
+  };
+
+  const handleImage = () => {
+    console.log('updateimage uri');
+    // setImageUri(???)
   };
 
   const handleSignOut = () => {
@@ -23,23 +90,110 @@ export default function ProfilePage() {
 
   return (
     <PaperProvider>
-      <View>
-        <TouchableOpacity>
+      <View style={styles.Avatar}>
+        <TouchableOpacity
+          onPress={() => {
+            setImageUri(
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUbyFsE5kJewme6YK54wS22BydCrT8P-kS4z1ToAl1&s'
+            );
+          }}
+        >
           <Image
             source={{
-              uri: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/2048px-OOjs_UI_icon_userAvatar.svg.png',
+              uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUbyFsE5kJewme6YK54wS22BydCrT8P-kS4z1ToAl1&s',
             }}
-            style={{ width: 100, height: 100 }}
+            style={{ width: 60, height: 60 }}
           />
         </TouchableOpacity>
-        <Text>Email: {auth.currentUser?.email}</Text>
-        <TouchableOpacity onPress={handleSignOut}>
-          <Text>Sign out</Text>
+
+        <TouchableOpacity
+          onPress={() => {
+            setImageUri(
+              'https://st2.depositphotos.com/1793519/5479/i/600/depositphotos_54794153-stock-photo-girl-holding-pink-heart.jpg'
+            );
+          }}
+        >
+          <Image
+            source={{
+              uri: 'https://st2.depositphotos.com/1793519/5479/i/600/depositphotos_54794153-stock-photo-girl-holding-pink-heart.jpg',
+            }}
+            style={{ width: 60, height: 60 }}
+          />
         </TouchableOpacity>
+      </View>
+
+      <View style={styles.container}>
+        <Image
+          source={{
+            uri: imageUri,
+          }}
+          style={{ width: 60, height: 60 }}
+        />
+        <Text>Email: {auth.currentUser?.email}</Text>
+        <View style={styles.textstyle}>
+          <TextInput
+            placeholder="Username"
+            value={username}
+            onChangeText={(text) => setUsername(text)}
+            style={styles.input}
+          />
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={handleUsername} style={styles.button}>
+              <Text style={styles.buttonText}>Change Username</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.textstyle}>
+          <TextInput
+            placeholder="Password"
+            value={newPassword}
+            onChangeText={(text) => setNewPassword(text)}
+            style={styles.input}
+          />
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={handlePassword} style={styles.button}>
+              <Text style={styles.buttonText}>Change Password</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.textstyle}>
+          <TextInput
+            placeholder="Set-Calorie-Goals"
+            value={calorieGoal}
+            onChangeText={(text) => setCalorieGoal(text)}
+            style={styles.input}
+          />
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={handleCalorieGoal} style={styles.button}>
+              <Text style={styles.buttonText}>Set Calorie Goal</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <View style={styles.textstyle}>
+          <TextInput
+            placeholder="Set-Step-Goals"
+            value={stepGoal}
+            onChangeText={(text) => setStepGoal(text)}
+            style={styles.input}
+          />
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={handleStepGoal} style={styles.button}>
+              <Text style={styles.buttonText}>Set Step Goal</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleSubmit} style={styles.button}>
             <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={handleSignOut} style={styles.button}>
+            <Text style={styles.buttonText}>Sign out</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -49,7 +203,7 @@ export default function ProfilePage() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 5.3,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -58,21 +212,25 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    paddingHorizontal: 8,
+    paddingVertical: 8,
     borderRadius: 10,
-    marginTop: 5,
+    marginTop: 3,
+    // height: 25,
+    width: '40%',
+    fontSize: 16,
   },
   buttonContainer: {
-    width: '60%',
+    width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    marginTop: 0,
+    marginBottom: 10,
   },
   button: {
     backgroundColor: '#0782F9',
-    width: '100%',
-    padding: 15,
+    width: '90%',
+    padding: 8,
     borderRadius: 10,
     alignItems: 'center',
   },
@@ -91,5 +249,13 @@ const styles = StyleSheet.create({
     color: '#0782F9',
     fontWeight: '700',
     fontSize: 16,
+  },
+  Avatar: {
+    flex: 1,
+    flexDirection: 'row',
+  },
+  textstyle: {
+    flex: 1,
+    flexDirection: 'row',
   },
 });
