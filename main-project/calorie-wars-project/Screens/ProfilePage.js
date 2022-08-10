@@ -90,6 +90,9 @@ export default function ProfilePage() {
 
   return (
     <PaperProvider>
+      <View>
+        <Text>Choose your Avatar:</Text>
+      </View>
       <View style={styles.Avatar}>
         <TouchableOpacity
           onPress={() => {
@@ -183,7 +186,7 @@ export default function ProfilePage() {
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleUsername} style={styles.button}>
-              <Text style={styles.buttonText}>Change Username</Text>
+              <Text style={styles.buttonText}>Update Username</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -193,6 +196,7 @@ export default function ProfilePage() {
             value={newPassword}
             onChangeText={(text) => setNewPassword(text)}
             style={styles.input}
+            secureTextEntry
           />
 
           <View style={styles.buttonContainer}>
@@ -246,7 +250,7 @@ export default function ProfilePage() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 7,
+    flex: 30,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -292,8 +296,9 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   Avatar: {
-    flex: 1,
+    flex: 5,
     flexDirection: 'row',
+    marginLeft: 10,
   },
   avatarstyling: {
     width: 60,

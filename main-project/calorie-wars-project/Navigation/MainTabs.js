@@ -11,7 +11,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  StyleSheet,ScrollView
+  StyleSheet,
+  ScrollView,
 } from 'react-native';
 
 const Tab = createMaterialBottomTabNavigator();
@@ -19,9 +20,6 @@ const Tab = createMaterialBottomTabNavigator();
 export default function MainTabs() {
   return (
     <>
-      <View>
-        <Text>Hello</Text>
-      </View>
       <Tab.Navigator initialRouteName={'ProfilePage'}>
         <Tab.Screen
           name="Home"
