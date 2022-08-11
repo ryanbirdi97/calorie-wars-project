@@ -8,6 +8,7 @@ export default LeaderboardCard = () => {
   const [targetStepsGoal, setTargetStepsGoal] = useState(0);
   const [currentCals, setCurrentCals] = useState(0);
   const [currentSteps, setCurrentSteps] = useState(0);
+  const [username, setUsername] = useState('');
 
   const email = auth.currentUser?.email;
   const getUserEmail = db.collection('users').doc(auth.currentUser?.email);
@@ -16,7 +17,6 @@ export default LeaderboardCard = () => {
     .collection('goals')
     .doc(email + '-goals')
     .onSnapshot((doc) => {
-      console.log('Current data: ', doc.data().step_goal);
       setTargetCalsGoal(doc.data().calorie_goal);
       setTargetStepsGoal(doc.data().step_goal);
     });
@@ -25,16 +25,19 @@ export default LeaderboardCard = () => {
     .collection('cals_step_log')
     .doc(email + '-cal_step_log')
     .onSnapshot((doc) => {
-      console.log('Current data: ', doc.data().steps);
       setCurrentCals(doc.data().cals_consumed);
       setCurrentSteps(doc.data().steps);
     });
+
+  getUserEmail.onSnapshot((doc) => {
+    setUsername(doc.data().username);
+  });
 
   return (
     <View>
       <View>
         <Text>Rank: {}</Text>
-        <Text>{}</Text>
+        <Text>{username}</Text>
         <Text>
           Steps to Goal: {currentSteps} / {targetStepsGoal}
         </Text>
