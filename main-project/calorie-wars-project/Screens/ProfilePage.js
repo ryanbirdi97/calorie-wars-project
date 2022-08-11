@@ -24,56 +24,41 @@ export default function ProfilePage() {
   const [stepGoal, setStepGoal] = useState(0);
   const [imageUri, setImageUri] = useState(null);
 
-
   const email = auth.currentUser?.email;
   var getUserEmail = db.collection('users').doc(auth.currentUser?.email);
 
-  // useEffect(() => {
-  getUserEmail
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        console.log('Document data:', doc.data().username);
-        setUsername(doc.data().username);
-        setImageUri(doc.data().avatar);
-      } else {
-        // doc.data() will be undefined in this case
-        console.log('No such document!');
-      }
-    })
-    .catch((error) => {
-      console.log('Error getting document:', error);
-    });
+  useEffect(() => {
+    getUserEmail
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log('Document data:', doc.data().username);
+          setUsername(doc.data().username);
+          setImageUri(doc.data().avatar);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!');
+        }
+      })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      });
 
-  getUserEmail
-    .collection('goals')
-    .doc(email + '-goals')
-    .get()
-    .then((doc) => {
-      if (doc.exists) {
-        console.log('Document data:', doc.data().step_goal);
-        setCalorieGoal(doc.data().calorie_goal);
-        setStepGoal(doc.data().step_goal);
-      } else {
-        // doc.data() will be undefined in this case
-        console.log('No such document!');
-      }
-    });
-
-  // const updateAvatar = (uri) => {
-  //   setImageUri(uri);
-  //   getUserEmail
-  //     .update({
-  //       avatar: imageUri,
-  //     })
-  //     .then(() => {
-  //       console.log('Document successfully updated!');
-  //     })
-  //     .catch((error) => {
-  //       // The document probably doesn't exist.
-  //       console.error('Error updating document: ', error);
-  //     });
-  // };
+    getUserEmail
+      .collection('goals')
+      .doc(email + '-goals')
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log('Document data:', doc.data().step_goal);
+          setCalorieGoal(doc.data().calorie_goal);
+          setStepGoal(doc.data().step_goal);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!');
+        }
+      });
+  }, []);
 
   const handleSubmit = () => {
     // setPage('MainTabs');
@@ -131,8 +116,21 @@ export default function ProfilePage() {
   const handleCalorieGoal = () => {
     if (calorieGoal > 0) {
       // update Password in database here....
+      getUserEmail
+        .collection('goals')
+        .doc(email + '-goals')
+        .update({
+          calorie_goal: Number(calorieGoal),
+        })
+        .then(() => {
+          console.log('Document successfully updated!');
+        })
+        .catch((error) => {
+          // The document probably doesn't exist.
+          console.error('Error updating document: ', error);
+        });
 
-      console.log('updatecalorieGoal in database');
+      console.log('updateUsername in database');
     } else {
       alert('Calorie Goal should be of type number and cannot be less than 1');
     }
@@ -142,7 +140,21 @@ export default function ProfilePage() {
     if (stepGoal > 0) {
       // update Password in database here....
 
-      console.log('updateStepGoal in database');
+      getUserEmail
+        .collection('goals')
+        .doc(email + '-goals')
+        .update({
+          step_goal: Number(stepGoal),
+        })
+        .then(() => {
+          console.log('Document successfully updated!');
+        })
+        .catch((error) => {
+          // The document probably doesn't exist.
+          console.error('Error updating document: ', error);
+        });
+
+      console.log('updateUsername in database');
     } else {
       alert('Step Goal should be a number and cannot be less than 1');
     }
@@ -366,7 +378,7 @@ export default function ProfilePage() {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-            <Text style={styles.buttonText}>Submit</Text>
+            <Text style={styles.buttonText}>Go to Home</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
