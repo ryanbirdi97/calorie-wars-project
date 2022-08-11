@@ -24,6 +24,7 @@ export default function ProfilePage() {
   const [imageUri, setImageUri] = useState(
     'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/2048px-OOjs_UI_icon_userAvatar.svg.png'
   );
+
   const handleSubmit = () => {
     // setPage('MainTabs');
     console.log(username);
@@ -260,7 +261,7 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     borderRadius: 10,
     marginTop: 15,
-    height: '40%',
+    height: 32,
     width: '40%',
 
     fontSize: 16,
