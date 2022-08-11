@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, SearchBar, TextInput, Pressable } from 'react-native';
+import {
+  View,
+  StyleSheet,
+  Text,
+  SearchBar,
+  TextInput,
+  Pressable,
+  TouchableOpacity,
+} from 'react-native';
 import { searchProductByText } from '../textLookupAPI';
 import SearchResults from './SearchResults';
+
 const SearchByText = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  const [searchResults, setSearchResults] = useState('');
+  const [weight, setWeight] = useState('100');
+  const [searchResults, setSearchResults] = useState([]);
 
-  useEffect(() => {
-    console.log('search term change');
-  }, [searchTerm]);
-
-  const handleSubmit = () => {
-    searchProductByText(searchTerm).then((data) => {
+  const handleSearch = () => {
+    searchProductByText(weight + 'g ' + searchTerm).then((data) => {
       setSearchResults(data);
     });
   };
@@ -25,11 +31,22 @@ const SearchByText = () => {
           onChangeText={(text) => setSearchTerm(text)}
           style={styles.input}
         />
-        <Pressable onPress={handleSubmit}>
-          <Text style={styles.submitButton}>Submit</Text>
-        </Pressable>
+        <View style={styles.weightInputField}>
+          <TextInput
+            placeholder={'weight'}
+            value={weight}
+            onChangeText={(text) => {
+              setWeight(text);
+            }}
+            style={styles.input}
+          />
+          <Text style={styles.gText}>g</Text>
+        </View>
+        <TouchableOpacity onPress={handleSearch} style={styles.button}>
+          <Text style={styles.buttonText}>Search</Text>
+        </TouchableOpacity>
       </View>
-      <SearchResults searchResults={searchResults} />
+      {searchResults.length >= 1 ? <SearchResults searchResults={searchResults} /> : <></>}
     </>
   );
 };
@@ -79,14 +96,8 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
   },
-  submitButton: {
-    backgroundColor: '#0782F9',
-    width: '100%',
-    padding: 15,
-    borderRadius: 10,
-    alignItems: 'center',
-    borderRadius: 40,
-  },
+  weightInputField: { flexDirection: 'row', margin: 6 },
+  gText: { fontSize: 30, margin: 10 },
 });
 
 export default SearchByText;
