@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 import {
   Text,
@@ -10,9 +10,10 @@ import {
   TextInput,
   ScrollView,
 } from 'react-native';
-import { auth } from '../firebase';
+import { db, auth } from '../firebase';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { useState } from 'react';
+import firebase from 'firebase';
 
 export default function ProfilePage() {
   const navigation = useNavigation();
@@ -24,6 +25,44 @@ export default function ProfilePage() {
   const [imageUri, setImageUri] = useState(
     'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/2048px-OOjs_UI_icon_userAvatar.svg.png'
   );
+
+  // const user = firebase.auth().currentUser;
+  // console.log(user.email, '<-----');
+  useEffect(() => {
+    const email = auth.currentUser?.email;
+    var getUserEmail = db.collection('users').doc(auth.currentUser?.email);
+
+    getUserEmail
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log('Document data:', doc.data().username);
+          setUsername(doc.data().username);
+          setImageUri(doc.data().avatar);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!');
+        }
+      })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      });
+
+    getUserEmail
+      .collection('goals')
+      .doc(email + '-goals')
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log('Document data:', doc.data().step_goal);
+          setCalorieGoal(doc.data().calorie_goal);
+          setStepGoal(doc.data().step_goal);
+        } else {
+          // doc.data() will be undefined in this case
+          console.log('No such document!');
+        }
+      });
+  }, []);
 
   const handleSubmit = () => {
     // setPage('MainTabs');
@@ -87,10 +126,10 @@ export default function ProfilePage() {
   };
 
   // change it to useEffect, whenever user selects the avatar update uri
-  const handleImage = () => {
-    console.log('updateimage uri');
-    // setImageUri(???)
-  };
+  // const handleImage = () => {
+  //   console.log('updateimage uri');
+  //   // setImageUri(???)
+  // };
 
   const handleSignOut = () => {
     auth
@@ -207,10 +246,7 @@ export default function ProfilePage() {
           <TextInput
             placeholder="New Password"
             value={newPassword}
-            onChangeText={(text) => {
-              //console.log(text);
-              setNewPassword(text);
-            }}
+            onChangeText={(text) => setNewPassword(text)}
             style={styles.input}
             secureTextEntry
           />
@@ -224,7 +260,7 @@ export default function ProfilePage() {
         <View style={styles.textstyle}>
           <TextInput
             placeholder="Set-Calorie-Goals"
-            value={calorieGoal}
+            value={String(calorieGoal)}
             onChangeText={(text) => setCalorieGoal(text)}
             style={styles.input}
           />
@@ -237,7 +273,7 @@ export default function ProfilePage() {
         <View style={styles.textstyle}>
           <TextInput
             placeholder="Set-Step-Goals"
-            value={stepGoal}
+            value={String(stepGoal)}
             onChangeText={(text) => setStepGoal(text)}
             style={styles.input}
           />
