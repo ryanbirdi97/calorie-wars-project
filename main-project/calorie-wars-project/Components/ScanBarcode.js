@@ -6,18 +6,15 @@ import { searchProductByBarcode } from '../barcodeLookupAPI';
 export default function ScanBarcode({ setShowBarcodeScanner, setProductNameFromBarcode }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [barcodeData, setBarcodeData] = useState('');
   const [product_name, setProduct_name] = useState('');
 
   useEffect(() => {
-    const getBarCodeScannerPermissions = async () => {
+    (async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
       setHasPermission(status === 'granted');
-    };
-
-    getBarCodeScannerPermissions();
+    })();
   }, []);
-
+  /* 
   useEffect(() => {
     console.log('use effect called, barcode data is: ', barcodeData);
     if (barcodeData !== '') {
@@ -31,13 +28,19 @@ export default function ScanBarcode({ setShowBarcodeScanner, setProductNameFromB
           console.log(err);
         });
     }
-  }, [barcodeData]);
+  }, [barcodeData]); */
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    console.log('data: ', data);
-    setBarcodeData(() => data);
     setShowBarcodeScanner(false);
+    searchProductByBarcode(data)
+      .then(({ product_name }) => {
+        setProduct_name(product_name);
+        setProductNameFromBarcode(product_name);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   if (hasPermission === null) {
