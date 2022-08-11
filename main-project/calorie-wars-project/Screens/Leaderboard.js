@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
+import LeaderboardList from '../Components/LeaderboardList';
 
-const Leaderboard = () => {
+export default Leaderboard = () => {
   return (
     <View>
-      <Text>Leaderboard</Text>
+      <Text>Daily Calorie Wars Winners</Text>
+      <LeaderboardList />
     </View>
   );
 };
-
-export default Leaderboard;
 
 const styles = StyleSheet.create({});
