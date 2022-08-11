@@ -60,7 +60,6 @@ export default function ProfilePage() {
         .catch((error) => {
           console.log(error);
           // An error occurred
-          // ...
         });
     } else {
       alert('Enter Password to update!!');
@@ -73,7 +72,7 @@ export default function ProfilePage() {
 
       console.log('updatecalorieGoal in database');
     } else {
-      alert('Calorie Goal cannot be less than 1');
+      alert('Calorie Goal should be of type number and cannot be less than 1');
     }
   };
 
@@ -83,10 +82,11 @@ export default function ProfilePage() {
 
       console.log('updateStepGoal in database');
     } else {
-      alert('Step Goal cannot be less than 1');
+      alert('Step Goal should be a number and cannot be less than 1');
     }
   };
 
+  // change it to useEffect, whenever user selects the avatar update uri
   const handleImage = () => {
     console.log('updateimage uri');
     // setImageUri(???)
