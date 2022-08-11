@@ -1,25 +1,25 @@
-import React, { useState, useEffect } from "react";
-import { Text, View, StyleSheet, Button } from "react-native";
-import { BarCodeScanner } from "expo-barcode-scanner";
-import { searchProductByBarcode } from "../barcodeLookupAPI";
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, Button } from 'react-native';
+import { BarCodeScanner } from 'expo-barcode-scanner';
+import { searchProductByBarcode } from '../barcodeLookupAPI';
 
 export default function ScanBarcode() {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
-  const [barcodeData, setBarcodeData] = useState("");
-  const [product_name, setProduct_name] = useState("");
+  const [barcodeData, setBarcodeData] = useState('');
+  const [product_name, setProduct_name] = useState('');
 
   useEffect(() => {
     const getBarCodeScannerPermissions = async () => {
       const { status } = await BarCodeScanner.requestPermissionsAsync();
-      setHasPermission(status === "granted");
+      setHasPermission(status === 'granted');
     };
 
     getBarCodeScannerPermissions();
   }, []);
 
   useEffect(() => {
-    if (barcodeData !== "") {
+    if (barcodeData !== '') {
       searchProductByBarcode(barcodeData).then(({ product_name }) => {
         setProduct_name(product_name);
       });
@@ -44,9 +44,7 @@ export default function ScanBarcode() {
         onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
         style={StyleSheet.absoluteFillObject}
       />
-      {scanned && (
-        <Button title={"Tap to Scan Again"} onPress={() => setScanned(false)} />
-      )}
+      {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
       {scanned && <Text>scanned with data: {barcodeData}</Text>}
     </View>
   );
@@ -54,8 +52,8 @@ export default function ScanBarcode() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    flexDirection: "column",
-    justifyContent: "center",
+    flex: 0.5,
+    flexDirection: 'column',
+    justifyContent: 'center',
   },
 });
