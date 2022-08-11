@@ -28,7 +28,7 @@ export default function ProfilePage() {
   const handleSubmit = () => {
     // setPage('MainTabs');
     console.log(username);
-    if (username !== '' && newPassword !== '' && calorieGoal > 0 && stepGoal > 0) {
+    if (username !== '' && calorieGoal > 0 && stepGoal > 0) {
       navigation.navigate('Home');
     } else {
       alert('Please enter details!');
@@ -46,10 +46,22 @@ export default function ProfilePage() {
   };
 
   const handlePassword = () => {
-    if (newPassword !== '') {
-      // update Password in database here....
+    if (newPassword.length < 6) {
+      alert('Password should be at 6 characters!!');
+    } else if (newPassword !== '' && newPassword.length > 5) {
+      const user = auth.currentUser;
 
-      console.log('updatePassword in database');
+      user
+        .updatePassword(newPassword)
+        .then(() => {
+          console.log('update success!!');
+          setNewPassword('');
+        })
+        .catch((error) => {
+          console.log(error);
+          // An error occurred
+          // ...
+        });
     } else {
       alert('Enter Password to update!!');
     }
@@ -193,9 +205,12 @@ export default function ProfilePage() {
         </View>
         <View style={styles.textstyle}>
           <TextInput
-            placeholder="Password"
+            placeholder="New Password"
             value={newPassword}
-            onChangeText={(text) => setNewPassword(text)}
+            onChangeText={(text) => {
+              //console.log(text);
+              setNewPassword(text);
+            }}
             style={styles.input}
             secureTextEntry
           />
