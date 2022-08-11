@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { searchProductByBarcode } from '../barcodeLookupAPI';
 
-export default function ScanBarcode() {
+export default function ScanBarcode({ setShowBarcodeScanner, setProductNameFromBarcode }) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [barcodeData, setBarcodeData] = useState('');
@@ -19,16 +19,25 @@ export default function ScanBarcode() {
   }, []);
 
   useEffect(() => {
+    console.log('use effect called, barcode data is: ', barcodeData);
     if (barcodeData !== '') {
-      searchProductByBarcode(barcodeData).then(({ product_name }) => {
-        setProduct_name(product_name);
-      });
+      searchProductByBarcode(barcodeData)
+        .then(({ product_name }) => {
+          setProduct_name(product_name);
+          setProductNameFromBarcode(product_name);
+          console.log(product_name, ' returned from API');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [barcodeData]);
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
-    setBarcodeData(data);
+    console.log('data: ', data);
+    setBarcodeData(() => data);
+    setShowBarcodeScanner(false);
   };
 
   if (hasPermission === null) {
@@ -40,12 +49,18 @@ export default function ScanBarcode() {
 
   return (
     <View style={styles.container}>
-      <BarCodeScanner
-        onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
-        style={StyleSheet.absoluteFillObject}
-      />
+      <TouchableOpacity
+        onPress={() => {
+          setShowBarcodeScanner(false);
+        }}
+      ></TouchableOpacity>
+      <View style={styles.barcodeBox}>
+        <BarCodeScanner
+          onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
+          style={styles.barcode}
+        />
+      </View>
       {scanned && <Button title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
-      {scanned && <Text>scanned with data: {barcodeData}</Text>}
     </View>
   );
 }
@@ -55,5 +70,26 @@ const styles = StyleSheet.create({
     flex: 0.5,
     flexDirection: 'column',
     justifyContent: 'center',
+    alignItems: 'center',
+    top: 70,
   },
+  barcode: { height: 400, width: 400 },
+  barcodeBox: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    height: 300,
+    width: 400,
+    overflow: 'hidden',
+    borderRadius: 30,
+    position: 'absolute',
+    top: -50,
+  },
+  closeButton: {
+    backgroundColor: '#0782F9',
+    width: 300,
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+  },
+  buttonText: { color: 'white', fontWeight: '700', fontSize: 16 },
 });

@@ -7,22 +7,32 @@ import ScanBarcode from '../Components/ScanBarcode';
 
 export default function Home() {
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
+  const [productNameFromBarcode, setProductNameFromBarcode] = useState('');
 
   return (
     <PaperProvider>
       <View style={styles.container}>
-        <SearchByText />
+        <SearchByText productNameFromBarcode={productNameFromBarcode} />
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
             setShowBarcodeScanner(showBarcodeScanner ? false : true);
           }}
         >
-          <Text style={styles.buttonText}>
-            {showBarcodeScanner ? 'hide' : 'show'} barcode scanner
-          </Text>
+          {
+            <Text style={styles.buttonText}>
+              {showBarcodeScanner ? 'hide' : 'show'} barcode scanner
+            </Text>
+          }
         </TouchableOpacity>
-        {showBarcodeScanner ? <ScanBarcode /> : <></>}
+        {showBarcodeScanner ? (
+          <ScanBarcode
+            setShowBarcodeScanner={setShowBarcodeScanner}
+            setProductNameFromBarcode={setProductNameFromBarcode}
+          />
+        ) : (
+          <></>
+        )}
       </View>
     </PaperProvider>
   );

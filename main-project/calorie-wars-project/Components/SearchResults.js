@@ -20,10 +20,7 @@ const SearchResults = ({ searchResults }) => {
       .doc(email + '-foodlog-' + date)
       .get()
       .then((doc) => {
-        if (doc.exists) {
-          console.log('exists');
-        } else {
-          console.log('doc does not exist');
+        if (!doc.exists) {
           dbRef
             .collection('foodlog')
             .doc(email + '-foodlog-' + date)
@@ -36,6 +33,7 @@ const SearchResults = ({ searchResults }) => {
             .then(() => {
               console.log('written to db');
             });
+        } else {
         }
       })
       .catch((err) => {
