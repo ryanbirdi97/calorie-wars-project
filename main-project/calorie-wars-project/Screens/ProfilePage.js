@@ -1,33 +1,53 @@
 import { useNavigation } from '@react-navigation/core';
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-} from 'react-native';
-import { auth } from '../firebase';
+import { Text, TouchableOpacity, View, Image, StyleSheet, TextInput } from 'react-native';
+import { db, auth } from '../firebase';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { useState } from 'react';
 
 export default function ProfilePage() {
   const navigation = useNavigation();
 
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(null);
   const [newPassword, setNewPassword] = useState('');
   const [calorieGoal, setCalorieGoal] = useState(0);
   const [stepGoal, setStepGoal] = useState(0);
-  const [imageUri, setImageUri] = useState(
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/2048px-OOjs_UI_icon_userAvatar.svg.png'
-  );
+  const [imageUri, setImageUri] = useState(null);
+
+  const email = auth.currentUser?.email;
+  var getUserEmail = db.collection('users').doc(auth.currentUser?.email);
+
+  useEffect(() => {
+    getUserEmail
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setUsername(doc.data().username);
+          setImageUri(doc.data().avatar);
+        } else {
+          console.log('No such document!');
+        }
+      })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      });
+
+    getUserEmail
+      .collection('goals')
+      .doc(email + '-goals')
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setCalorieGoal(doc.data().calorie_goal);
+          setStepGoal(doc.data().step_goal);
+        } else {
+          console.log('No such document!');
+        }
+      });
+  }, []);
 
   const handleSubmit = () => {
-    // setPage('MainTabs');
-    console.log(username);
     if (username !== '' && calorieGoal > 0 && stepGoal > 0) {
       navigation.navigate('Home');
     } else {
@@ -37,9 +57,16 @@ export default function ProfilePage() {
 
   const handleUsername = () => {
     if (username !== '') {
-      // update username in database here....
-
-      console.log('updateUsername in database');
+      getUserEmail
+        .update({
+          username: username,
+        })
+        .then(() => {
+          console.log('Document successfully updated!');
+        })
+        .catch((error) => {
+          console.error('Error updating document: ', error);
+        });
     } else {
       alert('Enter username to update!!');
     }
@@ -54,12 +81,11 @@ export default function ProfilePage() {
       user
         .updatePassword(newPassword)
         .then(() => {
-          console.log('update success!!');
+          console.log('password updated success!!');
           setNewPassword('');
         })
         .catch((error) => {
           console.log(error);
-          // An error occurred
         });
     } else {
       alert('Enter Password to update!!');
@@ -68,9 +94,18 @@ export default function ProfilePage() {
 
   const handleCalorieGoal = () => {
     if (calorieGoal > 0) {
-      // update Password in database here....
-
-      console.log('updatecalorieGoal in database');
+      getUserEmail
+        .collection('goals')
+        .doc(email + '-goals')
+        .update({
+          calorie_goal: Number(calorieGoal),
+        })
+        .then(() => {
+          console.log('Document successfully updated!');
+        })
+        .catch((error) => {
+          console.error('Error updating document: ', error);
+        });
     } else {
       alert('Calorie Goal should be of type number and cannot be less than 1');
     }
@@ -78,18 +113,21 @@ export default function ProfilePage() {
 
   const handleStepGoal = () => {
     if (stepGoal > 0) {
-      // update Password in database here....
-
-      console.log('updateStepGoal in database');
+      getUserEmail
+        .collection('goals')
+        .doc(email + '-goals')
+        .update({
+          step_goal: Number(stepGoal),
+        })
+        .then(() => {
+          console.log('Document successfully updated!');
+        })
+        .catch((error) => {
+          console.error('Error updating document: ', error);
+        });
     } else {
       alert('Step Goal should be a number and cannot be less than 1');
     }
-  };
-
-  // change it to useEffect, whenever user selects the avatar update uri
-  const handleImage = () => {
-    console.log('updateimage uri');
-    // setImageUri(???)
   };
 
   const handleSignOut = () => {
@@ -112,6 +150,17 @@ export default function ProfilePage() {
             setImageUri(
               'https://cn.i.cdn.ti-platform.com/content/2167/we-baby-bears/showpage/fr/webabybears-icon.8db091e9.8db091e9.png'
             );
+            getUserEmail
+              .update({
+                avatar:
+                  'https://cn.i.cdn.ti-platform.com/content/2167/we-baby-bears/showpage/fr/webabybears-icon.8db091e9.8db091e9.png',
+              })
+              .then(() => {
+                console.log('Document successfully updated!');
+              })
+              .catch((error) => {
+                console.error('Error updating document: ', error);
+              });
           }}
         >
           <Image
@@ -127,6 +176,18 @@ export default function ProfilePage() {
             setImageUri(
               'https://media.istockphoto.com/vectors/panda-in-welcoming-gesture-vector-id531507581?k=20&m=531507581&s=612x612&w=0&h=tfI8JVXgRzZDXq9mZBcltma2qE6UllK4q702bSKzljo='
             );
+
+            getUserEmail
+              .update({
+                avatar:
+                  'https://media.istockphoto.com/vectors/panda-in-welcoming-gesture-vector-id531507581?k=20&m=531507581&s=612x612&w=0&h=tfI8JVXgRzZDXq9mZBcltma2qE6UllK4q702bSKzljo=',
+              })
+              .then(() => {
+                console.log('Document successfully updated!');
+              })
+              .catch((error) => {
+                console.error('Error updating document: ', error);
+              });
           }}
         >
           <Image
@@ -140,6 +201,16 @@ export default function ProfilePage() {
         <TouchableOpacity
           onPress={() => {
             setImageUri('https://cdn.pixabay.com/photo/2013/07/13/11/44/penguin-158551__340.png');
+            getUserEmail
+              .update({
+                avatar: 'https://cdn.pixabay.com/photo/2013/07/13/11/44/penguin-158551__340.png',
+              })
+              .then(() => {
+                console.log('Document successfully updated!');
+              })
+              .catch((error) => {
+                console.error('Error updating document: ', error);
+              });
           }}
         >
           <Image
@@ -155,6 +226,17 @@ export default function ProfilePage() {
             setImageUri(
               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUbyFsE5kJewme6YK54wS22BydCrT8P-kS4z1ToAl1&s'
             );
+            getUserEmail
+              .update({
+                avatar:
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUbyFsE5kJewme6YK54wS22BydCrT8P-kS4z1ToAl1&s',
+              })
+              .then(() => {
+                console.log('Document successfully updated!');
+              })
+              .catch((error) => {
+                console.error('Error updating document: ', error);
+              });
           }}
         >
           <Image
@@ -170,6 +252,17 @@ export default function ProfilePage() {
             setImageUri(
               'https://st2.depositphotos.com/1793519/5479/i/600/depositphotos_54794153-stock-photo-girl-holding-pink-heart.jpg'
             );
+            getUserEmail
+              .update({
+                avatar:
+                  'https://st2.depositphotos.com/1793519/5479/i/600/depositphotos_54794153-stock-photo-girl-holding-pink-heart.jpg',
+              })
+              .then(() => {
+                console.log('Document successfully updated!');
+              })
+              .catch((error) => {
+                console.error('Error updating document: ', error);
+              });
           }}
         >
           <Image
@@ -207,10 +300,7 @@ export default function ProfilePage() {
           <TextInput
             placeholder="New Password"
             value={newPassword}
-            onChangeText={(text) => {
-              //console.log(text);
-              setNewPassword(text);
-            }}
+            onChangeText={(text) => setNewPassword(text)}
             style={styles.input}
             secureTextEntry
           />
@@ -224,7 +314,7 @@ export default function ProfilePage() {
         <View style={styles.textstyle}>
           <TextInput
             placeholder="Set-Calorie-Goals"
-            value={calorieGoal}
+            value={String(calorieGoal)}
             onChangeText={(text) => setCalorieGoal(text)}
             style={styles.input}
           />
@@ -237,7 +327,7 @@ export default function ProfilePage() {
         <View style={styles.textstyle}>
           <TextInput
             placeholder="Set-Step-Goals"
-            value={stepGoal}
+            value={String(stepGoal)}
             onChangeText={(text) => setStepGoal(text)}
             style={styles.input}
           />
@@ -251,7 +341,7 @@ export default function ProfilePage() {
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-            <Text style={styles.buttonText}>Submit</Text>
+            <Text style={styles.buttonText}>Go to Home</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
