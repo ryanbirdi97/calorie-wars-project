@@ -1,19 +1,10 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useEffect } from 'react';
 
-import {
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  StyleSheet,
-  TextInput,
-  ScrollView,
-} from 'react-native';
+import { Text, TouchableOpacity, View, Image, StyleSheet, TextInput } from 'react-native';
 import { db, auth } from '../firebase';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { useState } from 'react';
-import firebase from 'firebase';
 
 export default function ProfilePage() {
   const navigation = useNavigation();
@@ -32,11 +23,9 @@ export default function ProfilePage() {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          console.log('Document data:', doc.data().username);
           setUsername(doc.data().username);
           setImageUri(doc.data().avatar);
         } else {
-          // doc.data() will be undefined in this case
           console.log('No such document!');
         }
       })
@@ -50,19 +39,15 @@ export default function ProfilePage() {
       .get()
       .then((doc) => {
         if (doc.exists) {
-          console.log('Document data:', doc.data().step_goal);
           setCalorieGoal(doc.data().calorie_goal);
           setStepGoal(doc.data().step_goal);
         } else {
-          // doc.data() will be undefined in this case
           console.log('No such document!');
         }
       });
   }, []);
 
   const handleSubmit = () => {
-    // setPage('MainTabs');
-    console.log(username);
     if (username !== '' && calorieGoal > 0 && stepGoal > 0) {
       navigation.navigate('Home');
     } else {
@@ -72,8 +57,6 @@ export default function ProfilePage() {
 
   const handleUsername = () => {
     if (username !== '') {
-      // update username in database here....
-
       getUserEmail
         .update({
           username: username,
@@ -82,11 +65,8 @@ export default function ProfilePage() {
           console.log('Document successfully updated!');
         })
         .catch((error) => {
-          // The document probably doesn't exist.
           console.error('Error updating document: ', error);
         });
-
-      console.log('updateUsername in database');
     } else {
       alert('Enter username to update!!');
     }
@@ -101,12 +81,11 @@ export default function ProfilePage() {
       user
         .updatePassword(newPassword)
         .then(() => {
-          console.log('update success!!');
+          console.log('password updated success!!');
           setNewPassword('');
         })
         .catch((error) => {
           console.log(error);
-          // An error occurred
         });
     } else {
       alert('Enter Password to update!!');
@@ -115,7 +94,6 @@ export default function ProfilePage() {
 
   const handleCalorieGoal = () => {
     if (calorieGoal > 0) {
-      // update Password in database here....
       getUserEmail
         .collection('goals')
         .doc(email + '-goals')
@@ -126,11 +104,8 @@ export default function ProfilePage() {
           console.log('Document successfully updated!');
         })
         .catch((error) => {
-          // The document probably doesn't exist.
           console.error('Error updating document: ', error);
         });
-
-      console.log('updateUsername in database');
     } else {
       alert('Calorie Goal should be of type number and cannot be less than 1');
     }
@@ -138,8 +113,6 @@ export default function ProfilePage() {
 
   const handleStepGoal = () => {
     if (stepGoal > 0) {
-      // update Password in database here....
-
       getUserEmail
         .collection('goals')
         .doc(email + '-goals')
@@ -150,11 +123,8 @@ export default function ProfilePage() {
           console.log('Document successfully updated!');
         })
         .catch((error) => {
-          // The document probably doesn't exist.
           console.error('Error updating document: ', error);
         });
-
-      console.log('updateUsername in database');
     } else {
       alert('Step Goal should be a number and cannot be less than 1');
     }
@@ -189,7 +159,6 @@ export default function ProfilePage() {
                 console.log('Document successfully updated!');
               })
               .catch((error) => {
-                // The document probably doesn't exist.
                 console.error('Error updating document: ', error);
               });
           }}
@@ -217,7 +186,6 @@ export default function ProfilePage() {
                 console.log('Document successfully updated!');
               })
               .catch((error) => {
-                // The document probably doesn't exist.
                 console.error('Error updating document: ', error);
               });
           }}
@@ -241,7 +209,6 @@ export default function ProfilePage() {
                 console.log('Document successfully updated!');
               })
               .catch((error) => {
-                // The document probably doesn't exist.
                 console.error('Error updating document: ', error);
               });
           }}
@@ -253,9 +220,7 @@ export default function ProfilePage() {
             style={styles.avatarstyling}
           />
         </TouchableOpacity>
-        {/* setImageUri(
-              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUbyFsE5kJewme6YK54wS22BydCrT8P-kS4z1ToAl1&s'
-            ); */}
+
         <TouchableOpacity
           onPress={() => {
             setImageUri(
@@ -270,7 +235,6 @@ export default function ProfilePage() {
                 console.log('Document successfully updated!');
               })
               .catch((error) => {
-                // The document probably doesn't exist.
                 console.error('Error updating document: ', error);
               });
           }}
@@ -297,7 +261,6 @@ export default function ProfilePage() {
                 console.log('Document successfully updated!');
               })
               .catch((error) => {
-                // The document probably doesn't exist.
                 console.error('Error updating document: ', error);
               });
           }}
