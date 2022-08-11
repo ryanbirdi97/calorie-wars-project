@@ -18,51 +18,62 @@ import firebase from 'firebase';
 export default function ProfilePage() {
   const navigation = useNavigation();
 
-  const [username, setUsername] = useState('');
+  const [username, setUsername] = useState(null);
   const [newPassword, setNewPassword] = useState('');
   const [calorieGoal, setCalorieGoal] = useState(0);
   const [stepGoal, setStepGoal] = useState(0);
-  const [imageUri, setImageUri] = useState(
-    'https://upload.wikimedia.org/wikipedia/commons/thumb/9/98/OOjs_UI_icon_userAvatar.svg/2048px-OOjs_UI_icon_userAvatar.svg.png'
-  );
+  const [imageUri, setImageUri] = useState(null);
 
-  // const user = firebase.auth().currentUser;
-  // console.log(user.email, '<-----');
-  useEffect(() => {
-    const email = auth.currentUser?.email;
-    var getUserEmail = db.collection('users').doc(auth.currentUser?.email);
 
-    getUserEmail
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          console.log('Document data:', doc.data().username);
-          setUsername(doc.data().username);
-          setImageUri(doc.data().avatar);
-        } else {
-          // doc.data() will be undefined in this case
-          console.log('No such document!');
-        }
-      })
-      .catch((error) => {
-        console.log('Error getting document:', error);
-      });
+  const email = auth.currentUser?.email;
+  var getUserEmail = db.collection('users').doc(auth.currentUser?.email);
 
-    getUserEmail
-      .collection('goals')
-      .doc(email + '-goals')
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          console.log('Document data:', doc.data().step_goal);
-          setCalorieGoal(doc.data().calorie_goal);
-          setStepGoal(doc.data().step_goal);
-        } else {
-          // doc.data() will be undefined in this case
-          console.log('No such document!');
-        }
-      });
-  }, []);
+  // useEffect(() => {
+  getUserEmail
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        console.log('Document data:', doc.data().username);
+        setUsername(doc.data().username);
+        setImageUri(doc.data().avatar);
+      } else {
+        // doc.data() will be undefined in this case
+        console.log('No such document!');
+      }
+    })
+    .catch((error) => {
+      console.log('Error getting document:', error);
+    });
+
+  getUserEmail
+    .collection('goals')
+    .doc(email + '-goals')
+    .get()
+    .then((doc) => {
+      if (doc.exists) {
+        console.log('Document data:', doc.data().step_goal);
+        setCalorieGoal(doc.data().calorie_goal);
+        setStepGoal(doc.data().step_goal);
+      } else {
+        // doc.data() will be undefined in this case
+        console.log('No such document!');
+      }
+    });
+
+  // const updateAvatar = (uri) => {
+  //   setImageUri(uri);
+  //   getUserEmail
+  //     .update({
+  //       avatar: imageUri,
+  //     })
+  //     .then(() => {
+  //       console.log('Document successfully updated!');
+  //     })
+  //     .catch((error) => {
+  //       // The document probably doesn't exist.
+  //       console.error('Error updating document: ', error);
+  //     });
+  // };
 
   const handleSubmit = () => {
     // setPage('MainTabs');
@@ -77,6 +88,18 @@ export default function ProfilePage() {
   const handleUsername = () => {
     if (username !== '') {
       // update username in database here....
+
+      getUserEmail
+        .update({
+          username: username,
+        })
+        .then(() => {
+          console.log('Document successfully updated!');
+        })
+        .catch((error) => {
+          // The document probably doesn't exist.
+          console.error('Error updating document: ', error);
+        });
 
       console.log('updateUsername in database');
     } else {
@@ -125,12 +148,6 @@ export default function ProfilePage() {
     }
   };
 
-  // change it to useEffect, whenever user selects the avatar update uri
-  // const handleImage = () => {
-  //   console.log('updateimage uri');
-  //   // setImageUri(???)
-  // };
-
   const handleSignOut = () => {
     auth
       .signOut()
@@ -151,6 +168,18 @@ export default function ProfilePage() {
             setImageUri(
               'https://cn.i.cdn.ti-platform.com/content/2167/we-baby-bears/showpage/fr/webabybears-icon.8db091e9.8db091e9.png'
             );
+            getUserEmail
+              .update({
+                avatar:
+                  'https://cn.i.cdn.ti-platform.com/content/2167/we-baby-bears/showpage/fr/webabybears-icon.8db091e9.8db091e9.png',
+              })
+              .then(() => {
+                console.log('Document successfully updated!');
+              })
+              .catch((error) => {
+                // The document probably doesn't exist.
+                console.error('Error updating document: ', error);
+              });
           }}
         >
           <Image
@@ -166,6 +195,19 @@ export default function ProfilePage() {
             setImageUri(
               'https://media.istockphoto.com/vectors/panda-in-welcoming-gesture-vector-id531507581?k=20&m=531507581&s=612x612&w=0&h=tfI8JVXgRzZDXq9mZBcltma2qE6UllK4q702bSKzljo='
             );
+
+            getUserEmail
+              .update({
+                avatar:
+                  'https://media.istockphoto.com/vectors/panda-in-welcoming-gesture-vector-id531507581?k=20&m=531507581&s=612x612&w=0&h=tfI8JVXgRzZDXq9mZBcltma2qE6UllK4q702bSKzljo=',
+              })
+              .then(() => {
+                console.log('Document successfully updated!');
+              })
+              .catch((error) => {
+                // The document probably doesn't exist.
+                console.error('Error updating document: ', error);
+              });
           }}
         >
           <Image
@@ -179,6 +221,17 @@ export default function ProfilePage() {
         <TouchableOpacity
           onPress={() => {
             setImageUri('https://cdn.pixabay.com/photo/2013/07/13/11/44/penguin-158551__340.png');
+            getUserEmail
+              .update({
+                avatar: 'https://cdn.pixabay.com/photo/2013/07/13/11/44/penguin-158551__340.png',
+              })
+              .then(() => {
+                console.log('Document successfully updated!');
+              })
+              .catch((error) => {
+                // The document probably doesn't exist.
+                console.error('Error updating document: ', error);
+              });
           }}
         >
           <Image
@@ -188,12 +241,26 @@ export default function ProfilePage() {
             style={styles.avatarstyling}
           />
         </TouchableOpacity>
-
+        {/* setImageUri(
+              'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUbyFsE5kJewme6YK54wS22BydCrT8P-kS4z1ToAl1&s'
+            ); */}
         <TouchableOpacity
           onPress={() => {
             setImageUri(
               'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUbyFsE5kJewme6YK54wS22BydCrT8P-kS4z1ToAl1&s'
             );
+            getUserEmail
+              .update({
+                avatar:
+                  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUbyFsE5kJewme6YK54wS22BydCrT8P-kS4z1ToAl1&s',
+              })
+              .then(() => {
+                console.log('Document successfully updated!');
+              })
+              .catch((error) => {
+                // The document probably doesn't exist.
+                console.error('Error updating document: ', error);
+              });
           }}
         >
           <Image
@@ -209,6 +276,18 @@ export default function ProfilePage() {
             setImageUri(
               'https://st2.depositphotos.com/1793519/5479/i/600/depositphotos_54794153-stock-photo-girl-holding-pink-heart.jpg'
             );
+            getUserEmail
+              .update({
+                avatar:
+                  'https://st2.depositphotos.com/1793519/5479/i/600/depositphotos_54794153-stock-photo-girl-holding-pink-heart.jpg',
+              })
+              .then(() => {
+                console.log('Document successfully updated!');
+              })
+              .catch((error) => {
+                // The document probably doesn't exist.
+                console.error('Error updating document: ', error);
+              });
           }}
         >
           <Image
