@@ -7,10 +7,6 @@ const barcodeLookupAPI = axios.create({
 export const searchProductByBarcode = (barcode, setNotFoundFromBarcodeApi) => {
   console.log('fetching from API');
   return barcodeLookupAPI.get(barcode).then((resp) => {
-    /*
-    energy_unit: 'kcal',
-    energy_value: 2,
-    */
     if (resp.data.products.length === 0) {
       setNotFoundFromBarcodeApi(true);
       return;
@@ -22,10 +18,6 @@ export const searchProductByBarcode = (barcode, setNotFoundFromBarcodeApi) => {
       energy_unit: obj.nutriments.energy_unit,
       serving_size: obj.serving_size,
     };
-    /*
-      "Total calories consumed: ",
-      (retObj.energy * +retObj.serving_size.replace(/[a-z]+/i, "")) / 100
-    */
     setNotFoundFromBarcodeApi(false);
     return retObj;
   });
