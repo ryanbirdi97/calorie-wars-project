@@ -11,7 +11,7 @@ import {
 import { searchProductByText } from '../textLookupAPI';
 import SearchResults from './SearchResults';
 
-const SearchByText = ({ productNameFromBarcode }) => {
+const SearchByText = ({ productNameFromBarcode, notFoundFromBarcodeApi }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [weight, setWeight] = useState('100');
   const [searchResults, setSearchResults] = useState([]);
