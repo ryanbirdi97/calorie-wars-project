@@ -12,17 +12,19 @@ import { searchProductByText } from '../textLookupAPI';
 import SearchResults from './SearchResults';
 
 const SearchByText = ({ productNameFromBarcode }) => {
-  const [searchTerm, setSearchTerm] = useState('' + productNameFromBarcode);
+  const [searchTerm, setSearchTerm] = useState('');
   const [weight, setWeight] = useState('100');
   const [searchResults, setSearchResults] = useState([]);
+
+  useEffect(() => {
+    setSearchTerm(productNameFromBarcode);
+  }, [productNameFromBarcode]);
 
   const handleSearch = () => {
     searchProductByText(weight + 'g ' + searchTerm).then((data) => {
       setSearchResults(data);
     });
   };
-  console.log(productNameFromBarcode, 'from barcode');
-  console.log(searchTerm, 'search term');
   return (
     <>
       <View style={styles.inputContainer}>

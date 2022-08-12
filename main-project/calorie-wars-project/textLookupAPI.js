@@ -3,7 +3,7 @@ const axios = require('axios');
 const baseURL = 'https://api.calorieninjas.com/v1/nutrition?query=';
 
 export const searchProductByText = (item) => {
-  console.log(item, ' << quering with');
+  //console.log(item, ' << quering with');
   return axios
     .get(baseURL + item, {
       headers: {

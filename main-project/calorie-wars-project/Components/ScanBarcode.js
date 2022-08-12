@@ -3,7 +3,11 @@ import { Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { searchProductByBarcode } from '../barcodeLookupAPI';
 
-export default function ScanBarcode({ setShowBarcodeScanner, setProductNameFromBarcode }) {
+export default function ScanBarcode({
+  setShowBarcodeScanner,
+  setProductNameFromBarcode,
+  setNotFoundFromBarcodeApi,
+}) {
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [product_name, setProduct_name] = useState('');
@@ -33,7 +37,7 @@ export default function ScanBarcode({ setShowBarcodeScanner, setProductNameFromB
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);
     setShowBarcodeScanner(false);
-    searchProductByBarcode(data)
+    searchProductByBarcode(data, setNotFoundFromBarcodeApi)
       .then(({ product_name }) => {
         setProduct_name(product_name);
         setProductNameFromBarcode(product_name);

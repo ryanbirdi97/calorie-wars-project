@@ -8,13 +8,17 @@ import ScanBarcode from '../Components/ScanBarcode';
 export default function Home() {
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
   const [productNameFromBarcode, setProductNameFromBarcode] = useState('');
+  const [notFoundFromBarcodeApi, setNotFoundFromBarcodeApi] = useState(false);
 
-  console.log(productNameFromBarcode, ' << product name');
+  //console.log(productNameFromBarcode, ' << product name');
 
   return (
     <PaperProvider>
       <View style={styles.container}>
-        <SearchByText productNameFromBarcode={productNameFromBarcode} />
+        <SearchByText
+          productNameFromBarcode={productNameFromBarcode}
+          notFoundFromBarcodeApi={notFoundFromBarcodeApi}
+        />
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -31,6 +35,7 @@ export default function Home() {
           <ScanBarcode
             setShowBarcodeScanner={setShowBarcodeScanner}
             setProductNameFromBarcode={setProductNameFromBarcode}
+            setNotFoundFromBarcodeApi={setNotFoundFromBarcodeApi}
           />
         ) : (
           <></>
@@ -48,6 +53,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
     alignItems: 'center',
+    marginTop: 5,
   },
   buttonText: {
     color: 'white',

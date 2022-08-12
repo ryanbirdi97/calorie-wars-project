@@ -4,13 +4,17 @@ const barcodeLookupAPI = axios.create({
   baseURL: 'https://world.openfoodfacts.org/api/v2/search/',
 });
 
-export const searchProductByBarcode = (barcode) => {
+export const searchProductByBarcode = (barcode, setNotFoundFromBarcodeApi) => {
   console.log('fetching from API');
   return barcodeLookupAPI.get(barcode).then((resp) => {
     /*
     energy_unit: 'kcal',
     energy_value: 2,
     */
+    if (resp.data.products.length === 0) {
+      setNotFoundFromBarcodeApi(true);
+      return;
+    }
     const obj = resp.data.products[0];
     const retObj = {
       product_name: obj.product_name,
@@ -25,7 +29,7 @@ export const searchProductByBarcode = (barcode) => {
     );
     */
     //console.log(retObj, ' << retOBj');
-    console.log('fetched: ', retObj);
+    setNotFoundFromBarcodeApi(false);
     return retObj;
   });
 };
