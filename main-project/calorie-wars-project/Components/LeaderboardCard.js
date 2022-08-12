@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
 export default LeaderboardCard = ({ obj }) => {
-  console.log(obj.Object.username, '<---');
+  // console.log(obj.Object.username, '<---');
   return (
     <View>
       <View>
@@ -15,6 +15,7 @@ export default LeaderboardCard = ({ obj }) => {
           Calories to Goal: {obj.cals_consumed} / {obj.calorie_goal}
         </Text>
         <Text>Score: {obj.score}</Text>
+        <Text>-------</Text>
       </View>
     </View>
   );

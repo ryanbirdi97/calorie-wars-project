@@ -3,6 +3,7 @@ import React from 'react';
 import { useState } from 'react';
 import { db, auth } from '../firebase';
 import LeaderboardCard from './LeaderboardCard';
+import { v4 as uuidv4 } from 'uuid';
 
 export default LeaderboardList = () => {
   const [targetCalsGoal, setTargetCalsGoal] = useState(0);
@@ -58,16 +59,16 @@ export default LeaderboardList = () => {
     .get()
     .then((querySnapShot) => {
       querySnapShot.forEach((doc) => {
-        leaderboardList.push(doc);
+        leaderboardList.push(doc.data());
       });
       setLeaderboard(leaderboardList);
     });
 
-  console.log(leaderboard);
+  console.log(leaderboard, '<----');
   return (
     <View>
-      {leaderboardListArray.map((obj) => (
-        <LeaderboardCard key={email} obj={obj} />
+      {leaderboard.map((obj) => (
+        <LeaderboardCard key={uuidv4()} obj={obj} />
       ))}
     </View>
   );
