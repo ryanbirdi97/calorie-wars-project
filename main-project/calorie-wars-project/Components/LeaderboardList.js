@@ -50,29 +50,25 @@ export default LeaderboardList = () => {
   else scoreSteps = 50;
 
   const score = Number(scoreCals) + Number(scoreSteps);
+  const leaderboardList = [];
 
-  const leaderboardListArray = [];
+  const [leaderboard, setLeaderboard] = useState([]);
 
   db.collectionGroup('leaderboard')
     .get()
     .then((querySnapShot) => {
       querySnapShot.forEach((doc) => {
-        leaderboardListArray.push(doc.data());
-        console.log(doc.id, ' => ', doc.data());
+        leaderboardList.push(doc);
       });
+      setLeaderboard(leaderboardList);
     });
 
+  console.log(leaderboard);
   return (
     <View>
-      <LeaderboardCard
-        targetCalsGoal={targetCalsGoal}
-        targetStepsGoal={targetStepsGoal}
-        currentCals={currentCals}
-        currentSteps={currentSteps}
-        username={username}
-        score={score}
-        rank={rank}
-      />
+      {leaderboardListArray.map((obj) => (
+        <LeaderboardCard key={email} obj={obj} />
+      ))}
     </View>
   );
 };
