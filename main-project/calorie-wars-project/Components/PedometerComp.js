@@ -22,12 +22,10 @@ export default function PedometerComp() {
     const start = new Date();
     start.setDate(end.getDate() - 1);
     Pedometer.getStepCountAsync(start, end).then((result) => {
-      console.log(result.steps, '<--iphone');
       setStepCount(result.steps);
     });
 
     Pedometer.watchStepCount((result) => {
-      console.log(result.steps, '<----steps android');
       result.steps;
     });
   }, [setStepCount]);

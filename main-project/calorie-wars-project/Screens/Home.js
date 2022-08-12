@@ -10,8 +10,6 @@ export default function Home() {
   const [productNameFromBarcode, setProductNameFromBarcode] = useState('');
   const [notFoundFromBarcodeApi, setNotFoundFromBarcodeApi] = useState(false);
 
-  //console.log(productNameFromBarcode, ' << product name');
-
   return (
     <PaperProvider>
       <View style={styles.container}>

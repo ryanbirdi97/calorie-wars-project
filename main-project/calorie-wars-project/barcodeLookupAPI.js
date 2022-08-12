@@ -23,15 +23,10 @@ export const searchProductByBarcode = (barcode, setNotFoundFromBarcodeApi) => {
       serving_size: obj.serving_size,
     };
     /*
-    console.log(
       "Total calories consumed: ",
       (retObj.energy * +retObj.serving_size.replace(/[a-z]+/i, "")) / 100
-    );
     */
-    //console.log(retObj, ' << retOBj');
     setNotFoundFromBarcodeApi(false);
     return retObj;
   });
 };
-
-// const res = searchProductByBarcode("5060335635174");

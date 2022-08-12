@@ -18,21 +18,6 @@ export default function ScanBarcode({
       setHasPermission(status === 'granted');
     })();
   }, []);
-  /* 
-  useEffect(() => {
-    console.log('use effect called, barcode data is: ', barcodeData);
-    if (barcodeData !== '') {
-      searchProductByBarcode(barcodeData)
-        .then(({ product_name }) => {
-          setProduct_name(product_name);
-          setProductNameFromBarcode(product_name);
-          console.log(product_name, ' returned from API');
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-  }, [barcodeData]); */
 
   const handleBarCodeScanned = ({ type, data }) => {
     setScanned(true);

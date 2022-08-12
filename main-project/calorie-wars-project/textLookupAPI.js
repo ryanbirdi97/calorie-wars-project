@@ -3,7 +3,6 @@ const axios = require('axios');
 const baseURL = 'https://api.calorieninjas.com/v1/nutrition?query=';
 
 export const searchProductByText = (item) => {
-  //console.log(item, ' << quering with');
   return axios
     .get(baseURL + item, {
       headers: {
@@ -11,8 +10,6 @@ export const searchProductByText = (item) => {
       },
     })
     .then((result) => {
-      // console.log('calorieninja result: ', result.data.items);
-
       return result.data.items;
     });
 };
