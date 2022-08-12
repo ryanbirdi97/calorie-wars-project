@@ -8,11 +8,9 @@ export default function FoodLog() {
   const [foodArr, setFoodArr] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  const handlePress = () => {
-    setIsLoading(true);
+  if (isLoading) {
     const date = new Date().toLocaleDateString().replace(/\//gi, '-');
     const email = auth.currentUser?.email;
-
     db.collection('users')
       .doc(email)
       .collection('foodlog')
@@ -23,20 +21,18 @@ export default function FoodLog() {
         setFoodArr([...data]);
         setIsLoading(false);
       });
-  };
+  }
 
   return (
     <View>
       <Text>FoodLog</Text>
-      <TouchableOpacity onPress={handlePress}>
-        <Text>Refresh</Text>
-      </TouchableOpacity>
-      {isLoading ? <Text>Loading ...</Text> : <></>}
-      {isLoading
-        ? handlePress
-        : foodArr.map((food) => {
-            return <FoodCard food={food} />;
-          })}
+      {isLoading ? (
+        <Text>Loading ...</Text>
+      ) : (
+        foodArr.map((food) => {
+          return <FoodCard food={food} />;
+        })
+      )}
     </View>
   );
 }

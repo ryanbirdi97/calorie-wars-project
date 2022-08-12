@@ -13,9 +13,7 @@ export default function FoodCard({ food }) {
       .collection('foodlog')
       .doc(email + '-foodlog-' + date)
       .update({ [food.name]: firebase.firestore.FieldValue.delete() })
-      .then(() => {
-        console.log('Item deleted');
-      });
+      .then(() => {});
   };
 
   function capitalizeFirstLetter(string) {

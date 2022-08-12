@@ -38,9 +38,8 @@ export default function Home() {
             setNotFoundFromBarcodeApi={setNotFoundFromBarcodeApi}
           />
         ) : (
-          <></>
+          <FoodLog />
         )}
-        <FoodLog />
       </View>
     </ScrollView>
   );
