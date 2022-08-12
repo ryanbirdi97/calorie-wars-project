@@ -62,10 +62,23 @@ export default function ProfilePage() {
           username: username,
         })
         .then(() => {
-          console.log('Document successfully updated!');
+          console.log('Updated username in users successfully!');
         })
         .catch((error) => {
           console.error('Error updating document: ', error);
+        });
+
+      getUserEmail
+        .collection('leaderboard')
+        .doc(email + '-leaderboard')
+        .update({
+          username: username,
+        })
+        .then(() => {
+          console.log('username updated in leaderboard');
+        })
+        .catch((err) => {
+          console.log(err);
         });
     } else {
       alert('Enter username to update!!');
@@ -106,6 +119,19 @@ export default function ProfilePage() {
         .catch((error) => {
           console.error('Error updating document: ', error);
         });
+
+      getUserEmail
+        .collection('leaderboard')
+        .doc(email + '-leaderboard')
+        .update({
+          calorie_goal: Number(calorieGoal),
+        })
+        .then(() => {
+          console.log('calorie_goal updated in leaderboard');
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       alert('Calorie Goal should be of type number and cannot be less than 1');
     }
@@ -124,6 +150,19 @@ export default function ProfilePage() {
         })
         .catch((error) => {
           console.error('Error updating document: ', error);
+        });
+
+      getUserEmail
+        .collection('leaderboard')
+        .doc(email + '-leaderboard')
+        .update({
+          step_goal: Number(stepGoal),
+        })
+        .then(() => {
+          console.log('step_goal updated in leaderboard');
+        })
+        .catch((err) => {
+          console.log(err);
         });
     } else {
       alert('Step Goal should be a number and cannot be less than 1');

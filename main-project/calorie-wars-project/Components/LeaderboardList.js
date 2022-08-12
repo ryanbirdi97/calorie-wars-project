@@ -11,6 +11,10 @@ export default LeaderboardList = () => {
   const [currentSteps, setCurrentSteps] = useState(0);
   const [username, setUsername] = useState('');
 
+  let scoreCals = 0;
+  let scoreSteps = 0;
+  let rank = 1;
+
   const email = auth.currentUser?.email;
   const getUserEmail = db.collection('users').doc(auth.currentUser?.email);
 
@@ -34,6 +38,30 @@ export default LeaderboardList = () => {
     setUsername(doc.data().username);
   });
 
+  if (currentCals < targetCalsGoal) {
+    scoreCals = ((currentCals / targetCalsGoal) * 50).toFixed(2);
+  } else {
+    const extraCals = currentCals - targetCalsGoal;
+    scoreCals = (((targetCalsGoal - extraCals) / targetCalsGoal) * 50).toFixed(2);
+  }
+
+  if (currentSteps < targetStepsGoal)
+    scoreSteps = ((currentSteps / targetStepsGoal) * 50).toFixed(2);
+  else scoreSteps = 50;
+
+  const score = Number(scoreCals) + Number(scoreSteps);
+
+  const leaderboardListArray = [];
+
+  db.collectionGroup('leaderboard')
+    .get()
+    .then((querySnapShot) => {
+      querySnapShot.forEach((doc) => {
+        leaderboardListArray.push(doc.data());
+        console.log(doc.id, ' => ', doc.data());
+      });
+    });
+
   return (
     <View>
       <LeaderboardCard
@@ -42,6 +70,8 @@ export default LeaderboardList = () => {
         currentCals={currentCals}
         currentSteps={currentSteps}
         username={username}
+        score={score}
+        rank={rank}
       />
     </View>
   );

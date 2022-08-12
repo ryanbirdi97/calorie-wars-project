@@ -7,11 +7,13 @@ export default LeaderboardCard = ({
   currentCals,
   currentSteps,
   username,
+  score,
+  rank,
 }) => {
   return (
     <View>
       <View>
-        <Text>Rank: {}</Text>
+        <Text>Rank: {rank}</Text>
         <Text>{username}</Text>
         <Text>
           Steps to Goal: {currentSteps} / {targetStepsGoal}
@@ -19,7 +21,7 @@ export default LeaderboardCard = ({
         <Text>
           Calories to Goal: {currentCals} / {targetCalsGoal}
         </Text>
-        <Text>Score: {}</Text>
+        <Text>Score: {score}</Text>
       </View>
     </View>
   );
