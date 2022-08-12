@@ -20,21 +20,25 @@ const SearchResults = ({ searchResults }) => {
       .doc(email + '-foodlog-' + date)
       .get()
       .then((doc) => {
-        if (!doc.exists) {
-          dbRef
-            .collection('foodlog')
-            .doc(email + '-foodlog-' + date)
-            .set({
+        // if (!doc.exists) {
+        dbRef
+          .collection('foodlog')
+          .doc(email + '-foodlog-' + date)
+          .set(
+            {
               [resultsObj.name]: {
+                name: resultsObj.name,
                 grams: resultsObj.serving_size_g,
                 calories: resultsObj.calories,
               },
-            })
-            .then(() => {
-              console.log('written to db');
-            });
-        } else {
-        }
+            },
+            { merge: true }
+          )
+          .then(() => {
+            console.log('written to db');
+          });
+        // } else {
+        // }
       })
       .catch((err) => {
         console.log(err);

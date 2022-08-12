@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { Provider as PaperProvider } from 'react-native-paper';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import SearchByText from '../Components/SearchByText';
 
 import ScanBarcode from '../Components/ScanBarcode';
+import FoodLog from '../Components/FoodLog';
+import AddCustomFood from '../Components/AddCustomFood';
 
 export default function Home() {
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
@@ -11,12 +12,13 @@ export default function Home() {
   const [notFoundFromBarcodeApi, setNotFoundFromBarcodeApi] = useState(false);
 
   return (
-    <PaperProvider>
+    <ScrollView>
       <View style={styles.container}>
         <SearchByText
           productNameFromBarcode={productNameFromBarcode}
           notFoundFromBarcodeApi={notFoundFromBarcodeApi}
         />
+        <AddCustomFood />
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -38,8 +40,9 @@ export default function Home() {
         ) : (
           <></>
         )}
+        <FoodLog />
       </View>
-    </PaperProvider>
+    </ScrollView>
   );
 }
 
