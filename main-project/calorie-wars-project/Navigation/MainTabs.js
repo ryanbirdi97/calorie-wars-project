@@ -4,6 +4,7 @@ import { Image } from 'react-native';
 import Home from '../Screens/Home';
 import Leaderboard from '../Screens/Leaderboard';
 import ProfilePage from '../Screens/ProfilePage';
+import Log from '../Screens/Log';
 
 import {
   KeyboardAvoidingView,
@@ -44,6 +45,22 @@ export default function MainTabs() {
             tabBarIcon: ({ focused }) => (
               <Image
                 source={require('../assets/leaderboard.png')}
+                resizeMode="contain"
+                style={{
+                  width: 30,
+                  height: 30,
+                }}
+              />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="Log"
+          component={Log}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <Image
+                source={require('../assets/log.png')}
                 resizeMode="contain"
                 style={{
                   width: 30,
