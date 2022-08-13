@@ -20,7 +20,7 @@ export default LeaderboardList = () => {
   const email = auth.currentUser?.email;
   const getUserEmail = db.collection('users').doc(auth.currentUser?.email);
 
-  console.log('hello');
+  console.log('cool');
 
   useEffect(() => {
     getUserEmail
@@ -74,13 +74,44 @@ export default LeaderboardList = () => {
   }, []);
 
   return (
-    <View>
-      <Text>Hello</Text>
-      {leaderboard.map((obj) => (
-        <LeaderboardCard key={uuidv4()} obj={obj} />
-      ))}
+    <View style={styles.container}>
+      <View style={styles.cardHeader}>
+        <Text style={styles.baseText}>#</Text>
+        <Text style={styles.baseText}>Username</Text>
+        <Text style={styles.baseText}>Steps to Goal</Text>
+        <Text style={styles.baseText}>Cals to Goal</Text>
+        <Text style={styles.baseText}>Score</Text>
+      </View>
+      <View>
+        {leaderboard.map((obj) => (
+          <LeaderboardCard key={uuidv4()} obj={obj} />
+        ))}
+      </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    flex: 9.5,
+    margin: 5,
+    padding: 2,
+    backgroundColor: '#dee2e6',
+    borderColor: 'black',
+    borderWidth: 2,
+  },
+  cardHeader: {
+    backgroundColor: '#9d0208',
+    margin: 5,
+    padding: 5,
+    borderColor: 'black',
+    borderWidth: 2,
+    fontSize: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  baseText: {
+    fontWeight: '700',
+  },
+});

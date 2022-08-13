@@ -2,23 +2,33 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
 export default LeaderboardCard = ({ obj }) => {
-  // console.log(obj.Object.username, '<---');
   return (
     <View>
-      <View>
-        <Text>Rank: {obj.position}</Text>
+      <View style={styles.container}>
+        <Text>{obj.position}</Text>
         <Text>{obj.username}</Text>
         <Text>
-          Steps to Goal: {obj.steps} / {obj.step_goal}
+          {obj.steps}/{obj.step_goal}
         </Text>
         <Text>
-          Calories to Goal: {obj.cals_consumed} / {obj.calorie_goal}
+          {obj.cals_consumed}/{obj.calorie_goal}
         </Text>
-        <Text>Score: {obj.score}</Text>
-        <Text>-------</Text>
+        <Text>{obj.score}</Text>
       </View>
     </View>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#f1faee',
+    margin: 5,
+    padding: 5,
+    borderColor: 'black',
+    borderWidth: 2,
+    fontSize: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+});
