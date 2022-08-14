@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
 import LeaderboardCard from './LeaderboardCard';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,7 +10,7 @@ export default LeaderboardList = () => {
   const [targetStepsGoal, setTargetStepsGoal] = useState(0);
   const [currentCals, setCurrentCals] = useState(0);
   const [currentSteps, setCurrentSteps] = useState(0);
-  const [username, setUsername] = useState('');
+  const [leaderboard, setLeaderboard] = useState([]);
 
   let scoreCals = 0;
   let scoreSteps = 0;
@@ -19,25 +19,25 @@ export default LeaderboardList = () => {
   const email = auth.currentUser?.email;
   const getUserEmail = db.collection('users').doc(auth.currentUser?.email);
 
-  getUserEmail
-    .collection('goals')
-    .doc(email + '-goals')
-    .onSnapshot((doc) => {
-      setTargetCalsGoal(doc.data().calorie_goal);
-      setTargetStepsGoal(doc.data().step_goal);
-    });
+  useEffect(() => {
+    getUserEmail
+      .collection('goals')
+      .doc(email + '-goals')
+      .onSnapshot((doc) => {
+        setTargetCalsGoal(doc.data().calorie_goal);
+        setTargetStepsGoal(doc.data().step_goal);
+      });
+  }, []);
 
-  getUserEmail
-    .collection('cals_step_log')
-    .doc(email + '-cal_step_log')
-    .onSnapshot((doc) => {
-      setCurrentCals(doc.data().cals_consumed);
-      setCurrentSteps(doc.data().steps);
-    });
-
-  getUserEmail.onSnapshot((doc) => {
-    setUsername(doc.data().username);
-  });
+  useEffect(() => {
+    getUserEmail
+      .collection('cals_step_log')
+      .doc(email + '-cal_step_log')
+      .onSnapshot((doc) => {
+        setCurrentCals(doc.data().cals_consumed);
+        setCurrentSteps(doc.data().steps);
+      });
+  }, []);
 
   if (currentCals < targetCalsGoal) {
     scoreCals = ((currentCals / targetCalsGoal) * 50).toFixed(2);
@@ -53,18 +53,20 @@ export default LeaderboardList = () => {
   const score = Number(scoreCals) + Number(scoreSteps);
   const leaderboardList = [];
 
-  const [leaderboard, setLeaderboard] = useState([]);
-
   db.collectionGroup('leaderboard')
     .get()
     .then((querySnapShot) => {
+      const leaderboardList = [];
       querySnapShot.forEach((doc) => {
         leaderboardList.push(doc.data());
+      });
+
+      leaderboardList.sort(function (a, b) {
+        return a.position - b.position;
       });
       setLeaderboard(leaderboardList);
     });
 
-  console.log(leaderboard, '<----');
   return (
     <View>
       {leaderboard.map((obj) => (
