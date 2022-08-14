@@ -54,7 +54,13 @@ export default function Login({ setLoadPage }) {
   };
 
   return (
-    <KeyboardAvoidingView style={styles.container} behavior="padding">
+    // <KeyboardAvoidingView style={styles.container} behavior="padding">
+    <View style={styles.container} behavior="padding">
+      <Text>Calorie Wars logo</Text>
+      <Text style={styles.heading}>
+        Welcome to calorie Wars!{'\n'}An app where you can compete with your friends to reach your
+        calorie goals.
+      </Text>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Email"
@@ -79,7 +85,8 @@ export default function Login({ setLoadPage }) {
           <Text style={styles.buttonOutlineText}>Register</Text>
         </TouchableOpacity>
       </View>
-    </KeyboardAvoidingView>
+    </View>
+    //  </KeyboardAvoidingView>
   );
 }
 
@@ -127,5 +134,17 @@ const styles = StyleSheet.create({
     color: '#0782F9',
     fontWeight: '700',
     fontSize: 16,
+  },
+  heading: {
+    fontSize: 22,
+    textAlign: 'center',
+    marginTop: 40,
+    padding: 15,
+    color: 'green',
+    borderWidth: 2,
+    borderRadius: 25,
+    borderColor: 'green',
+    backgroundColor: '#f1faee',
+    marginBottom: 15,
   },
 });
