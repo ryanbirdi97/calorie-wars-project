@@ -68,6 +68,10 @@ export default LeaderboardList = () => {
       querySnapShot.forEach((doc) => {
         leaderboardList.push(doc.data());
       });
+
+      leaderboardList.sort(function (a, b) {
+        return a.position - b.position;
+      });
       setLeaderboard(leaderboardList);
     });
   // }, []);

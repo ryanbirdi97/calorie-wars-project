@@ -2,7 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
 export default LeaderboardCard = ({ obj }) => {
-  console.log(obj.position);
+  // console.log(obj.position);
   return (
     <View>
       <View style={styles.container}>
