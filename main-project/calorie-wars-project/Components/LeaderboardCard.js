@@ -2,10 +2,9 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
 export default LeaderboardCard = ({ obj }) => {
-  // console.log(obj.position);
   return (
     <View>
-      <View style={styles.container}>
+      <View>
         <Text>{obj.position}</Text>
         <Text>{obj.username}</Text>
         <Text>
@@ -20,17 +19,4 @@ export default LeaderboardCard = ({ obj }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: '#f1faee',
-    margin: 5,
-    padding: 5,
-    borderColor: 'black',
-    borderWidth: 2,
-    fontSize: 16,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: 37,
-  },
-});
+const styles = StyleSheet.create({});

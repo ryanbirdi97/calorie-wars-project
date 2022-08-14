@@ -10,7 +10,6 @@ export default LeaderboardList = () => {
   const [targetStepsGoal, setTargetStepsGoal] = useState(0);
   const [currentCals, setCurrentCals] = useState(0);
   const [currentSteps, setCurrentSteps] = useState(0);
-  const [username, setUsername] = useState('');
   const [leaderboard, setLeaderboard] = useState([]);
 
   let scoreCals = 0;
@@ -40,12 +39,6 @@ export default LeaderboardList = () => {
       });
   }, []);
 
-  useEffect(() => {
-    getUserEmail.onSnapshot((doc) => {
-      setUsername(doc.data().username);
-    });
-  }, []);
-
   if (currentCals < targetCalsGoal) {
     scoreCals = ((currentCals / targetCalsGoal) * 50).toFixed(2);
   } else {
@@ -60,7 +53,6 @@ export default LeaderboardList = () => {
   const score = Number(scoreCals) + Number(scoreSteps);
   const leaderboardList = [];
 
-  // useEffect(() => {
   db.collectionGroup('leaderboard')
     .get()
     .then((querySnapShot) => {
@@ -74,52 +66,14 @@ export default LeaderboardList = () => {
       });
       setLeaderboard(leaderboardList);
     });
-  // }, []);
 
-  //console.log(leaderboard, '<----');
   return (
-    // <View style={styles.container}>
     <View>
-      <View style={styles.container}>
-        <View style={styles.cardHeader}>
-          <Text style={styles.baseText}>#</Text>
-          <Text style={styles.baseText}>Username</Text>
-          <Text style={styles.baseText}>Steps to Goal</Text>
-          <Text style={styles.baseText}>Cals to Goal</Text>
-          <Text style={styles.baseText}>Score</Text>
-        </View>
-      </View>
-      <View>
-        {leaderboard.map((obj) => (
-          <LeaderboardCard key={uuidv4()} obj={obj} />
-        ))}
-      </View>
+      {leaderboard.map((obj) => (
+        <LeaderboardCard key={uuidv4()} obj={obj} />
+      ))}
     </View>
   );
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 55,
-    margin: 5,
-    padding: 2,
-    backgroundColor: '#dee2e6',
-    borderColor: 'black',
-    borderWidth: 2,
-  },
-  cardHeader: {
-    backgroundColor: '#9d0208',
-    margin: 5,
-    padding: 5,
-    borderColor: 'black',
-    borderWidth: 2,
-    fontSize: 12,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    height: 37,
-  },
-  baseText: {
-    fontWeight: '700',
-  },
-});
+const styles = StyleSheet.create({});
