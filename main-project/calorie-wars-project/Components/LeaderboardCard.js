@@ -4,7 +4,7 @@ import React from 'react';
 export default LeaderboardCard = ({ obj }) => {
   return (
     <View>
-      <View>
+      <View style={styles.container}>
         <Text>{obj.position}</Text>
         <Text>{obj.username}</Text>
         <Text>
@@ -19,4 +19,16 @@ export default LeaderboardCard = ({ obj }) => {
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#f1faee',
+    margin: 5,
+    padding: 5,
+    borderColor: 'black',
+    borderWidth: 2,
+    fontSize: 12,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+});
