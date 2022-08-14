@@ -10,7 +10,6 @@ export default LeaderboardList = () => {
   const [targetStepsGoal, setTargetStepsGoal] = useState(0);
   const [currentCals, setCurrentCals] = useState(0);
   const [currentSteps, setCurrentSteps] = useState(0);
-  const [username, setUsername] = useState('');
   const [leaderboard, setLeaderboard] = useState([]);
 
   let scoreCals = 0;
@@ -20,8 +19,6 @@ export default LeaderboardList = () => {
   const email = auth.currentUser?.email;
   const getUserEmail = db.collection('users').doc(auth.currentUser?.email);
 
-  console.log('cool');
-
   useEffect(() => {
     getUserEmail
       .collection('goals')
@@ -30,7 +27,7 @@ export default LeaderboardList = () => {
         setTargetCalsGoal(doc.data().calorie_goal);
         setTargetStepsGoal(doc.data().step_goal);
       });
-  }, [targetCalsGoal, targetStepsGoal]);
+  }, []);
 
   useEffect(() => {
     getUserEmail
@@ -40,12 +37,6 @@ export default LeaderboardList = () => {
         setCurrentCals(doc.data().cals_consumed);
         setCurrentSteps(doc.data().steps);
       });
-  }, []);
-
-  useEffect(() => {
-    getUserEmail.onSnapshot((doc) => {
-      setUsername(doc.data().username);
-    });
   }, []);
 
   if (currentCals < targetCalsGoal) {
@@ -61,7 +52,6 @@ export default LeaderboardList = () => {
 
   const score = Number(scoreCals) + Number(scoreSteps);
 
-  useEffect(() => {
     db.collectionGroup('leaderboard')
       .get()
       .then((querySnapShot) => {
@@ -69,9 +59,12 @@ export default LeaderboardList = () => {
         querySnapShot.forEach((doc) => {
           leaderboardList.push(doc.data());
         });
-        setLeaderboard(leaderboardList);
+   
+      leaderboardList.sort(function (a, b) {
+        return a.position - b.position;
       });
-  }, []);
+      setLeaderboard(leaderboardList);
+    });
 
   return (
     <View style={styles.container}>
