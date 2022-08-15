@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import firebase from 'firebase';
 import { db, auth } from '../firebase';
 
-import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
+import { Text, TextInput, TouchableOpacity, View, StyleSheet, Image } from 'react-native';
 
 export default function Login() {
   const date = new Date().toLocaleDateString().replace(/\//gi, '-');
@@ -106,7 +106,7 @@ export default function Login() {
 
   return (
     <View style={styles.container} behavior="padding">
-      <Text>Calorie Wars logo</Text>
+      <Image source={require('../assets/calorie_wars_logo.png')} style={styles.logo} />
       <Text style={styles.heading}>
         Welcome to calorie Wars!{'\n'}An app where you can compete with your friends to reach your
         calorie goals.
@@ -147,6 +147,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputContainer: {
+    width: '80%',
+  },
+  logo: {
     width: '80%',
   },
   input: {
