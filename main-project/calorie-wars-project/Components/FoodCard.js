@@ -5,7 +5,7 @@ import 'firebase/firestore';
 
 export default function FoodCard({ food, setIsLoading }) {
   const handleDelete = (food) => {
-    const date = new Date().toLocaleDateString().replace(/\//gi, '-');
+    const date = new Date().toLocaleDateString('en-US').replace(/\//gi, '-');
     const email = auth.currentUser?.email;
     console.log(food);
 

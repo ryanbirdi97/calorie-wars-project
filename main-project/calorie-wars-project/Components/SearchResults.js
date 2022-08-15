@@ -10,8 +10,11 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
     serving_size_g: searchResults[0].serving_size_g,
   };
 
+  console.log(resultsObj);
+
   const handleAdd = () => {
-    const date = new Date().toLocaleDateString().replace(/\//gi, '-'); // 08/11/22
+    const date = new Date().toLocaleDateString('en-US').replace(/\//gi, '-'); // 08/11/22
+    console.log(date);
     const email = auth.currentUser?.email;
     const dbRef = db.collection('users').doc(auth.currentUser?.email);
 
