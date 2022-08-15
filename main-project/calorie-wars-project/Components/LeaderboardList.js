@@ -27,17 +27,30 @@ export default LeaderboardList = () => {
         setTargetCalsGoal(doc.data().calorie_goal);
         setTargetStepsGoal(doc.data().step_goal);
       });
-  }, []);
+  }, [targetCalsGoal, targetStepsGoal]);
 
   useEffect(() => {
     getUserEmail
       .collection('cals_step_log')
       .doc(date)
       .onSnapshot((doc) => {
+        getUserEmail
+          .collection('leaderboard')
+          .doc(email + '-leaderboard')
+          .update({
+            cals_consumed: doc.data().cals_consumed,
+            steps: doc.data().steps,
+          })
+          .then(() => {
+            console.log('cals_consumed and steps updated in leaderboard');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         setCurrentCals(doc.data().cals_consumed);
         setCurrentSteps(doc.data().steps);
       });
-  }, []);
+  }, [currentCals, currentSteps]);
 
   if (currentCals < targetCalsGoal) {
     scoreCals = ((currentCals / targetCalsGoal) * 50).toFixed(2);
@@ -50,9 +63,13 @@ export default LeaderboardList = () => {
     scoreSteps = ((currentSteps / targetStepsGoal) * 50).toFixed(2);
   else scoreSteps = 50;
 
+  //const [score, setScore] = useState(0);
+  //console.log(score);
   const score = Number(scoreCals) + Number(scoreSteps);
 
   useEffect(() => {
+    //setScore();
+    console.log(score);
     db.collection('users')
       .doc(email)
       .collection('leaderboard')
@@ -66,20 +83,26 @@ export default LeaderboardList = () => {
       });
   }, [score]);
 
-  db.collectionGroup('leaderboard')
-    .get()
-    .then((querySnapShot) => {
-      const leaderboardList = [];
-      querySnapShot.forEach((doc) => {
-        leaderboardList.push(doc.data());
-      });
+  useEffect(() => {
+    let isMounted = true;
+    db.collectionGroup('leaderboard')
+      .get()
+      .then((querySnapShot) => {
+        const leaderboardList = [];
+        querySnapShot.forEach((doc) => {
+          leaderboardList.push(doc.data());
+        });
 
-      leaderboardList.sort(function (a, b) {
-        return b.score - a.score;
-      });
+        leaderboardList.sort(function (a, b) {
+          return b.score - a.score;
+        });
 
-      setLeaderboard(leaderboardList);
-    });
+        if (isMounted) setLeaderboard(leaderboardList);
+      });
+    return () => {
+      isMounted = false;
+    };
+  }, [leaderboard]);
 
   return (
     <View style={styles.container}>
