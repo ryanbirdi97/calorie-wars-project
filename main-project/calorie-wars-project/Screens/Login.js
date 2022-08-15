@@ -6,6 +6,7 @@ import { db, auth } from '../firebase';
 import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
 
 export default function Login() {
+  const date = new Date().toLocaleDateString().replace(/\//gi, '-');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [page, setPage] = useState('Login');
@@ -67,11 +68,10 @@ export default function Login() {
           .collection('users')
           .doc(email)
           .collection('cals_step_log')
-          .doc(email + '-cal_step_log');
+          .doc(date);
 
         batch.set(newCalsStepGoal, {
           cals_consumed: 0,
-          date: firebase.firestore.Timestamp.now(),
           steps: 0,
         });
 

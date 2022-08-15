@@ -6,6 +6,7 @@ import LeaderboardCard from './LeaderboardCard';
 import { v4 as uuidv4 } from 'uuid';
 
 export default LeaderboardList = () => {
+  const date = new Date().toLocaleDateString().replace(/\//gi, '-');
   const [targetCalsGoal, setTargetCalsGoal] = useState(0);
   const [targetStepsGoal, setTargetStepsGoal] = useState(0);
   const [currentCals, setCurrentCals] = useState(0);
@@ -16,8 +17,7 @@ export default LeaderboardList = () => {
   let scoreSteps = 0;
 
   const email = auth.currentUser?.email;
-
-  const getUserEmail = db.collection('users').doc(auth.currentUser?.email);
+  const getUserEmail = db.collection('users').doc(email);
 
   useEffect(() => {
     getUserEmail
@@ -32,7 +32,7 @@ export default LeaderboardList = () => {
   useEffect(() => {
     getUserEmail
       .collection('cals_step_log')
-      .doc(email + '-cal_step_log')
+      .doc(date)
       .onSnapshot((doc) => {
         setCurrentCals(doc.data().cals_consumed);
         setCurrentSteps(doc.data().steps);
