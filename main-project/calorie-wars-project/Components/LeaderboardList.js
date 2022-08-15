@@ -63,13 +63,9 @@ export default LeaderboardList = () => {
     scoreSteps = ((currentSteps / targetStepsGoal) * 50).toFixed(2);
   else scoreSteps = 50;
 
-  //const [score, setScore] = useState(0);
-  //console.log(score);
   const score = Number(scoreCals) + Number(scoreSteps);
 
   useEffect(() => {
-    //setScore();
-    console.log(score);
     db.collection('users')
       .doc(email)
       .collection('leaderboard')
