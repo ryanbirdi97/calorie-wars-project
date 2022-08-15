@@ -16,7 +16,7 @@ export default function ProfilePage() {
   const [imageUri, setImageUri] = useState(null);
 
   const email = auth.currentUser?.email;
-  var getUserEmail = db.collection('users').doc(auth.currentUser?.email);
+  var getUserEmail = db.collection('users').doc(email);
 
   useEffect(() => {
     getUserEmail
@@ -56,6 +56,7 @@ export default function ProfilePage() {
   };
 
   const handleUsername = () => {
+    console.log(email);
     if (username !== '') {
       getUserEmail
         .update({

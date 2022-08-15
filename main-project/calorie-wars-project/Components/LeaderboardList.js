@@ -16,6 +16,7 @@ export default LeaderboardList = () => {
   let scoreSteps = 0;
 
   const email = auth.currentUser?.email;
+
   const getUserEmail = db.collection('users').doc(auth.currentUser?.email);
 
   useEffect(() => {
