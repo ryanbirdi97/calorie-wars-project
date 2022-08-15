@@ -14,7 +14,6 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
 
   const handleAdd = () => {
     const date = new Date().toLocaleDateString('en-US').replace(/\//gi, '-'); // 08/11/22
-    console.log(date);
     const email = auth.currentUser?.email;
     const dbRef = db.collection('users').doc(auth.currentUser?.email);
 
