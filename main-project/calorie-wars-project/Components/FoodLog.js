@@ -4,9 +4,8 @@ import { db, auth } from '../firebase';
 
 import FoodCard from './FoodCard';
 
-export default function FoodLog() {
+export default function FoodLog({ isLoading, setIsLoading }) {
   const [foodArr, setFoodArr] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
 
   if (isLoading) {
     const date = new Date().toLocaleDateString().replace(/\//gi, '-');
@@ -25,12 +24,11 @@ export default function FoodLog() {
 
   return (
     <View>
-      <Text>FoodLog</Text>
       {isLoading ? (
-        <Text>Loading ...</Text>
+        <Text>Food Log ...</Text>
       ) : (
         foodArr.map((food) => {
-          return <FoodCard food={food} />;
+          return <FoodCard food={food} setIsLoading={setIsLoading} />;
         })
       )}
     </View>

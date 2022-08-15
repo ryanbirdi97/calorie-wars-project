@@ -3,17 +3,21 @@ import { db, auth } from '../firebase';
 import firebase from 'firebase';
 import 'firebase/firestore';
 
-export default function FoodCard({ food }) {
+export default function FoodCard({ food, setIsLoading }) {
   const handleDelete = (food) => {
     const date = new Date().toLocaleDateString().replace(/\//gi, '-');
     const email = auth.currentUser?.email;
+    console.log(food);
 
     db.collection('users')
       .doc(email)
       .collection('foodlog')
       .doc(email + '-foodlog-' + date)
       .update({ [food.name]: firebase.firestore.FieldValue.delete() })
-      .then(() => {});
+      .then(() => {
+        console.log('Item Deleted!');
+        setIsLoading(true);
+      });
   };
 
   function capitalizeFirstLetter(string) {
@@ -25,7 +29,12 @@ export default function FoodCard({ food }) {
       <Text>{capitalizeFirstLetter(food.name)}</Text>
       <Text>Amount: {food.grams}g</Text>
       <Text>Calories: {Math.round(food.calories)}</Text>
-      <Button title="Delete" onPress={handleDelete(food.name)} />
+      <Button
+        title="Delete"
+        onPress={() => {
+          handleDelete(food);
+        }}
+      />
     </View>
   );
 }

@@ -10,6 +10,7 @@ export default function Home() {
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
   const [productNameFromBarcode, setProductNameFromBarcode] = useState('');
   const [notFoundFromBarcodeApi, setNotFoundFromBarcodeApi] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <ScrollView>
@@ -17,6 +18,8 @@ export default function Home() {
         <SearchByText
           productNameFromBarcode={productNameFromBarcode}
           notFoundFromBarcodeApi={notFoundFromBarcodeApi}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
         />
         <AddCustomFood />
         <TouchableOpacity
@@ -38,7 +41,7 @@ export default function Home() {
             setNotFoundFromBarcodeApi={setNotFoundFromBarcodeApi}
           />
         ) : (
-          <FoodLog />
+          <FoodLog isLoading={isLoading} setIsLoading={setIsLoading} />
         )}
       </View>
     </ScrollView>

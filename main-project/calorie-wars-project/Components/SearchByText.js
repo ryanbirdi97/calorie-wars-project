@@ -11,7 +11,12 @@ import {
 import { searchProductByText } from '../textLookupAPI';
 import SearchResults from './SearchResults';
 
-const SearchByText = ({ productNameFromBarcode, notFoundFromBarcodeApi }) => {
+const SearchByText = ({
+  productNameFromBarcode,
+  notFoundFromBarcodeApi,
+  isLoading,
+  setIsLoading,
+}) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [weight, setWeight] = useState('100');
   const [searchResults, setSearchResults] = useState([]);
@@ -49,7 +54,11 @@ const SearchByText = ({ productNameFromBarcode, notFoundFromBarcodeApi }) => {
           <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
       </View>
-      {searchResults.length >= 1 ? <SearchResults searchResults={searchResults} /> : <></>}
+      {searchResults.length >= 1 ? (
+        <SearchResults searchResults={searchResults} setIsLoading={setIsLoading} />
+      ) : (
+        <></>
+      )}
     </>
   );
 };
