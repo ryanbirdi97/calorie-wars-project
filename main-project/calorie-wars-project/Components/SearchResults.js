@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-nativ
 import { db, auth } from '../firebase';
 import firebase from 'firebase';
 
-const SearchResults = ({ searchResults }) => {
+const SearchResults = ({ searchResults, setIsLoading }) => {
   const resultsObj = {
     name: searchResults[0].name,
     calories: searchResults[0].calories,
@@ -20,21 +20,26 @@ const SearchResults = ({ searchResults }) => {
       .doc(email + '-foodlog-' + date)
       .get()
       .then((doc) => {
-        if (!doc.exists) {
-          dbRef
-            .collection('foodlog')
-            .doc(email + '-foodlog-' + date)
-            .set({
+        // if (!doc.exists) {
+        dbRef
+          .collection('foodlog')
+          .doc(email + '-foodlog-' + date)
+          .set(
+            {
               [resultsObj.name]: {
+                name: resultsObj.name,
                 grams: resultsObj.serving_size_g,
                 calories: resultsObj.calories,
               },
-            })
-            .then(() => {
-              console.log('written to db');
-            });
-        } else {
-        }
+            },
+            { merge: true }
+          )
+          .then(() => {
+            console.log('written to db');
+            setIsLoading(true);
+          });
+        // } else {
+        // }
       })
       .catch((err) => {
         console.log(err);
