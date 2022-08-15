@@ -52,14 +52,28 @@ export default LeaderboardList = () => {
 
   const score = Number(scoreCals) + Number(scoreSteps);
 
-    db.collectionGroup('leaderboard')
-      .get()
-      .then((querySnapShot) => {
-        const leaderboardList = [];
-        querySnapShot.forEach((doc) => {
-          leaderboardList.push(doc.data());
-        });
-   
+  useEffect(() => {
+    db.collection('users')
+      .doc(email)
+      .collection('leaderboard')
+      .doc(email + '-leaderboard')
+      .set({ score: score }, { merge: true })
+      .then(() => {
+        console.log('written to db');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [score]);
+  
+  db.collectionGroup('leaderboard')
+    .get()
+    .then((querySnapShot) => {
+      const leaderboardList = [];
+      querySnapShot.forEach((doc) => {
+        leaderboardList.push(doc.data());
+      });
+
       leaderboardList.sort(function (a, b) {
         return a.position - b.position;
       });
