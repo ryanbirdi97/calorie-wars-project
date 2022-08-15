@@ -5,7 +5,7 @@ import { db, auth } from '../firebase';
 
 import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
 
-export default function Login({ setLoadPage }) {
+export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [page, setPage] = useState('Login');
@@ -29,10 +29,11 @@ export default function Login({ setLoadPage }) {
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
         const newUsername = db.collection('users').doc(email);
+
         batch.set(newUsername, {
           username: '',
           avatar:
-            'https://cn.i.cdn.ti-platform.com/content/2167/we-baby-bears/showpage/fr/webabybears-icon.8db091e9.8db091e9.png',
+            'https://freepikpsd.com/file/2019/10/silhouette-icon-blank-person-template-blank-person-png-900_900-1.jpg',
         });
 
         const newLeaderboard = db
@@ -40,6 +41,7 @@ export default function Login({ setLoadPage }) {
           .doc(email)
           .collection('leaderboard')
           .doc(email + '-leaderboard');
+
         batch.set(newLeaderboard, {
           calorie_goal: 0,
           cals_consumed: 0,
@@ -55,6 +57,7 @@ export default function Login({ setLoadPage }) {
           .doc(email)
           .collection('goals')
           .doc(email + '-goals');
+
         batch.set(newGoals, {
           calorie_goal: 0,
           step_goal: 0,
@@ -65,6 +68,7 @@ export default function Login({ setLoadPage }) {
           .doc(email)
           .collection('cals_step_log')
           .doc(email + '-cal_step_log');
+
         batch.set(newCalsStepGoal, {
           cals_consumed: 0,
           date: firebase.firestore.Timestamp.now(),

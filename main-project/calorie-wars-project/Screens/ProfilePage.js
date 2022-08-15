@@ -58,8 +58,6 @@ export default function ProfilePage() {
   const handleUsername = () => {
     console.log(email);
     if (username !== '') {
-      console.log(username, '<---username');
-
       getUserEmail
         .update({
           username: username,
