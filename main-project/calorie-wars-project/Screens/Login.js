@@ -43,7 +43,7 @@ export default function Login({ setLoadPage }) {
         batch.set(newLeaderboard, {
           calorie_goal: 0,
           cals_consumed: 0,
-          // date: firebase.firestore.Timestamp(Date.now()),
+          date: firebase.firestore.Timestamp.now(),
           score: 0,
           step_goal: 0,
           steps: 0,
@@ -67,7 +67,7 @@ export default function Login({ setLoadPage }) {
           .doc(email + '-cal_step_log');
         batch.set(newCalsStepGoal, {
           cals_consumed: 0,
-          //  date: firebase.firestore.Timestamp(Date.now()),
+          date: firebase.firestore.Timestamp.now(),
           steps: 0,
         });
 
