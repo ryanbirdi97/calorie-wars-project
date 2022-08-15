@@ -14,7 +14,6 @@ export default LeaderboardList = () => {
 
   let scoreCals = 0;
   let scoreSteps = 0;
-  let rank = 1;
 
   const email = auth.currentUser?.email;
   const getUserEmail = db.collection('users').doc(auth.currentUser?.email);
@@ -65,7 +64,7 @@ export default LeaderboardList = () => {
         console.log(err);
       });
   }, [score]);
-  
+
   db.collectionGroup('leaderboard')
     .get()
     .then((querySnapShot) => {
@@ -75,15 +74,15 @@ export default LeaderboardList = () => {
       });
 
       leaderboardList.sort(function (a, b) {
-        return a.position - b.position;
+        return b.score - a.score;
       });
+
       setLeaderboard(leaderboardList);
     });
 
   return (
     <View style={styles.container}>
       <View style={styles.cardHeader}>
-        <Text style={styles.baseText}>#</Text>
         <Text style={styles.baseText}>Username</Text>
         <Text style={styles.baseText}>Steps to Goal</Text>
         <Text style={styles.baseText}>Cals to Goal</Text>
