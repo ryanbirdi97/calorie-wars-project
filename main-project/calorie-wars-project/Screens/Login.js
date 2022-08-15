@@ -1,15 +1,9 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
+import firebase from 'firebase';
+import { db, auth } from '../firebase';
 
-import {
-  KeyboardAvoidingView,
-  Text,
-  TextInput,
-  TouchableOpacity,
-  View,
-  StyleSheet,
-} from 'react-native';
-import { auth } from '../firebase';
+import { Text, TextInput, TouchableOpacity, View, StyleSheet } from 'react-native';
 
 export default function Login({ setLoadPage }) {
   const [email, setEmail] = useState('');
@@ -17,6 +11,7 @@ export default function Login({ setLoadPage }) {
   const [page, setPage] = useState('Login');
 
   const navigation = useNavigation();
+  const batch = db.batch();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -33,6 +28,58 @@ export default function Login({ setLoadPage }) {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then((userCredentials) => {
+        const newUsername = db.collection('users').doc(email);
+        batch.set(newUsername, {
+          username: '',
+          avatar:
+            'https://cn.i.cdn.ti-platform.com/content/2167/we-baby-bears/showpage/fr/webabybears-icon.8db091e9.8db091e9.png',
+        });
+
+        const newLeaderboard = db
+          .collection('users')
+          .doc(email)
+          .collection('leaderboard')
+          .doc(email + '-leaderboard');
+        batch.set(newLeaderboard, {
+          calorie_goal: 0,
+          cals_consumed: 0,
+          // date: firebase.firestore.Timestamp(Date.now()),
+          score: 0,
+          step_goal: 0,
+          steps: 0,
+          username: '',
+        });
+
+        const newGoals = db
+          .collection('users')
+          .doc(email)
+          .collection('goals')
+          .doc(email + '-goals');
+        batch.set(newGoals, {
+          calorie_goal: 0,
+          step_goal: 0,
+        });
+
+        const newCalsStepGoal = db
+          .collection('users')
+          .doc(email)
+          .collection('cals_step_log')
+          .doc(email + '-cal_step_log');
+        batch.set(newCalsStepGoal, {
+          cals_consumed: 0,
+          //  date: firebase.firestore.Timestamp(Date.now()),
+          steps: 0,
+        });
+
+        batch
+          .commit()
+          .then(() => {
+            console.log('New user database Created!!');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+
         const user = userCredentials.user;
         setPage('ProfilePage');
         navigation.navigate('MainTabs');
@@ -54,7 +101,6 @@ export default function Login({ setLoadPage }) {
   };
 
   return (
-    // <KeyboardAvoidingView style={styles.container} behavior="padding">
     <View style={styles.container} behavior="padding">
       <Text>Calorie Wars logo</Text>
       <Text style={styles.heading}>
@@ -67,6 +113,7 @@ export default function Login({ setLoadPage }) {
           value={email}
           onChangeText={(text) => setEmail(text)}
           style={styles.input}
+          autoCapitalize="none"
         />
         <TextInput
           placeholder="Password"
@@ -86,7 +133,6 @@ export default function Login({ setLoadPage }) {
         </TouchableOpacity>
       </View>
     </View>
-    //  </KeyboardAvoidingView>
   );
 }
 

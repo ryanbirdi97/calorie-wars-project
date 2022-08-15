@@ -17,6 +17,7 @@ export default LeaderboardList = () => {
   let rank = 1;
 
   const email = auth.currentUser?.email;
+
   const getUserEmail = db.collection('users').doc(auth.currentUser?.email);
 
   useEffect(() => {
@@ -52,14 +53,14 @@ export default LeaderboardList = () => {
 
   const score = Number(scoreCals) + Number(scoreSteps);
 
-    db.collectionGroup('leaderboard')
-      .get()
-      .then((querySnapShot) => {
-        const leaderboardList = [];
-        querySnapShot.forEach((doc) => {
-          leaderboardList.push(doc.data());
-        });
-   
+  db.collectionGroup('leaderboard')
+    .get()
+    .then((querySnapShot) => {
+      const leaderboardList = [];
+      querySnapShot.forEach((doc) => {
+        leaderboardList.push(doc.data());
+      });
+
       leaderboardList.sort(function (a, b) {
         return a.position - b.position;
       });
