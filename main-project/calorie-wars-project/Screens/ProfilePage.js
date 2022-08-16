@@ -178,12 +178,24 @@ export default function ProfilePage() {
       })
       .catch((error) => alert(error.message));
   };
+  const updateAvatar = () => {
+    getUserEmail
+      .update({ avatar: imageUri })
+      .then(() => {
+        console.log('Updated username in users successfully!');
+      })
+      .catch((error) => {
+        console.error('Error updating document: ', error);
+      });
+  };
 
   return (
     <PaperProvider>
       <View>
-        <Text>Choose your Avatar:</Text>
+        <Text style={styles.updateProfile}>Update Profile</Text>
       </View>
+      <Text style={styles.emailAlign}>Email: {email}</Text>
+
       <View style={styles.Avatar}>
         <TouchableOpacity
           onPress={() => {
@@ -321,21 +333,42 @@ export default function ProfilePage() {
           }}
           style={styles.avatarstyling}
         />
-        <Text>Email: {auth.currentUser?.email}</Text>
+        <Text>Enter your avatar url or select from above images.</Text>
+
         <View style={styles.textstyle}>
           <TextInput
-            placeholder="Username"
+            placeholder="New Avatar"
+            value={imageUri}
+            onChangeText={(text) => {
+              setImageUri(text);
+            }}
+            style={styles.input}
+          />
+
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={updateAvatar} style={styles.button}>
+              <Text style={styles.buttonText}>New Avatar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+
+        <View style={styles.textstyle}>
+          <TextInput
+            placeholder="Name"
             value={username}
-            onChangeText={(text) => setUsername(text)}
+            onChangeText={(text) => {
+              setUsername(text);
+            }}
             style={styles.input}
           />
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleUsername} style={styles.button}>
-              <Text style={styles.buttonText}>Update Username</Text>
+              <Text style={styles.buttonText}>Change Name</Text>
             </TouchableOpacity>
           </View>
         </View>
+
         <View style={styles.textstyle}>
           <TextInput
             placeholder="New Password"
@@ -347,7 +380,7 @@ export default function ProfilePage() {
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handlePassword} style={styles.button}>
-              <Text style={styles.buttonText}>Change Password</Text>
+              <Text style={styles.buttonText}>Password</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -360,7 +393,7 @@ export default function ProfilePage() {
           />
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleCalorieGoal} style={styles.button}>
-              <Text style={styles.buttonText}>Set Calorie Goal</Text>
+              <Text style={styles.buttonText}>Calorie Goal</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -374,14 +407,13 @@ export default function ProfilePage() {
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleStepGoal} style={styles.button}>
-              <Text style={styles.buttonText}>Set Step Goal</Text>
+              <Text style={styles.buttonText}>Steps Goal</Text>
             </TouchableOpacity>
           </View>
         </View>
-
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-            <Text style={styles.buttonText}>Go to Home</Text>
+            <Text style={styles.buttonText}>Home</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
@@ -400,6 +432,13 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  updateProfile: {
+    textAlign: 'center',
+    marginTop: 25,
+    marginBottom: 10,
+    fontSize: 25,
+    fontWeight: '700',
+  },
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 8,
@@ -407,17 +446,18 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 15,
     height: 32,
-    width: '40%',
+    width: '55%',
 
     fontSize: 16,
   },
   buttonContainer: {
-    width: '50%',
+    width: '36%',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 0,
     marginBottom: 10,
   },
+  emailAlign: { textAlign: 'center', marginBottom: 5 },
   button: {
     backgroundColor: '#0782F9',
     width: '90%',
