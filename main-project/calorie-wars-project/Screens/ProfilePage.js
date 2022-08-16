@@ -182,7 +182,7 @@ export default function ProfilePage() {
   return (
     <PaperProvider>
       <View>
-        <Text>Choose your Avatar:</Text>
+        <Text style={styles.updateProfile}>Update Profile</Text>
       </View>
       <View style={styles.Avatar}>
         <TouchableOpacity
@@ -332,7 +332,7 @@ export default function ProfilePage() {
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleUsername} style={styles.button}>
-              <Text style={styles.buttonText}>Update Username</Text>
+              <Text style={styles.buttonText}>Change Name</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -360,7 +360,7 @@ export default function ProfilePage() {
           />
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleCalorieGoal} style={styles.button}>
-              <Text style={styles.buttonText}>Set Calorie Goal</Text>
+              <Text style={styles.buttonText}>Calorie Goal</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -374,14 +374,14 @@ export default function ProfilePage() {
 
           <View style={styles.buttonContainer}>
             <TouchableOpacity onPress={handleStepGoal} style={styles.button}>
-              <Text style={styles.buttonText}>Set Step Goal</Text>
+              <Text style={styles.buttonText}>Steps Goal</Text>
             </TouchableOpacity>
           </View>
         </View>
 
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-            <Text style={styles.buttonText}>Go to Home</Text>
+            <Text style={styles.buttonText}>Home</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.buttonContainer}>
@@ -400,6 +400,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  updateProfile: {
+    textAlign: 'center',
+    marginTop: 25,
+    marginLeft: 5,
+    marginRight: 5,
+    marginBottom: 5,
+    fontSize: 25,
+    fontWeight: '700',
+    // marginTop: 20,
+    // fontSize: 25,
+    // color: 'blue',
+  },
   input: {
     backgroundColor: 'white',
     paddingHorizontal: 8,
@@ -407,12 +419,12 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 15,
     height: 32,
-    width: '40%',
+    width: '60%',
 
     fontSize: 16,
   },
   buttonContainer: {
-    width: '50%',
+    width: '30%',
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 0,
