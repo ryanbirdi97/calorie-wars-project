@@ -10,7 +10,7 @@ export default function FoodLog({ isLoading, setIsLoading }) {
 
   const [foodArr, setFoodArr] = useState([]);
 
-  if (isLoading) {
+  useEffect(() => {
     const date = formatDate(); // 16-08-2022
 
     const email = auth.currentUser?.email;
@@ -43,7 +43,7 @@ export default function FoodLog({ isLoading, setIsLoading }) {
         setIsLoading(false);
         console.log('written to the db');
       }); */
-  }
+  }, [isLoading]);
 
   return (
     <View>

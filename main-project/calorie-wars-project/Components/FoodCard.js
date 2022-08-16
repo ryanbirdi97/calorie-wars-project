@@ -19,7 +19,6 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
       .update({ [food.name]: firebase.firestore.FieldValue.delete() })
       .then(() => {
         console.log('Item Deleted!');
-        setIsLoading(true);
         // deleting the calories from curr calorie count
         db.collection('users')
           .doc(email)
@@ -35,6 +34,7 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
               .collection('cals_step_log')
               .doc(date)
               .set({ cals_consumed: cals_consumed - food.calories });
+            setIsLoading(true);
           });
       })
       .catch((err) => {

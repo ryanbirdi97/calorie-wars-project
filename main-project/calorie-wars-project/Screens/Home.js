@@ -39,25 +39,19 @@ export default function Home() {
           }
         </TouchableOpacity>
         {showBarcodeScanner ? (
-          <View style={styles.barcodeScanner}>
-            <ScanBarcode
-              setShowBarcodeScanner={setShowBarcodeScanner}
-              setProductNameFromBarcode={setProductNameFromBarcode}
-              setNotFoundFromBarcodeApi={setNotFoundFromBarcodeApi}
-            />
-          </View>
+          <ScanBarcode
+            setShowBarcodeScanner={setShowBarcodeScanner}
+            setProductNameFromBarcode={setProductNameFromBarcode}
+            setNotFoundFromBarcodeApi={setNotFoundFromBarcodeApi}
+          />
         ) : (
           <FoodLog isLoading={isLoading} setIsLoading={setIsLoading} />
         )}
       </View>
       <View style={styles.pedometer}>
-        <PedometerComp setIsLoading={setIsLoading} />
+        <PedometerComp />
       </View>
-      {showBarcodeScanner ? (
-        <></>
-      ) : (
-        <ProgressTracker isLoading={isLoading} setIsLoading={setIsLoading} />
-      )}
+      {showBarcodeScanner ? <></> : <ProgressTracker />}
     </ScrollView>
   );
 }
@@ -78,5 +72,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   pedometer: {},
-  //barcodeScanner: { flex: 1, position: 'absolute', top: 250, left: 150, bottom: 150 },
 });

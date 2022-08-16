@@ -7,7 +7,7 @@ import * as Progress from 'react-native-progress';
 
 import formatDate from '../Utils/formatDate';
 
-export default function ProgressTracker({ isLoading, setIsLoading }) {
+export default function ProgressTracker() {
   //console.log('inside progress tracker');
 
   const [calorieGoal, setCalorieGoal] = useState(1);
@@ -17,28 +17,26 @@ export default function ProgressTracker({ isLoading, setIsLoading }) {
 
   const date = formatDate(); // 16-08-2022
 
-  useEffect(() => {
-    const email = auth.currentUser?.email;
-    db.collection('users')
-      .doc(email)
-      .collection('cals_step_log')
-      .doc(date)
-      .onSnapshot((result) => {
-        const obj = result.data();
-        setCaloriesConsumed(obj.cals_consumed);
-        setStepsWalked(obj.steps);
-        db.collection('users')
-          .doc(email)
-          .collection('goals')
-          .doc(email + '-goals')
-          .onSnapshot((goals) => {
-            const goalObj = goals.data();
-            setCalorieGoal(goalObj.calorie_goal);
-            setStepGoal(goalObj.step_goal);
-            setIsLoading(false);
-          });
-      });
-  }, [isLoading]);
+  const email = auth.currentUser?.email;
+  db.collection('users')
+    .doc(email)
+    .collection('cals_step_log')
+    .doc(date)
+    .onSnapshot((result) => {
+      const obj = result.data();
+      setCaloriesConsumed(obj.cals_consumed);
+      setStepsWalked(obj.steps);
+      db.collection('users')
+        .doc(email)
+        .collection('goals')
+        .doc(email + '-goals')
+        .onSnapshot((goals) => {
+          const goalObj = goals.data();
+          setCalorieGoal(goalObj.calorie_goal);
+          setStepGoal(goalObj.step_goal);
+          console.log('here fetching the data from db');
+        });
+    });
 
   return (
     <View>
