@@ -8,9 +8,7 @@ import * as Progress from 'react-native-progress';
 import formatDate from '../Utils/formatDate';
 
 export default function ProgressTracker({ isLoading, setIsLoading }) {
-  console.log('inside progress tracker');
-
-  const [progress, setProgress] = useState({});
+  //console.log('inside progress tracker');
 
   const [calorieGoal, setCalorieGoal] = useState(1);
   const [stepGoal, setStepGoal] = useState(1);
@@ -20,12 +18,6 @@ export default function ProgressTracker({ isLoading, setIsLoading }) {
   const date = formatDate(); // 16-08-2022
 
   useEffect(() => {
-    setProgress(() => {
-      return {
-        calories: caloriesConsumed / calorieGoal,
-        steps: stepsWalked / stepGoal,
-      };
-    });
     const email = auth.currentUser?.email;
     db.collection('users')
       .doc(email)
@@ -51,25 +43,33 @@ export default function ProgressTracker({ isLoading, setIsLoading }) {
   return (
     <View>
       <View style={styles.progressCircles}>
-        <Text>{'\n\n' + caloriesConsumed + '/' + '' + calorieGoal + ' kcal:'}</Text>
+        <Text>{'\n\n' + Math.round(caloriesConsumed) + '/' + '' + calorieGoal + ' kcal:'}</Text>
         <Progress.Circle
           size={80}
           showsText={true}
           formatText={() => {
-            return isNaN(progress.calories) ? 0 : (progress.calories * 100).toFixed(2) + '%';
+            return isNaN(caloriesConsumed / calorieGoal)
+              ? 0
+              : ((caloriesConsumed / calorieGoal) * 100).toFixed(2) + '%';
           }}
-          progress={progress.calories}
+          progress={caloriesConsumed / calorieGoal}
           allowFontScaling={true}
         />
-        <Text>{'\n\n' + stepsWalked + '/' + '' + stepGoal + ' steps:'}</Text>
+        <Text>
+          {typeof stepsWalked === 'number'
+            ? '\n\n' + stepsWalked + '/' + '' + stepGoal + ' steps:'
+            : '\n\n0/' + '' + stepGoal}
+        </Text>
         <Progress.Circle
           size={80}
           showsText={true}
           formatText={() => {
-            return isNaN(progress.steps) ? 0 : '' + (progress.steps * 100).toFixed(2) + '%';
+            return isNaN(stepsWalked / stepGoal)
+              ? 0 + '%'
+              : '' + ((stepsWalked / stepGoal) * 100).toFixed(2) + '%';
           }}
           allowFontScaling={true}
-          progress={progress.steps}
+          progress={isNaN(+stepsWalked) ? 0 : stepsWalked / stepGoal}
         />
       </View>
     </View>

@@ -4,7 +4,7 @@ import { db, auth } from '../firebase';
 import formatDate from '../Utils/formatDate';
 
 const SearchResults = ({ searchResults, setIsLoading }) => {
-  console.log('inside search results');
+  //console.log('inside search results');
 
   const resultsObj = {
     name: searchResults[0].name,

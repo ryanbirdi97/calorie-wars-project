@@ -6,7 +6,7 @@ import FoodCard from './FoodCard';
 import formatDate from '../Utils/formatDate';
 
 export default function FoodLog({ isLoading, setIsLoading }) {
-  console.log('inside food log');
+  //console.log('inside food log');
 
   const [foodArr, setFoodArr] = useState([]);
 

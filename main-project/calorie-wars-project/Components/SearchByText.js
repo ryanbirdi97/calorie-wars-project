@@ -4,7 +4,7 @@ import { searchProductByText } from '../textLookupAPI';
 import SearchResults from './SearchResults';
 
 const SearchByText = ({ productNameFromBarcode, setIsLoading }) => {
-  console.log('inside search by text');
+  //console.log('inside search by text');
 
   const [searchTerm, setSearchTerm] = useState('');
   const [weight, setWeight] = useState('100');

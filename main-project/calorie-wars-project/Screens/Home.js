@@ -9,7 +9,8 @@ import PedometerComp from '../Components/PedometerComp';
 import ProgressTracker from '../Components/ProgressTracker';
 
 export default function Home() {
-  console.log('inside home');
+  //console.log('inside home');
+
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
   const [productNameFromBarcode, setProductNameFromBarcode] = useState('');
   const [notFoundFromBarcodeApi, setNotFoundFromBarcodeApi] = useState(false);
