@@ -147,10 +147,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   inputContainer: {
+    flex: 1,
     width: '80%',
   },
   logo: {
-    width: '80%',
+    flex: 1,
+    width: '90%',
+    height: undefined,
+    aspectRatio: 1,
+    resizeMode: 'contain',
   },
   input: {
     backgroundColor: 'white',
@@ -160,10 +165,11 @@ const styles = StyleSheet.create({
     marginTop: 5,
   },
   buttonContainer: {
+    flex: 1,
     width: '60%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 40,
+    //marginTop: 40,
   },
   button: {
     backgroundColor: '#0782F9',
@@ -189,15 +195,16 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   heading: {
-    fontSize: 22,
+    flex: 1,
+    fontSize: 16,
     textAlign: 'center',
-    marginTop: 40,
+    //marginTop: 40,
     padding: 15,
-    color: 'green',
-    borderWidth: 2,
+    color: 'black',
+    //borderWidth: 2,
     borderRadius: 25,
-    borderColor: 'green',
-    backgroundColor: '#f1faee',
+    //borderColor: 'green',
+    //backgroundColor: '#f1faee',
     marginBottom: 15,
   },
 });
