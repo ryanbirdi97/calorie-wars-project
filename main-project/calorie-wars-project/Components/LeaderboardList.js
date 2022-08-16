@@ -4,9 +4,10 @@ import { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
 import LeaderboardCard from './LeaderboardCard';
 import { v4 as uuidv4 } from 'uuid';
+import formatDate from '../Utils/formatDate';
 
 export default LeaderboardList = () => {
-  const date = new Date().toLocaleDateString().replace(/\//gi, '-');
+  const date = formatDate(); // 16-08-2022
   const [targetCalsGoal, setTargetCalsGoal] = useState(0);
   const [targetStepsGoal, setTargetStepsGoal] = useState(0);
   const [currentCals, setCurrentCals] = useState(0);
