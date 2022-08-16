@@ -47,7 +47,7 @@ export default function PedometerComp({ setIsLoading }) {
       .doc(date)
       .set(
         {
-          steps: { totalSteps: stepCount },
+          steps: stepCount,
         },
         { merge: true }
       )

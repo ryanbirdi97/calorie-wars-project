@@ -29,21 +29,18 @@ export default function ProgressTracker({ isLoading, setIsLoading }) {
       .doc(email)
       .collection('cals_step_log')
       .doc(date)
-      .get()
-      .then((result) => {
+      .onSnapshot((result) => {
         const obj = result.data();
-        setCaloriesConsumed(obj.cals_consumed.totalCalories);
-        setStepsWalked(obj.steps.totalSteps);
+        setCaloriesConsumed(obj.cals_consumed);
+        setStepsWalked(obj.steps);
         db.collection('users')
           .doc(email)
           .collection('goals')
           .doc(email + '-goals')
-          .get()
-          .then((goals) => {
+          .onSnapshot((goals) => {
             const goalObj = goals.data();
             setCalorieGoal(goalObj.calorie_goal);
             setStepGoal(goalObj.step_goal);
-
             setIsLoading(false);
           });
       });

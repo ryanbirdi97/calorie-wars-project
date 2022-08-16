@@ -13,7 +13,7 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
     db.collection('users')
       .doc(email)
       .collection('foodlog')
-      .doc(email + '-foodlog-' + date)
+      .doc(date)
       .update({ [food.name]: firebase.firestore.FieldValue.delete() })
       .then(() => {
         console.log('Item Deleted!');

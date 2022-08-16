@@ -15,7 +15,7 @@ export default function FoodLog({ isLoading, setIsLoading }) {
     db.collection('users')
       .doc(email)
       .collection('foodlog')
-      .doc(email + '-foodlog-' + date)
+      .doc(date)
       .get()
       .then((result) => {
         let data = Object.values(result.data());
@@ -33,7 +33,7 @@ export default function FoodLog({ isLoading, setIsLoading }) {
       .doc(date)
       .set(
         {
-          cals_consumed: { totalCalories: Math.round(totalCals) },
+          cals_consumed: Math.round(totalCals),
         },
         { merge: true }
       )

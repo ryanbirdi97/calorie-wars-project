@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { db, auth } from '../firebase';
-import firebase from 'firebase';
+import formatDate from '../Utils/formatDate';
 
 const SearchResults = ({ searchResults, setIsLoading }) => {
   const resultsObj = {
@@ -11,18 +11,17 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
   };
 
   const handleAdd = () => {
-    const date = new Date().toLocaleDateString().replace(/\//gi, '-'); // 08/11/22
-    const email = auth.currentUser?.email;
+    const date = formatDate();
     const dbRef = db.collection('users').doc(auth.currentUser?.email);
 
     dbRef
       .collection('foodlog')
-      .doc(email + '-foodlog-' + date)
+      .doc(date)
       .get()
       .then((doc) => {
         dbRef
           .collection('foodlog')
-          .doc(email + '-foodlog-' + date)
+          .doc(date)
           .set(
             {
               [resultsObj.name]: {

@@ -1,7 +1,6 @@
 import { View, Button, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { db, auth } from '../firebase';
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 import formatDate from '../Utils/formatDate';
 
 export default function AddCustomFood() {
@@ -23,12 +22,12 @@ export default function AddCustomFood() {
     ) {
       dbRef
         .collection('foodlog')
-        .doc(email + '-foodlog-' + date)
+        .doc(date)
         .get()
         .then(() => {
           dbRef
             .collection('foodlog')
-            .doc(email + '-foodlog-' + date)
+            .doc(date)
             .set(
               {
                 [food]: {
