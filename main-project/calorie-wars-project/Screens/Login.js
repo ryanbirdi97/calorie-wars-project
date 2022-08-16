@@ -76,6 +76,10 @@ export default function Login() {
           steps: 0,
         });
 
+        const newFoodLog = db.collection('users').doc(email).collection('foodlog').doc(date);
+
+        batch.set(newFoodLog, {});
+
         batch
           .commit()
           .then(() => {
