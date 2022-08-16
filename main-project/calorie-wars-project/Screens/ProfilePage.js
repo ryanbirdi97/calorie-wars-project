@@ -48,16 +48,7 @@ export default function ProfilePage() {
   }, []);
 
   const handleSubmit = () => {
-    if (username !== '' && calorieGoal > 0 && stepGoal > 0) {
-      navigation.navigate('Home');
-    } else {
-      alert('Please enter details!');
-    }
-  };
-
-  const handleUsername = () => {
-    console.log(email);
-    if (username !== '') {
+    if (username !== '' && calorieGoal > 0 && stepGoal > 0 && imageUri !== '') {
       getUserEmail
         .update({
           username: username,
@@ -81,33 +72,7 @@ export default function ProfilePage() {
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      alert('Enter username to update!!');
-    }
-  };
 
-  const handlePassword = () => {
-    if (newPassword.length < 6) {
-      alert('Password should be at 6 characters!!');
-    } else if (newPassword !== '' && newPassword.length > 5) {
-      const user = auth.currentUser;
-
-      user
-        .updatePassword(newPassword)
-        .then(() => {
-          console.log('password updated success!!');
-          setNewPassword('');
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      alert('Enter Password to update!!');
-    }
-  };
-
-  const handleCalorieGoal = () => {
-    if (calorieGoal > 0) {
       getUserEmail
         .collection('goals')
         .doc(email + '-goals')
@@ -133,13 +98,7 @@ export default function ProfilePage() {
         .catch((err) => {
           console.log(err);
         });
-    } else {
-      alert('Calorie Goal should be of type number and cannot be less than 1');
-    }
-  };
 
-  const handleStepGoal = () => {
-    if (stepGoal > 0) {
       getUserEmail
         .collection('goals')
         .doc(email + '-goals')
@@ -165,8 +124,41 @@ export default function ProfilePage() {
         .catch((err) => {
           console.log(err);
         });
+
+      getUserEmail
+        .update({ avatar: imageUri })
+        .then(() => {
+          console.log('Updated username in users successfully!');
+        })
+        .catch((error) => {
+          console.error('Error updating document: ', error);
+        });
+
+      navigation.navigate('Home');
+    } else if (calorieGoal < 1 || stepGoal < 1) {
+      alert('Calorie Goal and steps goal should be of type number and cannot be less than 1');
     } else {
-      alert('Step Goal should be a number and cannot be less than 1');
+      alert('Please enter details!');
+    }
+  };
+
+  const handlePassword = () => {
+    if (newPassword.length < 6) {
+      alert('Password should be at 6 characters!!');
+    } else if (newPassword !== '' && newPassword.length > 5) {
+      const user = auth.currentUser;
+
+      user
+        .updatePassword(newPassword)
+        .then(() => {
+          console.log('password updated success!!');
+          setNewPassword('');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert('Enter Password to update!!');
     }
   };
 
@@ -178,24 +170,28 @@ export default function ProfilePage() {
       })
       .catch((error) => alert(error.message));
   };
-  const updateAvatar = () => {
-    getUserEmail
-      .update({ avatar: imageUri })
-      .then(() => {
-        console.log('Updated username in users successfully!');
-      })
-      .catch((error) => {
-        console.error('Error updating document: ', error);
-      });
-  };
 
   return (
     <PaperProvider>
       <View>
-        <Text style={styles.updateProfile}>Update Profile</Text>
+        <Text style={styles.updateProfile}>Email: {email}</Text>
       </View>
-      <Text style={styles.emailAlign}>Email: {email}</Text>
 
+      <View style={styles.password}>
+        <TextInput
+          placeholder="New Password"
+          value={newPassword}
+          onChangeText={(text) => setNewPassword(text)}
+          style={styles.inputPassword}
+          secureTextEntry
+        />
+
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity onPress={handlePassword} style={styles.button}>
+            <Text style={styles.buttonText}>Password</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
       <View style={styles.Avatar}>
         <TouchableOpacity
           onPress={() => {
@@ -333,9 +329,11 @@ export default function ProfilePage() {
           }}
           style={styles.avatarstyling}
         />
-        <Text>Enter your avatar url or select from above images.</Text>
+        <Text style={styles.messagetext}>Enter your avatar url or select from above images.</Text>
 
         <View style={styles.textstyle}>
+          <Text style={styles.label}>Avatar</Text>
+
           <TextInput
             placeholder="New Avatar"
             value={imageUri}
@@ -344,15 +342,10 @@ export default function ProfilePage() {
             }}
             style={styles.input}
           />
-
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={updateAvatar} style={styles.button}>
-              <Text style={styles.buttonText}>New Avatar</Text>
-            </TouchableOpacity>
-          </View>
         </View>
 
         <View style={styles.textstyle}>
+          <Text style={styles.label}>Name</Text>
           <TextInput
             placeholder="Name"
             value={username}
@@ -361,56 +354,29 @@ export default function ProfilePage() {
             }}
             style={styles.input}
           />
-
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleUsername} style={styles.button}>
-              <Text style={styles.buttonText}>Change Name</Text>
-            </TouchableOpacity>
-          </View>
         </View>
 
         <View style={styles.textstyle}>
-          <TextInput
-            placeholder="New Password"
-            value={newPassword}
-            onChangeText={(text) => setNewPassword(text)}
-            style={styles.input}
-            secureTextEntry
-          />
+          <Text style={styles.label}>Calorie Goal</Text>
 
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handlePassword} style={styles.button}>
-              <Text style={styles.buttonText}>Password</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        <View style={styles.textstyle}>
           <TextInput
             placeholder="Set-Calorie-Goals"
             value={String(calorieGoal)}
             onChangeText={(text) => setCalorieGoal(text)}
             style={styles.input}
           />
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleCalorieGoal} style={styles.button}>
-              <Text style={styles.buttonText}>Calorie Goal</Text>
-            </TouchableOpacity>
-          </View>
         </View>
         <View style={styles.textstyle}>
+          <Text style={styles.label}>Step Goal</Text>
+
           <TextInput
             placeholder="Set-Step-Goals"
             value={String(stepGoal)}
             onChangeText={(text) => setStepGoal(text)}
             style={styles.input}
           />
-
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleStepGoal} style={styles.button}>
-              <Text style={styles.buttonText}>Steps Goal</Text>
-            </TouchableOpacity>
-          </View>
         </View>
+
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleSubmit} style={styles.button}>
             <Text style={styles.buttonText}>Home</Text>
@@ -431,31 +397,39 @@ const styles = StyleSheet.create({
     flex: 30,
     justifyContent: 'center',
     alignItems: 'center',
+    marginBottom: 7,
   },
+  messagetext: { marginTop: 10 },
   updateProfile: {
     textAlign: 'center',
     marginTop: 25,
     marginBottom: 10,
-    fontSize: 25,
-    fontWeight: '700',
   },
   input: {
+    flex: 3,
     backgroundColor: 'white',
     paddingHorizontal: 8,
     paddingVertical: 8,
     borderRadius: 10,
     marginTop: 15,
     height: 32,
-    width: '55%',
-
+    width: '40%',
+    marginRight: 15,
     fontSize: 16,
+  },
+  label: {
+    flex: 1,
+    marginTop: 15,
+    justifyContent: 'center',
+    alignContent: 'center',
+    alignSelf: 'center',
+    marginRight: 15,
+    marginLeft: 15,
   },
   buttonContainer: {
     width: '36%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 0,
-    marginBottom: 10,
   },
   emailAlign: { textAlign: 'center', marginBottom: 5 },
   button: {
@@ -464,6 +438,7 @@ const styles = StyleSheet.create({
     padding: 8,
     borderRadius: 10,
     alignItems: 'center',
+    marginTop: 5,
   },
   buttonOutline: {
     backgroundColor: 'white',
@@ -490,9 +465,43 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     margin: 5,
+    borderRadius: '15%',
+    borderWidth: 1,
+    borderColor: 'grey',
   },
   textstyle: {
-    flex: 2,
+    flex: 1,
     flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  password: {
+    flex: 1,
+    flexDirection: 'row',
+    marginBottom: 30,
+    marginLeft: 15,
+    marginRight: 15,
+  },
+  inputPassword: {
+    flex: 3,
+    backgroundColor: 'white',
+    paddingHorizontal: 8,
+    paddingVertical: 8,
+    borderRadius: 10,
+    height: 32,
+    width: '40%',
+    marginRight: 15,
+    fontSize: 16,
+  },
+  buttonPassword: {
+    flex: 1,
+    color: 'white',
+    fontWeight: '700',
+    fontSize: 16,
+    backgroundColor: '#0782F9',
+    width: '90%',
+    borderRadius: 10,
+    textAlign: 'center',
+    height: 18,
   },
 });
