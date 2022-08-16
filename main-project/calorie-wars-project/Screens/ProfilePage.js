@@ -465,7 +465,7 @@ const styles = StyleSheet.create({
     width: 60,
     height: 60,
     margin: 5,
-    borderRadius: '15%',
+    borderRadius: 15,
     borderWidth: 1,
     borderColor: 'grey',
   },
