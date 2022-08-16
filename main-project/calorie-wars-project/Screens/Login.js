@@ -3,7 +3,17 @@ import React, { useEffect, useState } from 'react';
 import firebase from 'firebase';
 import { db, auth } from '../firebase';
 
-import { Text, TextInput, TouchableOpacity, View, StyleSheet, Image } from 'react-native';
+import {
+  Text,
+  TextInput,
+  TouchableOpacity,
+  View,
+  StyleSheet,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+} from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function Login() {
   const date = new Date().toLocaleDateString().replace(/\//gi, '-');
@@ -105,106 +115,151 @@ export default function Login() {
   };
 
   return (
-    <View style={styles.container} behavior="padding">
-      <Image source={require('../assets/calorie_wars_logo.png')} style={styles.logo} />
-      <Text style={styles.heading}>
-        Welcome to calorie Wars!{'\n'}An app where you can compete with your friends to reach your
-        calorie goals.
-      </Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Email"
-          value={email}
-          onChangeText={(text) => setEmail(text.toLowerCase())}
-          style={styles.input}
-          autoCapitalize="none"
-        />
-        <TextInput
-          placeholder="Password"
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          style={styles.input}
-          secureTextEntry
-        />
-      </View>
+    <SafeAreaView style={styles.safeareaview}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'height' : ''}
+        style={styles.fullContainer}
+      >
+        <View style={styles.container}>
+          <Image source={require('../assets/calorie_wars_logo.png')} style={styles.logo} />
+          <Text style={styles.welcomemsg}>
+            <Text style={styles.welcomemsgHeader}>Welcome to Calorie Wars!</Text>
+            <Text style={styles.welcomemsgMain}>
+              {'\n'}An app where you can compete with your friends to reach your calorie goals
+            </Text>
+            <Text style={styles.welcomemsgMain}>
+              {'\n'}Earn points by being as close to your food calories goal as possible - Not above
+              or below
+            </Text>
+            <Text style={styles.welcomemsgMain}>
+              {'\n'}Earn points by smashing your steps goal - The more steps the better
+            </Text>
+          </Text>
+          <View style={styles.inputContainer}>
+            <TextInput
+              placeholder="Email"
+              value={email}
+              onChangeText={(text) => setEmail(text.toLowerCase())}
+              style={styles.inputBox}
+              autoCapitalize="none"
+            />
+            <TextInput
+              placeholder="Password"
+              value={password}
+              onChangeText={(text) => setPassword(text)}
+              style={styles.inputBox}
+              secureTextEntry
+            />
+          </View>
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity onPress={handleLogin} style={styles.button}>
-          <Text style={styles.buttonText}>Login</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleSignUp} style={[styles.button, styles.buttonOutline]}>
-          <Text style={styles.buttonOutlineText}>Register</Text>
-        </TouchableOpacity>
-      </View>
-    </View>
+          <View style={styles.buttonContainer}>
+            <TouchableOpacity onPress={handleLogin} style={styles.loginButton}>
+              <Text style={styles.loginButtonText}>Login</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={handleSignUp} style={[styles.button, styles.registerButton]}>
+              <Text style={styles.registerButtonText}>Register</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeareaview: {
+    flex: 1,
+    justifyContent: 'center',
+  },
+  fullContainer: {
+    flex: 1,
+    alignItems: 'stretch',
+  },
   container: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  inputContainer: {
-    flex: 1,
-    width: '80%',
+    backgroundColor: 'white',
   },
   logo: {
-    flex: 1,
+    flex: 0.12,
+    alignItems: 'flex-start',
     width: '90%',
     height: undefined,
-    aspectRatio: 1,
+    marginTop: 15,
     resizeMode: 'contain',
+    //backgroundColor: 'yellow',
   },
-  input: {
-    backgroundColor: 'white',
+  welcomemsg: {
+    flex: 0.18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 15,
+    color: '#2B2D42',
+    borderWidth: 1,
+    borderColor: '#2B2D42',
+    borderRadius: 20,
+    margin: 20,
+    backgroundColor: '#EDF2F4',
+  },
+  welcomemsgHeader: {
+    fontSize: 16,
+    fontWeight: '700',
+  },
+  welcomemsgMain: {
+    fontSize: 14,
+  },
+  inputContainer: {
+    flex: 0.25,
+    justifyContent: 'center',
+    alignItems: 'stretch',
+    width: '80%',
+    //backgroundColor: 'blue',
+  },
+  inputBox: {
+    backgroundColor: '#EDF2F4',
     paddingHorizontal: 15,
     paddingVertical: 10,
     borderRadius: 10,
-    marginTop: 5,
+    borderColor: '#2B2D42',
+    borderWidth: 1,
+    marginTop: 7,
   },
   buttonContainer: {
-    flex: 1,
-    width: '60%',
+    flex: 0.18,
+    width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    //marginTop: 40,
+    marginTop: 20,
+    //backgroundColor: 'pink',
   },
-  button: {
-    backgroundColor: '#0782F9',
+  loginButton: {
+    alignItems: 'center',
+    backgroundColor: '#DA1E37',
     width: '100%',
     padding: 15,
     borderRadius: 10,
+    borderColor: '#2B2D42',
+    borderWidth: 1,
+  },
+  registerButton: {
     alignItems: 'center',
-  },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  heading: {
-    flex: 1,
-    fontSize: 16,
-    textAlign: 'center',
-    //marginTop: 40,
+    backgroundColor: '#8D99AE',
+    width: '100%',
     padding: 15,
-    color: 'black',
-    //borderWidth: 2,
-    borderRadius: 25,
-    //borderColor: 'green',
-    //backgroundColor: '#f1faee',
-    marginBottom: 15,
+    borderRadius: 10,
+    marginTop: 5,
+    borderColor: '#2B2D42',
+    borderWidth: 1,
+  },
+  loginButtonText: {
+    color: '#2B2D42',
+    fontWeight: '700',
+    fontSize: 16,
+  },
+  registerButtonText: {
+    color: '#2B2D42',
+    fontWeight: '700',
+    fontSize: 16,
   },
 });
