@@ -20,6 +20,25 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
       .then(() => {
         console.log('Item Deleted!');
         setIsLoading(true);
+        // deleting the calories from curr calorie count
+        db.collection('users')
+          .doc(email)
+          .collection('cals_step_log')
+          .doc(date)
+          .get()
+          .then((result) => {
+            const { cals_consumed } = result.data();
+
+            console.log(cals_consumed, ' cals from handleDelete');
+            db.collection('users')
+              .doc(email)
+              .collection('cals_step_log')
+              .doc(date)
+              .set({ cals_consumed: cals_consumed - food.calories });
+          });
+      })
+      .catch((err) => {
+        console.log(err, ' from handleDelete promise rejection');
       });
   };
 
