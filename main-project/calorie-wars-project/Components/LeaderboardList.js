@@ -7,6 +7,8 @@ import { v4 as uuidv4 } from 'uuid';
 import formatDate from '../Utils/formatDate';
 
 export default LeaderboardList = () => {
+  console.log('inside leaderboard list');
+
   const date = formatDate();
   const [targetCalsGoal, setTargetCalsGoal] = useState(0);
   const [targetStepsGoal, setTargetStepsGoal] = useState(0);

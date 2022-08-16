@@ -4,17 +4,26 @@ import { searchProductByText } from '../textLookupAPI';
 import SearchResults from './SearchResults';
 
 const SearchByText = ({ productNameFromBarcode, setIsLoading }) => {
+  console.log('inside search by text');
+
   const [searchTerm, setSearchTerm] = useState('');
   const [weight, setWeight] = useState('100');
   const [searchResults, setSearchResults] = useState([]);
+
+  const [hasLoaded, setHasLoaded] = useState(false);
+  const [searchPressed, setSearchPressed] = useState(false);
 
   useEffect(() => {
     setSearchTerm(productNameFromBarcode);
   }, [productNameFromBarcode]);
 
   const handleSearch = () => {
+    setHasLoaded(false);
+    setSearchPressed(true);
     searchProductByText(weight + 'g ' + searchTerm).then((data) => {
       setSearchResults(data);
+      setHasLoaded(true);
+      setSearchPressed(false);
     });
   };
   return (
@@ -40,11 +49,12 @@ const SearchByText = ({ productNameFromBarcode, setIsLoading }) => {
         <TouchableOpacity onPress={handleSearch} style={styles.button}>
           <Text style={styles.buttonText}>Search</Text>
         </TouchableOpacity>
+        <Text>{hasLoaded || !searchPressed ? <></> : 'loading...'}</Text>
       </View>
       {searchResults.length >= 1 ? (
         <SearchResults searchResults={searchResults} setIsLoading={setIsLoading} />
       ) : (
-        <></>
+        <Text>{hasLoaded ? 'wtf is that?' : <></>}</Text>
       )}
     </>
   );

@@ -6,6 +6,8 @@ import FoodCard from './FoodCard';
 import formatDate from '../Utils/formatDate';
 
 export default function FoodLog({ isLoading, setIsLoading }) {
+  console.log('inside food log');
+
   const [foodArr, setFoodArr] = useState([]);
 
   if (isLoading) {
@@ -23,7 +25,7 @@ export default function FoodLog({ isLoading, setIsLoading }) {
         setIsLoading(false);
       });
 
-    let totalCals = 0;
+    /* let totalCals = 0;
     for (let i = 0; i < foodArr.length; i++) {
       totalCals += foodArr[i].calories;
     }
@@ -40,7 +42,7 @@ export default function FoodLog({ isLoading, setIsLoading }) {
       .then(() => {
         setIsLoading(false);
         console.log('written to the db');
-      });
+      }); */
   }
 
   return (

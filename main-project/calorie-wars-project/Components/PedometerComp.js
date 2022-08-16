@@ -6,6 +6,8 @@ import { db, auth } from '../firebase';
 import formatDate from '../Utils/formatDate';
 
 export default function PedometerComp({ setIsLoading }) {
+  console.log('inside pedometer comp');
+
   const [isAvailable, setIsAvailable] = useState('checking');
   const [stepCount, setStepCount] = useState(0);
 

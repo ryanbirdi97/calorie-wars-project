@@ -9,6 +9,7 @@ import PedometerComp from '../Components/PedometerComp';
 import ProgressTracker from '../Components/ProgressTracker';
 
 export default function Home() {
+  console.log('inside home');
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
   const [productNameFromBarcode, setProductNameFromBarcode] = useState('');
   const [notFoundFromBarcodeApi, setNotFoundFromBarcodeApi] = useState(false);
@@ -17,12 +18,7 @@ export default function Home() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <SearchByText
-          productNameFromBarcode={productNameFromBarcode}
-          notFoundFromBarcodeApi={notFoundFromBarcodeApi}
-          isLoading={isLoading}
-          setIsLoading={setIsLoading}
-        />
+        <SearchByText productNameFromBarcode={productNameFromBarcode} setIsLoading={setIsLoading} />
         <AddCustomFood />
         <TouchableOpacity
           style={styles.button}

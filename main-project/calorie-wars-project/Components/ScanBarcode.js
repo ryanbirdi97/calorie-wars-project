@@ -8,6 +8,8 @@ export default function ScanBarcode({
   setProductNameFromBarcode,
   setNotFoundFromBarcodeApi,
 }) {
+  console.log('inside scan barcode');
+
   const [hasPermission, setHasPermission] = useState(null);
   const [scanned, setScanned] = useState(false);
   const [product_name, setProduct_name] = useState('');

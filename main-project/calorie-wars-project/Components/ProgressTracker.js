@@ -8,6 +8,8 @@ import * as Progress from 'react-native-progress';
 import formatDate from '../Utils/formatDate';
 
 export default function ProgressTracker({ isLoading, setIsLoading }) {
+  console.log('inside progress tracker');
+
   const [progress, setProgress] = useState({});
 
   const [calorieGoal, setCalorieGoal] = useState(1);

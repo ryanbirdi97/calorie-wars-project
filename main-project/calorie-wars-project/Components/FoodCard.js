@@ -5,6 +5,8 @@ import 'firebase/firestore';
 import formatDate from '../Utils/formatDate';
 
 export default function FoodCard({ food, setIsLoading, fromLog = false }) {
+  console.log('inside food card');
+
   const handleDelete = (food) => {
     const date = formatDate(); // 16-08-2022
     const email = auth.currentUser?.email;

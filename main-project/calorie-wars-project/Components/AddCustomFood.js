@@ -4,6 +4,7 @@ import { db, auth } from '../firebase';
 import formatDate from '../Utils/formatDate';
 
 export default function AddCustomFood() {
+  console.log('inside custom food');
   const [food, setFood] = useState('');
   const [amount, setAmount] = useState(undefined);
   const [calories, setCalories] = useState(undefined);
@@ -39,7 +40,7 @@ export default function AddCustomFood() {
               { merge: true }
             )
             .then(() => {
-              console.log('written to db');
+              console.log('written to db (inside AddCustomFood.js)');
             })
             .then(() => {
               setFood('');
