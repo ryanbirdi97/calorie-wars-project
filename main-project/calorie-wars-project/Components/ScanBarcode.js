@@ -45,7 +45,10 @@ export default function ScanBarcode({
         onPress={() => {
           setShowBarcodeScanner(false);
         }}
-      ></TouchableOpacity>
+        style={styles.closeButton}
+      >
+        <Text style={styles.buttonText}>Close</Text>
+      </TouchableOpacity>
       <View style={styles.barcodeBox}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
