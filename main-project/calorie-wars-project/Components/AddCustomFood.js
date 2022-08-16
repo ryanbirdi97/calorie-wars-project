@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { db, auth } from '../firebase';
 import formatDate from '../Utils/formatDate';
 
-export default function AddCustomFood() {
+export default function AddCustomFood({ setIsLoading }) {
   console.log('inside custom food');
   const [food, setFood] = useState('');
   const [amount, setAmount] = useState(undefined);
@@ -33,19 +33,29 @@ export default function AddCustomFood() {
               {
                 [food]: {
                   name: food,
-                  grams: amount,
-                  calories: calories,
+                  grams: Number(amount),
+                  calories: Number(calories),
                 },
               },
               { merge: true }
             )
             .then(() => {
               console.log('written to db (inside AddCustomFood.js)');
-            })
-            .then(() => {
-              setFood('');
-              setAmount(undefined);
-              setCalories(undefined);
+              dbRef
+                .collection('cals_step_log')
+                .doc(date)
+                .get()
+                .then((result) => {
+                  const { cals_consumed } = result.data();
+                  dbRef
+                    .collection('cals_step_log')
+                    .doc(date)
+                    .set({ cals_consumed: cals_consumed + Number(calories) });
+                  setFood('');
+                  setAmount(undefined);
+                  setCalories(undefined);
+                  setIsLoading(true);
+                });
             });
         })
         .catch((err) => {

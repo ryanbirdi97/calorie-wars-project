@@ -59,7 +59,7 @@ export default function ScanBarcode({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.5,
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',

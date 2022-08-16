@@ -19,8 +19,13 @@ export default function Home() {
   return (
     <ScrollView>
       <View style={styles.container}>
-        <SearchByText productNameFromBarcode={productNameFromBarcode} setIsLoading={setIsLoading} />
-        <AddCustomFood />
+        <View style={styles.searchByText}>
+          <SearchByText
+            productNameFromBarcode={productNameFromBarcode}
+            setIsLoading={setIsLoading}
+          />
+        </View>
+        <AddCustomFood setIsLoading={setIsLoading} />
         <TouchableOpacity
           style={styles.button}
           onPress={() => {
@@ -34,11 +39,13 @@ export default function Home() {
           }
         </TouchableOpacity>
         {showBarcodeScanner ? (
-          <ScanBarcode
-            setShowBarcodeScanner={setShowBarcodeScanner}
-            setProductNameFromBarcode={setProductNameFromBarcode}
-            setNotFoundFromBarcodeApi={setNotFoundFromBarcodeApi}
-          />
+          <View style={styles.barcodeScanner}>
+            <ScanBarcode
+              setShowBarcodeScanner={setShowBarcodeScanner}
+              setProductNameFromBarcode={setProductNameFromBarcode}
+              setNotFoundFromBarcodeApi={setNotFoundFromBarcodeApi}
+            />
+          </View>
         ) : (
           <FoodLog isLoading={isLoading} setIsLoading={setIsLoading} />
         )}
@@ -71,4 +78,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   pedometer: {},
+  //barcodeScanner: { flex: 1, position: 'absolute', top: 250, left: 150, bottom: 150 },
 });
