@@ -189,32 +189,6 @@ export default function ProfilePage() {
       });
   };
 
-  // useEffect(() => {
-  //   getUserEmail
-  //     .update({
-  //       username: username,
-  //     })
-  //     .then(() => {
-  //       console.log('Updated username in users successfully!');
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error updating document: ', error);
-  //     });
-
-  //   getUserEmail
-  //     .collection('leaderboard')
-  //     .doc(email + '-leaderboard')
-  //     .update({
-  //       username: username,
-  //     })
-  //     .then(() => {
-  //       console.log('username updated in leaderboard');
-  //     })
-  //     .catch((err) => {
-  //       console.log(err);
-  //     });
-  // }, [username]);
-
   return (
     <PaperProvider>
       <View>
