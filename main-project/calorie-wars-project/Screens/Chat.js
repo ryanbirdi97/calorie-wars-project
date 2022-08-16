@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React, { useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { auth, db } from '../firebase';
@@ -12,17 +12,9 @@ export default function Chat() {
   useEffect(() => {
     db.collection('users')
       .doc(email)
-      .get()
-      .then((doc) => {
-        if (doc.exists) {
-          setAvatar(doc.data().avatar);
-          setUsername(doc.data().username);
-        } else {
-          console.log('No such document!');
-        }
-      })
-      .catch((error) => {
-        console.log('Error getting document:', error);
+      .onSnapshot((doc) => {
+        setAvatar(doc.data().avatar);
+        setUsername(doc.data().username);
       });
   }, []);
 
@@ -70,11 +62,4 @@ export default function Chat() {
   );
 }
 
-const styles = StyleSheet.create({
-  avatarstyling: {
-    width: 40,
-    height: 40,
-    margin: 5,
-    borderRadius: 50,
-  },
-});
+const styles = StyleSheet.create({});
