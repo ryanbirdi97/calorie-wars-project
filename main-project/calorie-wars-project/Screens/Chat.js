@@ -1,27 +1,30 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React, { useState, useCallback, useLayoutEffect } from 'react';
+import { StyleSheet, Text, View, Image } from 'react-native';
+import React, { useState, useCallback, useLayoutEffect, useEffect } from 'react';
 import { GiftedChat } from 'react-native-gifted-chat';
 import { auth, db } from '../firebase';
 
 export default function Chat() {
+  const email = auth.currentUser?.email;
   const [messages, setMessages] = useState([]);
+  const [avatar, setAvatar] = useState('');
+  const [username, setUsername] = useState('');
 
-  /*
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-    ]);
+    db.collection('users')
+      .doc(email)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          setAvatar(doc.data().avatar);
+          setUsername(doc.data().username);
+        } else {
+          console.log('No such document!');
+        }
+      })
+      .catch((error) => {
+        console.log('Error getting document:', error);
+      });
   }, []);
-  */
 
   useLayoutEffect(() => {
     const unsubscribe = db
@@ -55,14 +58,23 @@ export default function Chat() {
     <GiftedChat
       messages={messages}
       showAvatarForEveryMessage={true}
+      renderUsernameOnMessage={true}
+      isTyping={true}
       onSend={(messages) => onSend(messages)}
       user={{
-        _id: auth?.currentUser?.email,
-        name: auth?.currentUser?.displayName,
-        avatar: auth?.currentUser?.photoURL,
+        _id: email,
+        name: username,
+        avatar: avatar,
       }}
     />
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  avatarstyling: {
+    width: 40,
+    height: 40,
+    margin: 5,
+    borderRadius: 50,
+  },
+});
