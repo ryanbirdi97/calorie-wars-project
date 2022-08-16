@@ -49,7 +49,6 @@ export default Log = () => {
       .get()
       .then((result) => {
         let data = Object.values(result.data());
-
         setCals(data[0].totalCalories);
         setSteps(data[1].totalSteps);
       });

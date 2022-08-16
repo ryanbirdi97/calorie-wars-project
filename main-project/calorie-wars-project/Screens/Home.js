@@ -49,7 +49,11 @@ export default function Home() {
       <View style={styles.pedometer}>
         <PedometerComp setIsLoading={setIsLoading} />
       </View>
-      <ProgressTracker isLoading={isLoading} setIsLoading={setIsLoading} />
+      {showBarcodeScanner ? (
+        <></>
+      ) : (
+        <ProgressTracker isLoading={isLoading} setIsLoading={setIsLoading} />
+      )}
     </ScrollView>
   );
 }

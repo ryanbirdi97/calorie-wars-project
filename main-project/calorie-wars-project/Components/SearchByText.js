@@ -1,22 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import {
-  View,
-  StyleSheet,
-  Text,
-  SearchBar,
-  TextInput,
-  Pressable,
-  TouchableOpacity,
-} from 'react-native';
+import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { searchProductByText } from '../textLookupAPI';
 import SearchResults from './SearchResults';
 
-const SearchByText = ({
-  productNameFromBarcode,
-  notFoundFromBarcodeApi,
-  isLoading,
-  setIsLoading,
-}) => {
+const SearchByText = ({ productNameFromBarcode, setIsLoading }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [weight, setWeight] = useState('100');
   const [searchResults, setSearchResults] = useState([]);
