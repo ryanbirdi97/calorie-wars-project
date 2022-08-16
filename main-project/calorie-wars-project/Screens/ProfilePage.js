@@ -142,37 +142,6 @@ export default function ProfilePage() {
     }
   };
 
-  // const handleUsername = () => {
-  //   console.log(email);
-  //   if (username !== '') {
-  //     getUserEmail
-  //       .update({
-  //         username: username,
-  //       })
-  //       .then(() => {
-  //         console.log('Updated username in users successfully!');
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error updating document: ', error);
-  //       });
-
-  //     getUserEmail
-  //       .collection('leaderboard')
-  //       .doc(email + '-leaderboard')
-  //       .update({
-  //         username: username,
-  //       })
-  //       .then(() => {
-  //         console.log('username updated in leaderboard');
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     alert('Enter username to update!!');
-  //   }
-  // };
-
   const handlePassword = () => {
     if (newPassword.length < 6) {
       alert('Password should be at 6 characters!!');
@@ -193,70 +162,6 @@ export default function ProfilePage() {
     }
   };
 
-  // const handleCalorieGoal = () => {
-  //   if (calorieGoal > 0) {
-  //     getUserEmail
-  //       .collection('goals')
-  //       .doc(email + '-goals')
-  //       .update({
-  //         calorie_goal: Number(calorieGoal),
-  //       })
-  //       .then(() => {
-  //         console.log('Document successfully updated!');
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error updating document: ', error);
-  //       });
-
-  //     getUserEmail
-  //       .collection('leaderboard')
-  //       .doc(email + '-leaderboard')
-  //       .update({
-  //         calorie_goal: Number(calorieGoal),
-  //       })
-  //       .then(() => {
-  //         console.log('calorie_goal updated in leaderboard');
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     alert('Calorie Goal should be of type number and cannot be less than 1');
-  //   }
-  // };
-
-  // const handleStepGoal = () => {
-  //   if (stepGoal > 0) {
-  //     getUserEmail
-  //       .collection('goals')
-  //       .doc(email + '-goals')
-  //       .update({
-  //         step_goal: Number(stepGoal),
-  //       })
-  //       .then(() => {
-  //         console.log('Document successfully updated!');
-  //       })
-  //       .catch((error) => {
-  //         console.error('Error updating document: ', error);
-  //       });
-
-  //     getUserEmail
-  //       .collection('leaderboard')
-  //       .doc(email + '-leaderboard')
-  //       .update({
-  //         step_goal: Number(stepGoal),
-  //       })
-  //       .then(() => {
-  //         console.log('step_goal updated in leaderboard');
-  //       })
-  //       .catch((err) => {
-  //         console.log(err);
-  //       });
-  //   } else {
-  //     alert('Step Goal should be a number and cannot be less than 1');
-  //   }
-  // };
-
   const handleSignOut = () => {
     auth
       .signOut()
@@ -265,16 +170,6 @@ export default function ProfilePage() {
       })
       .catch((error) => alert(error.message));
   };
-  // const updateAvatar = () => {
-  //   getUserEmail
-  //     .update({ avatar: imageUri })
-  //     .then(() => {
-  //       console.log('Updated username in users successfully!');
-  //     })
-  //     .catch((error) => {
-  //       console.error('Error updating document: ', error);
-  //     });
-  // };
 
   return (
     <PaperProvider>
@@ -447,12 +342,6 @@ export default function ProfilePage() {
             }}
             style={styles.input}
           />
-
-          {/* <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={updateAvatar} style={styles.button}>
-              <Text style={styles.buttonText}>New Avatar</Text>
-            </TouchableOpacity>
-          </View> */}
         </View>
 
         <View style={styles.textstyle}>
@@ -465,12 +354,6 @@ export default function ProfilePage() {
             }}
             style={styles.input}
           />
-
-          {/* <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleUsername} style={styles.button}>
-              <Text style={styles.buttonText}>Change Name</Text>
-            </TouchableOpacity>
-          </View> */}
         </View>
 
         <View style={styles.textstyle}>
@@ -482,11 +365,6 @@ export default function ProfilePage() {
             onChangeText={(text) => setCalorieGoal(text)}
             style={styles.input}
           />
-          {/* <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleCalorieGoal} style={styles.button}>
-              <Text style={styles.buttonText}>Calorie Goal</Text>
-            </TouchableOpacity>
-          </View> */}
         </View>
         <View style={styles.textstyle}>
           <Text style={styles.label}>Step Goal</Text>
@@ -497,12 +375,6 @@ export default function ProfilePage() {
             onChangeText={(text) => setStepGoal(text)}
             style={styles.input}
           />
-
-          {/* <View style={styles.buttonContainer}>
-            <TouchableOpacity onPress={handleStepGoal} style={styles.button}>
-              <Text style={styles.buttonText}>Steps Goal</Text>
-            </TouchableOpacity>
-          </View> */}
         </View>
 
         <View style={styles.buttonContainer}>
@@ -532,8 +404,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 25,
     marginBottom: 10,
-    // fontSize: 25,
-    // fontWeight: '700',
   },
   input: {
     flex: 3,
@@ -555,7 +425,6 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginRight: 15,
     marginLeft: 15,
-    // fontSize: 14,
   },
   buttonContainer: {
     width: '36%',
