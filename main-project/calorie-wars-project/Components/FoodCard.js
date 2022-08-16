@@ -4,7 +4,7 @@ import firebase from 'firebase';
 import 'firebase/firestore';
 import formatDate from '../Utils/formatDate';
 
-export default function FoodCard({ food, setIsLoading }) {
+export default function FoodCard({ food, setIsLoading, fromLog = false }) {
   const handleDelete = (food) => {
     const date = formatDate(); // 16-08-2022
     const email = auth.currentUser?.email;
@@ -30,12 +30,16 @@ export default function FoodCard({ food, setIsLoading }) {
       <Text>{capitalizeFirstLetter(food.name)}</Text>
       <Text>Amount: {food.grams}g</Text>
       <Text>Calories: {Math.round(food.calories)}</Text>
-      <Button
-        title="Delete"
-        onPress={() => {
-          handleDelete(food);
-        }}
-      />
+      {fromLog ? (
+        <></>
+      ) : (
+        <Button
+          title="Delete"
+          onPress={() => {
+            handleDelete(food);
+          }}
+        />
+      )}
     </View>
   );
 }
