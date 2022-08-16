@@ -22,6 +22,7 @@ export default function FoodLog({ isLoading, setIsLoading }) {
         setFoodArr([...data]);
         setIsLoading(false);
       });
+
     let totalCals = 0;
     for (let i = 0; i < foodArr.length; i++) {
       totalCals += foodArr[i].calories;

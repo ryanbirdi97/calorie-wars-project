@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, StyleSheet, Text, TextInput, TouchableOpacity } from 'react-native';
 import { db, auth } from '../firebase';
 import firebase from 'firebase';
-import formatDate from '../Utils/formatDate';
 
 const SearchResults = ({ searchResults, setIsLoading }) => {
   const resultsObj = {
@@ -11,11 +10,8 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
     serving_size_g: searchResults[0].serving_size_g,
   };
 
-  console.log(resultsObj);
-
   const handleAdd = () => {
-    const date = formatDate();
-
+    const date = new Date().toLocaleDateString().replace(/\//gi, '-'); // 08/11/22
     const email = auth.currentUser?.email;
     const dbRef = db.collection('users').doc(auth.currentUser?.email);
 
@@ -24,7 +20,6 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
       .doc(email + '-foodlog-' + date)
       .get()
       .then((doc) => {
-        // if (!doc.exists) {
         dbRef
           .collection('foodlog')
           .doc(email + '-foodlog-' + date)
@@ -42,8 +37,6 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
             console.log('written to db');
             setIsLoading(true);
           });
-        // } else {
-        // }
       })
       .catch((err) => {
         console.log(err);

@@ -43,13 +43,10 @@ export default function ProgressTracker({ isLoading, setIsLoading }) {
             const goalObj = goals.data();
             setCalorieGoal(goalObj.calorie_goal);
             setStepGoal(goalObj.step_goal);
-            console.log(obj, '<< cals consumed/steps walked');
-            console.log(goalObj, ' << cal/steps goal');
+
             setIsLoading(false);
           });
       });
-    //console.log(progress, ' << progress');
-    //}
   }, [isLoading]);
 
   return (
