@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { Pedometer } from 'expo-sensors';
 
 import { db, auth } from '../firebase';
-import firebase from 'firebase';
+import formatDate from '../Utils/formatDate';
 
 export default function PedometerComp({ setIsLoading }) {
   const [isAvailable, setIsAvailable] = useState('checking');
@@ -38,7 +38,7 @@ export default function PedometerComp({ setIsLoading }) {
   }, [setStepCount]);
 
   useEffect(() => {
-    const date = new Date().toLocaleDateString('en-US').replace(/\//gi, '-'); // 08/11/22
+    const date = formatDate();
     const email = auth.currentUser?.email;
 
     db.collection('users')

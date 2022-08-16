@@ -2,6 +2,7 @@ import { View, Button, TouchableOpacity, Text, TextInput, StyleSheet } from 'rea
 import { useState } from 'react';
 import { db, auth } from '../firebase';
 import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
+import formatDate from '../Utils/formatDate';
 
 export default function AddCustomFood() {
   const [food, setFood] = useState('');
@@ -11,7 +12,7 @@ export default function AddCustomFood() {
   const [err, setErr] = useState(false);
 
   function handleSubmit() {
-    const date = new Date().toLocaleDateString().replace(/\//gi, '-'); // 08/11/22
+    const date = formatDate(); // 16-08-2022
     const email = auth.currentUser?.email;
     const dbRef = db.collection('users').doc(auth.currentUser?.email);
 

@@ -2,10 +2,11 @@ import { Text, View, StyleSheet, Button } from 'react-native';
 import { db, auth } from '../firebase';
 import firebase from 'firebase';
 import 'firebase/firestore';
+import formatDate from '../Utils/formatDate';
 
 export default function FoodCard({ food, setIsLoading }) {
   const handleDelete = (food) => {
-    const date = new Date().toLocaleDateString('en-US').replace(/\//gi, '-');
+    const date = formatDate(); // 16-08-2022
     const email = auth.currentUser?.email;
     console.log(food);
 
