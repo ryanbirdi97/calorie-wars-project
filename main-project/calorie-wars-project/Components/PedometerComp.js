@@ -2,7 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Pedometer } from 'expo-sensors';
 
-export default function PedometerComp() {
+import { db, auth } from '../firebase';
+import formatDate from '../Utils/formatDate';
+
+export default function PedometerComp({ setIsLoading }) {
   const [isAvailable, setIsAvailable] = useState('checking');
   const [stepCount, setStepCount] = useState(0);
 
@@ -21,22 +24,40 @@ export default function PedometerComp() {
     const end = new Date();
     const start = new Date();
     start.setDate(end.getDate() - 1);
-    Pedometer.getStepCountAsync(start, end).then((result) => {
-      setStepCount(result.steps);
-    });
+    Pedometer.getStepCountAsync(start, end)
+      .then((result) => {
+        setStepCount(result.steps);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
 
     Pedometer.watchStepCount((result) => {
       result.steps;
     });
   }, [setStepCount]);
 
-  return (
-    <View>
-      <Text>
-        is Pedometer available: {isAvailable} and step count: {stepCount}
-      </Text>
-    </View>
-  );
+  useEffect(() => {
+    const date = formatDate();
+    const email = auth.currentUser?.email;
+
+    db.collection('users')
+      .doc(email)
+      .collection('cals_step_log')
+      .doc(date)
+      .set(
+        {
+          steps: { totalSteps: stepCount },
+        },
+        { merge: true }
+      )
+      .then(() => {
+        setIsLoading(false);
+        console.log('written to the db');
+      });
+  }, [stepCount]);
+
+  return <></>;
 }
 
 const styles = StyleSheet.create({});

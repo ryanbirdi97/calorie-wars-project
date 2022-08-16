@@ -5,6 +5,8 @@ import SearchByText from '../Components/SearchByText';
 import ScanBarcode from '../Components/ScanBarcode';
 import FoodLog from '../Components/FoodLog';
 import AddCustomFood from '../Components/AddCustomFood';
+import PedometerComp from '../Components/PedometerComp';
+import ProgressTracker from '../Components/ProgressTracker';
 
 export default function Home() {
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
@@ -44,6 +46,10 @@ export default function Home() {
           <FoodLog isLoading={isLoading} setIsLoading={setIsLoading} />
         )}
       </View>
+      <View style={styles.pedometer}>
+        <PedometerComp setIsLoading={setIsLoading} />
+      </View>
+      <ProgressTracker isLoading={isLoading} setIsLoading={setIsLoading} />
     </ScrollView>
   );
 }
@@ -63,4 +69,5 @@ const styles = StyleSheet.create({
     fontWeight: '700',
     fontSize: 16,
   },
+  pedometer: {},
 });
