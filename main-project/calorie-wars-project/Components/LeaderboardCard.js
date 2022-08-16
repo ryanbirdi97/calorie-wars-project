@@ -5,7 +5,6 @@ export default LeaderboardCard = ({ obj }) => {
   return (
     <View>
       <View style={styles.container}>
-        <Text>{obj.position}</Text>
         <Text>{obj.username}</Text>
         <Text>
           {obj.steps}/{obj.step_goal}

@@ -6,6 +6,7 @@ import LeaderboardCard from './LeaderboardCard';
 import { v4 as uuidv4 } from 'uuid';
 
 export default LeaderboardList = () => {
+  const date = new Date().toLocaleDateString().replace(/\//gi, '-');
   const [targetCalsGoal, setTargetCalsGoal] = useState(0);
   const [targetStepsGoal, setTargetStepsGoal] = useState(0);
   const [currentCals, setCurrentCals] = useState(0);
@@ -14,10 +15,9 @@ export default LeaderboardList = () => {
 
   let scoreCals = 0;
   let scoreSteps = 0;
-  let rank = 1;
 
   const email = auth.currentUser?.email;
-  const getUserEmail = db.collection('users').doc(auth.currentUser?.email);
+  const getUserEmail = db.collection('users').doc(email);
 
   useEffect(() => {
     getUserEmail
@@ -27,17 +27,30 @@ export default LeaderboardList = () => {
         setTargetCalsGoal(doc.data().calorie_goal);
         setTargetStepsGoal(doc.data().step_goal);
       });
-  }, []);
+  }, [targetCalsGoal, targetStepsGoal]);
 
   useEffect(() => {
     getUserEmail
       .collection('cals_step_log')
-      .doc(email + '-cal_step_log')
+      .doc(date)
       .onSnapshot((doc) => {
+        getUserEmail
+          .collection('leaderboard')
+          .doc(email + '-leaderboard')
+          .update({
+            cals_consumed: doc.data().cals_consumed,
+            steps: doc.data().steps,
+          })
+          .then(() => {
+            console.log('cals_consumed and steps updated in leaderboard');
+          })
+          .catch((err) => {
+            console.log(err);
+          });
         setCurrentCals(doc.data().cals_consumed);
         setCurrentSteps(doc.data().steps);
       });
-  }, []);
+  }, [currentCals, currentSteps]);
 
   if (currentCals < targetCalsGoal) {
     scoreCals = ((currentCals / targetCalsGoal) * 50).toFixed(2);
@@ -52,6 +65,22 @@ export default LeaderboardList = () => {
 
   const score = Number(scoreCals) + Number(scoreSteps);
 
+  useEffect(() => {
+    db.collection('users')
+      .doc(email)
+      .collection('leaderboard')
+      .doc(email + '-leaderboard')
+      .set({ score: score }, { merge: true })
+      .then(() => {
+        console.log('written to db');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [score]);
+
+  useEffect(() => {
+    let isMounted = true;
     db.collectionGroup('leaderboard')
       .get()
       .then((querySnapShot) => {
@@ -59,17 +88,21 @@ export default LeaderboardList = () => {
         querySnapShot.forEach((doc) => {
           leaderboardList.push(doc.data());
         });
-   
-      leaderboardList.sort(function (a, b) {
-        return a.position - b.position;
+
+        leaderboardList.sort(function (a, b) {
+          return b.score - a.score;
+        });
+
+        if (isMounted) setLeaderboard(leaderboardList);
       });
-      setLeaderboard(leaderboardList);
-    });
+    return () => {
+      isMounted = false;
+    };
+  }, [leaderboard]);
 
   return (
     <View style={styles.container}>
       <View style={styles.cardHeader}>
-        <Text style={styles.baseText}>#</Text>
         <Text style={styles.baseText}>Username</Text>
         <Text style={styles.baseText}>Steps to Goal</Text>
         <Text style={styles.baseText}>Cals to Goal</Text>
