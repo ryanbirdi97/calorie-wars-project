@@ -54,7 +54,7 @@ const SearchByText = ({ productNameFromBarcode, setIsLoading }) => {
       {searchResults.length >= 1 ? (
         <SearchResults searchResults={searchResults} setIsLoading={setIsLoading} />
       ) : (
-        <Text>{hasLoaded ? 'wtf is that?' : <></>}</Text>
+        <Text>{hasLoaded ? 'not found' : <></>}</Text>
       )}
     </>
   );
