@@ -34,6 +34,9 @@ export default function ProgressTracker() {
           setStepGoal(goalObj.step_goal);
           console.log('here fetching the data from db');
         });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 
   return (

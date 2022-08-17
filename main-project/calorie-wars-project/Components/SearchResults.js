@@ -55,7 +55,8 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
                         (isNaN(+cals_consumed) ? 0 : +cals_consumed) + Number(resultsObj.calories),
                     },
                     { merge: true }
-                  );
+                  )
+                  .catch((err) => console.log(err));
                 dbRef
                   .collection('leaderboard')
                   .doc(email + '-leaderboard')
@@ -65,7 +66,10 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
                         (isNaN(+cals_consumed) ? 0 : +cals_consumed) + Number(resultsObj.calories),
                     },
                     { merge: true }
-                  );
+                  )
+                  .catch((err) => {
+                    console.log(err);
+                  });
               })
               .catch((err) => {
                 console.log(err);

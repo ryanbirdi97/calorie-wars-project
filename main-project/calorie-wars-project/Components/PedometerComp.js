@@ -53,6 +53,9 @@ export default function PedometerComp() {
       )
       .then(() => {
         console.log('written to the db');
+      })
+      .catch((err) => {
+        console.log(err);
       });
   }, [stepCount]);
 

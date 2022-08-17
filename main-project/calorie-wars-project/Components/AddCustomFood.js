@@ -4,7 +4,6 @@ import { db, auth } from '../firebase';
 import formatDate from '../Utils/formatDate';
 
 export default function AddCustomFood({ setIsLoading }) {
-  console.log('inside custom food');
   const [food, setFood] = useState('');
   const [amount, setAmount] = useState(undefined);
   const [calories, setCalories] = useState(undefined);
@@ -56,7 +55,10 @@ export default function AddCustomFood({ setIsLoading }) {
                           (isNaN(+cals_consumed) ? 0 : +cals_consumed) + Number(calories),
                       },
                       { merge: true }
-                    );
+                    )
+                    .catch((err) => {
+                      console.log(err);
+                    });
 
                   dbRef
                     .collection('leaderboard')
@@ -67,7 +69,10 @@ export default function AddCustomFood({ setIsLoading }) {
                           (isNaN(+cals_consumed) ? 0 : +cals_consumed) + Number(calories),
                       },
                       { merge: true }
-                    );
+                    )
+                    .catch((err) => {
+                      console.log(err);
+                    });
 
                   setFood('');
                   setAmount(undefined);
