@@ -46,13 +46,13 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
               .get()
               .then((result) => {
                 const { cals_consumed } = result.data();
+                let cals = Math.round(cals_consumed);
                 dbRef
                   .collection('cals_step_log')
                   .doc(date)
                   .set(
                     {
-                      cals_consumed:
-                        (isNaN(+cals_consumed) ? 0 : +cals_consumed) + Number(resultsObj.calories),
+                      cals_consumed: (isNaN(cals) ? 0 : cals) + Number(resultsObj.calories),
                     },
                     { merge: true }
                   )
@@ -62,8 +62,7 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
                   .doc(email + '-leaderboard')
                   .set(
                     {
-                      cals_consumed:
-                        (isNaN(+cals_consumed) ? 0 : +cals_consumed) + Number(resultsObj.calories),
+                      cals_consumed: (isNaN(cals) ? 0 : cals) + Number(resultsObj.calories),
                     },
                     { merge: true }
                   )
@@ -88,7 +87,7 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
       <Text> Calories: {resultsObj.calories}</Text>
       <Text> Serving Size (g): {resultsObj.serving_size_g}</Text>
       <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
-        <Text>+</Text>
+        <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
     </View>
   );
@@ -99,12 +98,12 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightgrey',
     marginTop: 5,
     padding: 5,
-    borderColor: '#0782F9',
+    borderColor: '#DA1E37',
     borderWidth: 2,
     paddingBottom: 0,
   },
   addButton: {
-    backgroundColor: '#0782F9',
+    backgroundColor: '#DA1E37',
     color: 'white',
     textAlign: 'center',
     width: '20%',
@@ -114,6 +113,9 @@ const styles = StyleSheet.create({
     borderRadius: 40,
     bottom: 60,
     left: 250,
+  },
+  addButtonText: {
+    color: 'white',
   },
 });
 

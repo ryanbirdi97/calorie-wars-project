@@ -37,11 +37,12 @@ export default function ProgressTracker() {
     });
 
   return (
-    <View>
+    <View style={styles.progressTracker}>
       <View style={styles.progressCircles}>
         <Text>{'\n\n' + Math.round(caloriesConsumed) + '/' + '' + calorieGoal + ' kcal:'}</Text>
         <Progress.Circle
           size={80}
+          color="#DA1E37"
           showsText={true}
           formatText={() => {
             return isNaN(caloriesConsumed / calorieGoal)
@@ -58,6 +59,7 @@ export default function ProgressTracker() {
         </Text>
         <Progress.Circle
           size={80}
+          color="#DA1E37"
           showsText={true}
           formatText={() => {
             return isNaN(stepsWalked / stepGoal)
@@ -78,5 +80,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     paddingTop: 10,
+  },
+  progressTracker: {
+    paddingBottom: 90,
   },
 });

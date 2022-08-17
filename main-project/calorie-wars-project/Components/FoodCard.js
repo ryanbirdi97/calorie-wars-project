@@ -52,7 +52,7 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
 
   return (
     <View style={styles.foodCard}>
-      <Text>{capitalizeFirstLetter(food.name)}</Text>
+      <Text style={styles.foodName}>{capitalizeFirstLetter(food.name)}</Text>
       <Text>Amount: {food.grams}g</Text>
       <Text>Calories: {Math.round(food.calories)}</Text>
       {fromLog ? (
@@ -60,6 +60,7 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
       ) : (
         <Button
           title="Delete"
+          color="#DA1E37"
           onPress={() => {
             handleDelete(food);
           }}
@@ -72,9 +73,18 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
 const styles = StyleSheet.create({
   foodCard: {
     backgroundColor: 'lightgrey',
-    borderColor: 'black',
-    padding: 10,
+    borderColor: '#DA1E37',
+    borderWidth: 2,
+    paddingTop: 10,
+    paddingBottom: 6,
     alignItems: 'center',
     direction: 'row',
+    borderRadius: 25,
+    margin: 5,
+  },
+  foodName: {
+    fontSize: 20,
+    fontWeight: '500',
+    paddingBottom: 5,
   },
 });

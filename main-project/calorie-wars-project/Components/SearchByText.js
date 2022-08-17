@@ -33,22 +33,24 @@ const SearchByText = ({ productNameFromBarcode, setIsLoading }) => {
   return (
     <>
       <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Search..."
-          value={searchTerm}
-          onChangeText={(text) => setSearchTerm(text)}
-          style={styles.input}
-        />
-        <View style={styles.weightInputField}>
+        <View style={styles.inputBox}>
           <TextInput
-            placeholder={'weight'}
-            value={weight}
-            onChangeText={(text) => {
-              setWeight(text);
-            }}
+            placeholder="Search..."
+            value={searchTerm}
+            onChangeText={(text) => setSearchTerm(text)}
             style={styles.input}
           />
-          <Text style={styles.gText}>g</Text>
+          <View style={styles.weightInputField}>
+            <TextInput
+              placeholder={'weight'}
+              value={weight}
+              onChangeText={(text) => {
+                setWeight(text);
+              }}
+              style={styles.input}
+            />
+            <Text style={styles.gText}>g</Text>
+          </View>
         </View>
         <TouchableOpacity onPress={handleSearch} style={styles.button}>
           <Text style={styles.buttonText}>Search</Text>
@@ -80,6 +82,7 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 5,
   },
+
   buttonContainer: {
     width: '60%',
     justifyContent: 'center',
@@ -87,11 +90,13 @@ const styles = StyleSheet.create({
     marginTop: 40,
   },
   button: {
-    backgroundColor: '#0782F9',
+    alignItems: 'center',
+    backgroundColor: '#DA1E37',
     width: '100%',
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    borderColor: '#2B2D42',
+    borderWidth: 1,
   },
   buttonOutline: {
     backgroundColor: 'white',

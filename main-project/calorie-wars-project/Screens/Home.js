@@ -67,7 +67,7 @@ export default function Home() {
       <View style={styles.pedometer}>
         <PedometerComp />
       </View>
-      {showBarcodeScanner ? <></> : <ProgressTracker />}
+      <ProgressTracker />
     </ScrollView>
   );
 }
@@ -75,12 +75,15 @@ export default function Home() {
 const styles = StyleSheet.create({
   container: { paddingTop: 70 },
   button: {
-    backgroundColor: '#0782F9',
+    alignItems: 'center',
+    backgroundColor: '#DA1E37',
     width: '100%',
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 5,
+    borderColor: '#2B2D42',
+    borderWidth: 1,
+    margin: 10,
+    right: 10,
   },
   buttonText: {
     color: 'white',

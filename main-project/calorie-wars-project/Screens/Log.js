@@ -58,7 +58,8 @@ export default Log = () => {
       .get()
       .then((result) => {
         let data = result.data();
-        setCals(data.cals_consumed.toFixed(2));
+        let cals = Math.round(data.cals_consumed);
+        setCals(cals);
         setSteps(data.steps);
       })
       .catch((err) => {
@@ -68,14 +69,15 @@ export default Log = () => {
 
   return (
     <View style={styles.container}>
-      <Text>Log</Text>
-      <SelectList
-        setSelected={setSelected}
-        data={data}
-        onSelect={() => {
-          handleSelect();
-        }}
-      />
+      <View style={styles.list}>
+        <SelectList
+          setSelected={setSelected}
+          data={data}
+          onSelect={() => {
+            handleSelect();
+          }}
+        />
+      </View>
       <View>
         {foodArr.length === 0 ? (
           <Text>nothing logged on {selected}</Text>
@@ -85,9 +87,9 @@ export default Log = () => {
           })
         )}
       </View>
-      <View>
-        {cals === 0 ? <></> : <Text>kcal: {cals}</Text>}
-        {steps === 0 ? <></> : <Text>Steps: {steps}</Text>}
+      <View style={styles.kcalSteps}>
+        {cals === 0 ? <></> : <Text style={styles.kcal}>Kcal: {cals}</Text>}
+        {steps === 0 ? <></> : <Text style={styles.steps}>Steps: {steps}</Text>}
       </View>
     </View>
   );
@@ -95,4 +97,16 @@ export default Log = () => {
 
 const styles = StyleSheet.create({
   container: { paddingTop: 70 },
+  kcalSteps: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    paddingTop: 15,
+  },
+  list: {
+    padding: 8,
+  },
+  kcal: { fontSize: 18, fontWeight: '500' },
+  steps: { fontSize: 18, fontWeight: '500' },
 });
