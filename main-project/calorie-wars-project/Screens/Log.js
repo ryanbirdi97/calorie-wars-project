@@ -35,11 +35,14 @@ export default Log = () => {
     db.collection('users')
       .doc(email)
       .collection('foodlog')
-      .doc(email + '-foodlog-' + selected)
+      .doc(selected)
       .get()
       .then((result) => {
         let data = Object.values(result.data());
         setFoodArr([...data]);
+      })
+      .catch((err) => {
+        console.log(err, ' << log.js promise rejection');
       });
 
     db.collection('users')
