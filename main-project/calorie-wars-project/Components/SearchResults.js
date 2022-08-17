@@ -82,10 +82,12 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
 
   return (
     <View style={styles.searchResultsContainer}>
-      <Text> Search Results View </Text>
-      <Text> Name: {resultsObj.name}</Text>
-      <Text> Calories: {resultsObj.calories}</Text>
-      <Text> Serving Size (g): {resultsObj.serving_size_g}</Text>
+      <Text style={styles.textElems}> -- search result -- </Text>
+      <Text style={{ ...styles.textElems, fontSize: 20 }}>
+        {resultsObj.name[0].toUpperCase() + resultsObj.name.slice(1)}
+      </Text>
+      <Text style={styles.textElems}> {resultsObj.calories} kcal</Text>
+      <Text style={styles.textElems}> {resultsObj.serving_size_g} (g)</Text>
       <TouchableOpacity style={styles.addButton} onPress={handleAdd}>
         <Text style={styles.addButtonText}>+</Text>
       </TouchableOpacity>
@@ -94,13 +96,16 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
 };
 
 const styles = StyleSheet.create({
+  textElems: { textAlign: 'center', margin: 3 },
   searchResultsContainer: {
     backgroundColor: 'lightgrey',
     marginTop: 5,
-    padding: 5,
+    paddingTop: 5,
     borderColor: '#DA1E37',
-    borderWidth: 2,
+    borderWidth: 1,
+    borderRadius: 10,
     paddingBottom: 0,
+    borderColor: '#2B2D42',
   },
   addButton: {
     backgroundColor: '#DA1E37',

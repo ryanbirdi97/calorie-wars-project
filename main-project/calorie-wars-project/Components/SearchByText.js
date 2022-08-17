@@ -67,55 +67,34 @@ const SearchByText = ({ productNameFromBarcode, setIsLoading }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   inputContainer: {
     width: '80%',
   },
+  inputBox: { flexDirection: 'row' },
   input: {
     backgroundColor: 'white',
-    paddingHorizontal: 15,
-    paddingVertical: 10,
+    padding: 10,
     borderRadius: 10,
-    marginTop: 5,
+    width: '90%',
   },
+  weightInputField: { flexDirection: 'row', width: '30%', paddingLeft: 5 },
+  gText: { fontSize: 30, marginLeft: 8 },
 
-  buttonContainer: {
-    width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 40,
-  },
   button: {
     alignItems: 'center',
     backgroundColor: '#DA1E37',
-    width: '100%',
+    width: '125%',
     padding: 15,
     borderRadius: 10,
     borderColor: '#2B2D42',
     borderWidth: 1,
-  },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
+    marginTop: 10,
   },
   buttonText: {
     color: 'white',
     fontWeight: '700',
     fontSize: 16,
   },
-  buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  weightInputField: { flexDirection: 'row', margin: 6 },
-  gText: { fontSize: 30, margin: 10 },
 });
 
 export default SearchByText;

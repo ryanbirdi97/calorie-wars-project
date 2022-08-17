@@ -3,12 +3,12 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyA5F-3-p-lwtPrBx8J8iPI4B64MnguY5qg',
-  authDomain: 'calorie-wars-3.firebaseapp.com',
-  projectId: 'calorie-wars-3',
-  storageBucket: 'calorie-wars-3.appspot.com',
-  messagingSenderId: '932471827995',
-  appId: '1:932471827995:web:a39bde57aa4b3f5ec612be',
+  apiKey: 'AIzaSyAza4Op7C-30UFz8iaiafJH2jq_2ayp3Vc',
+  authDomain: 'calorie-wars-2.firebaseapp.com',
+  projectId: 'calorie-wars-2',
+  storageBucket: 'calorie-wars-2.appspot.com',
+  messagingSenderId: '499309437978',
+  appId: '1:499309437978:web:78ac91bb2179c2dca5dda3',
 };
 
 firebase.initializeApp(firebaseConfig);
@@ -17,3 +17,13 @@ const auth = firebase.auth();
 const db = firebase.firestore();
 
 export { auth, db };
+
+/*
+apiKey: 'AIzaSyAza4Op7C-30UFz8iaiafJH2jq_2ayp3Vc',
+  authDomain: 'calorie-wars-2.firebaseapp.com',
+  projectId: 'calorie-wars-2',
+  storageBucket: 'calorie-wars-2.appspot.com',
+  messagingSenderId: '499309437978',
+  appId: '1:499309437978:web:78ac91bb2179c2dca5dda3',
+
+  */

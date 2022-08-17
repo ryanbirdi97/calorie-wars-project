@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, Image } from 'react-native';
 import SearchByText from '../Components/SearchByText';
 
 import ScanBarcode from '../Components/ScanBarcode';
@@ -9,8 +9,6 @@ import PedometerComp from '../Components/PedometerComp';
 import ProgressTracker from '../Components/ProgressTracker';
 
 export default function Home() {
-  //console.log('inside home');
-
   const [showBarcodeScanner, setShowBarcodeScanner] = useState(false);
   const [productNameFromBarcode, setProductNameFromBarcode] = useState('');
   const [notFoundFromBarcodeApi, setNotFoundFromBarcodeApi] = useState(false);
@@ -21,25 +19,31 @@ export default function Home() {
   return (
     <ScrollView style={styles.container}>
       <View>
-        <View style={styles.searchByText}>
+        <View style={styles.box}>
           <SearchByText
             productNameFromBarcode={productNameFromBarcode}
             setIsLoading={setIsLoading}
           />
         </View>
-        <AddCustomFood setIsLoading={setIsLoading} />
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => {
-            setShowBarcodeScanner(showBarcodeScanner ? false : true);
-          }}
-        >
-          {
-            <Text style={styles.buttonText}>
-              {showBarcodeScanner ? 'hide' : 'show'} barcode scanner
-            </Text>
-          }
-        </TouchableOpacity>
+        <View style={styles.box}>
+          <AddCustomFood setIsLoading={setIsLoading} />
+
+          <TouchableOpacity
+            style={{ ...styles.button, backgroundColor: 'white' }}
+            onPress={() => {
+              setShowBarcodeScanner(showBarcodeScanner ? false : true);
+            }}
+          >
+            <Image
+              source={require('../assets/barcode_icon.png')}
+              resizeMode="contain"
+              style={{
+                width: 60,
+                height: 60,
+              }}
+            />
+          </TouchableOpacity>
+        </View>
         {showBarcodeScanner ? (
           <Modal
             animationType="slide"
@@ -72,15 +76,18 @@ export default function Home() {
   );
 }
 
+// bg color -> 100% anti flash white #F2F2F2
+
 const styles = StyleSheet.create({
-  container: { paddingTop: 70 },
+  container: { paddingTop: 50, padding: 20, backgroundColor: '#FFF' },
+  box: { backgroundColor: '#F2F2F2', borderRadius: 10, padding: 15, marginBottom: 10 },
   button: {
     alignItems: 'center',
-    backgroundColor: '#DA1E37',
+    backgroundColor: '#DA1E37', // red -> 97% crimson
     width: '100%',
     padding: 15,
     borderRadius: 10,
-    borderColor: '#2B2D42',
+    borderColor: '#2B2D42', // brownish red
     borderWidth: 1,
     margin: 10,
     right: 10,
