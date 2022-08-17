@@ -8,8 +8,6 @@ import * as Progress from 'react-native-progress';
 import formatDate from '../Utils/formatDate';
 
 export default function ProgressTracker() {
-  //console.log('inside progress tracker');
-
   const [calorieGoal, setCalorieGoal] = useState(1);
   const [stepGoal, setStepGoal] = useState(1);
   const [caloriesConsumed, setCaloriesConsumed] = useState(0);
@@ -50,7 +48,7 @@ export default function ProgressTracker() {
               ? 0
               : ((caloriesConsumed / calorieGoal) * 100).toFixed(2) + '%';
           }}
-          progress={caloriesConsumed / calorieGoal}
+          progress={isNaN(+caloriesConsumed) ? 0 : caloriesConsumed / calorieGoal}
           allowFontScaling={true}
         />
         <Text>

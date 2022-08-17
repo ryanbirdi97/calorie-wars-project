@@ -6,8 +6,6 @@ import FoodCard from './FoodCard';
 import formatDate from '../Utils/formatDate';
 
 export default function FoodLog({ isLoading, setIsLoading }) {
-  //console.log('inside food log');
-
   const [foodArr, setFoodArr] = useState([]);
 
   useEffect(() => {
@@ -23,6 +21,9 @@ export default function FoodLog({ isLoading, setIsLoading }) {
         let data = Object.values(result.data());
         setFoodArr([...data]);
         setIsLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
 
     /* let totalCals = 0;
