@@ -8,8 +8,6 @@ import * as Progress from 'react-native-progress';
 import formatDate from '../Utils/formatDate';
 
 export default function ProgressTracker() {
-  //console.log('inside progress tracker');
-
   const [calorieGoal, setCalorieGoal] = useState(1);
   const [stepGoal, setStepGoal] = useState(1);
   const [caloriesConsumed, setCaloriesConsumed] = useState(0);
@@ -36,6 +34,9 @@ export default function ProgressTracker() {
           setStepGoal(goalObj.step_goal);
           console.log('here fetching the data from db');
         });
+    })
+    .catch((err) => {
+      console.log(err);
     });
 
   return (

@@ -20,11 +20,15 @@ const SearchByText = ({ productNameFromBarcode, setIsLoading }) => {
   const handleSearch = () => {
     setHasLoaded(false);
     setSearchPressed(true);
-    searchProductByText(weight + 'g ' + searchTerm).then((data) => {
-      setSearchResults(data);
-      setHasLoaded(true);
-      setSearchPressed(false);
-    });
+    searchProductByText(weight + 'g ' + searchTerm)
+      .then((data) => {
+        setSearchResults(data);
+        setHasLoaded(true);
+        setSearchPressed(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
   return (
     <>

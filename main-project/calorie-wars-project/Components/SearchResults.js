@@ -15,6 +15,7 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
   const handleAdd = () => {
     const date = formatDate();
     const dbRef = db.collection('users').doc(auth.currentUser?.email);
+    const email = auth.currentUser?.email;
 
     dbRef
       .collection('foodlog')
@@ -48,10 +49,30 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
                 dbRef
                   .collection('cals_step_log')
                   .doc(date)
-                  .set({
-                    cals_consumed:
-                      (isNaN(+cals_consumed) ? 0 : +cals_consumed) + Number(resultsObj.calories),
+                  .set(
+                    {
+                      cals_consumed:
+                        (isNaN(+cals_consumed) ? 0 : +cals_consumed) + Number(resultsObj.calories),
+                    },
+                    { merge: true }
+                  )
+                  .catch((err) => console.log(err));
+                dbRef
+                  .collection('leaderboard')
+                  .doc(email + '-leaderboard')
+                  .set(
+                    {
+                      cals_consumed:
+                        (isNaN(+cals_consumed) ? 0 : +cals_consumed) + Number(resultsObj.calories),
+                    },
+                    { merge: true }
+                  )
+                  .catch((err) => {
+                    console.log(err);
                   });
+              })
+              .catch((err) => {
+                console.log(err);
               });
           });
       })

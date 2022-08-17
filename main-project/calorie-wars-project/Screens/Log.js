@@ -5,10 +5,10 @@ import FoodCard from '../Components/FoodCard';
 import { db, auth } from '../firebase';
 
 export default Log = () => {
-  const [selected, setSelected] = React.useState('');
+  const [selected, setSelected] = useState('');
   const [foodArr, setFoodArr] = useState([]);
-  const [cals, setCals] = useState('');
-  const [steps, setSteps] = useState('');
+  const [cals, setCals] = useState(0);
+  const [steps, setSteps] = useState(0);
   const data = [];
 
   const past7Days = [...Array(7).keys()].map((index) => {
@@ -35,11 +35,20 @@ export default Log = () => {
     db.collection('users')
       .doc(email)
       .collection('foodlog')
-      .doc(email + '-foodlog-' + selected)
+      .doc(selected)
       .get()
       .then((result) => {
-        let data = Object.values(result.data());
-        setFoodArr([...data]);
+        if (result.data() === undefined) {
+          // nothing in log
+          setFoodArr([]);
+        } else {
+          let data = Object.values(result.data());
+          console.log(data);
+          setFoodArr([...data]);
+        }
+      })
+      .catch((err) => {
+        console.log(err, ' << log.js promise rejection');
       });
 
     db.collection('users')
@@ -48,9 +57,12 @@ export default Log = () => {
       .doc(selected)
       .get()
       .then((result) => {
-        let data = Object.values(result.data());
-        setCals(data[0].totalCalories);
-        setSteps(data[1].totalSteps);
+        let data = result.data();
+        setCals(data.cals_consumed.toFixed(2));
+        setSteps(data.steps);
+      })
+      .catch((err) => {
+        console.log(err, ' << log.js db req promise rejection');
       });
   }
 
@@ -65,13 +77,17 @@ export default Log = () => {
         }}
       />
       <View>
-        {foodArr.map((food) => {
-          return <FoodCard key={Math.round(Math.random() * 1000)} food={food} fromLog={true} />;
-        })}
+        {foodArr.length === 0 ? (
+          <Text>nothing logged on {selected}</Text>
+        ) : (
+          foodArr.map((food) => {
+            return <FoodCard key={Math.round(Math.random() * 1000)} food={food} fromLog={true} />;
+          })
+        )}
       </View>
       <View>
-        <Text>Kcal: {cals}</Text>
-        <Text>Steps: {steps}</Text>
+        {cals === 0 ? <></> : <Text>kcal: {cals}</Text>}
+        {steps === 0 ? <></> : <Text>Steps: {steps}</Text>}
       </View>
     </View>
   );

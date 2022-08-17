@@ -10,7 +10,6 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
   const handleDelete = (food) => {
     const date = formatDate(); // 16-08-2022
     const email = auth.currentUser?.email;
-    console.log(food);
 
     db.collection('users')
       .doc(email)
@@ -33,6 +32,11 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
               .doc(email)
               .collection('cals_step_log')
               .doc(date)
+              .set({ cals_consumed: cals_consumed - food.calories });
+            db.collection('users')
+              .doc(email)
+              .collection('leaderboard')
+              .doc(email + '-leaderboard')
               .set({ cals_consumed: cals_consumed - food.calories });
             setIsLoading(true);
           });
