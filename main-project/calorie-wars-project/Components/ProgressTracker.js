@@ -39,15 +39,12 @@ export default function ProgressTracker() {
   return (
     <View style={styles.progressTracker}>
       <View style={styles.progressCircles}>
-        <Text>
-          {typeof caloriesConsumed === 'number'
-            ? '\n\n' + Math.round(caloriesConsumed) + '/' + calorieGoal + ' kcal:'
-            : '\n\n0/' + calorieGoal + ' kcal:'}
-        </Text>
         <Progress.Circle
-          size={80}
-          color="#DA1E37"
+          size={100}
+          color="#00C2A5"
           showsText={true}
+          strokeCap="round"
+          thickness={5}
           formatText={() => {
             return isNaN(caloriesConsumed / calorieGoal)
               ? 0
@@ -56,15 +53,12 @@ export default function ProgressTracker() {
           progress={isNaN(+caloriesConsumed) ? 0 : caloriesConsumed / calorieGoal}
           allowFontScaling={true}
         />
-        <Text>
-          {typeof stepsWalked === 'number'
-            ? '\n\n' + stepsWalked + '/' + stepGoal + ' steps:'
-            : '\n\n0/' + stepGoal}
-        </Text>
         <Progress.Circle
-          size={80}
-          color="#DA1E37"
+          size={100}
+          color="#184EA6"
           showsText={true}
+          thickness={5}
+          strokeCap="round"
           formatText={() => {
             return isNaN(stepsWalked / stepGoal)
               ? 0 + '%'
@@ -74,9 +68,24 @@ export default function ProgressTracker() {
           progress={isNaN(+stepsWalked) ? 0 : stepsWalked / stepGoal}
         />
       </View>
+      <View style={styles.textContainer}>
+        <Text style={styles.caloriesText}>
+          {typeof caloriesConsumed === 'number'
+            ? '\n\n' + Math.round(caloriesConsumed) + '/' + calorieGoal + ' kcal'
+            : '\n\n0/' + calorieGoal + ' kcal:'}
+        </Text>
+        <Text style={styles.stepsText}>
+          {typeof stepsWalked === 'number'
+            ? '\n\n' + stepsWalked + '/' + stepGoal + ' steps'
+            : '\n\n0/' + stepGoal}
+        </Text>
+      </View>
     </View>
   );
 }
+
+// 93% Denim -> #184EA6 steps
+// 89% Turquoise -> #00C2A5 calories
 
 const styles = StyleSheet.create({
   progressCircles: {
@@ -88,4 +97,7 @@ const styles = StyleSheet.create({
   progressTracker: {
     paddingBottom: 90,
   },
+  caloriesText: { color: '#00C2A5' },
+  stepsText: { color: '#184EA6' },
+  textContainer: { flexDirection: 'row', justifyContent: 'space-around' },
 });

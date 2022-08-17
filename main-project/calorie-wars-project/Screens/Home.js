@@ -67,10 +67,10 @@ export default function Home() {
           <FoodLog isLoading={isLoading} setIsLoading={setIsLoading} />
         )}
       </View>
-      <View style={styles.pedometer}>
-        <PedometerComp />
+      <PedometerComp />
+      <View style={styles.box}>
+        <ProgressTracker />
       </View>
-      <ProgressTracker />
     </ScrollView>
   );
 }
