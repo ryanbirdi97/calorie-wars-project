@@ -1,7 +1,7 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useEffect } from 'react';
 
-import { Text, TouchableOpacity, View, Image, StyleSheet, TextInput } from 'react-native';
+import { Text, TouchableOpacity, View, Image, StyleSheet, TextInput, Alert } from 'react-native';
 import { db, auth } from '../firebase';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { useState } from 'react';
@@ -377,6 +377,26 @@ export default function ProfilePage() {
           />
         </View>
 
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            onPress={() =>
+              Alert.alert(
+                'About Calorie Wars',
+                '\nWelcome to Calorie Wars!\nAn app where you can compete with your friends to reach your calorie goals.\nEarn points by being as close to your food calories goal as possible - Not above or below.\nEarn points by smashing your steps goal - The more steps the better',
+                [
+                  {
+                    text: 'Back to Profile Page',
+                    style: 'cancel',
+                  },
+                ],
+                { cancelable: false }
+              )
+            }
+            style={styles.button}
+          >
+            <Text style={styles.buttonText}>About App</Text>
+          </TouchableOpacity>
+        </View>
         <View style={styles.buttonContainer}>
           <TouchableOpacity onPress={handleSubmit} style={styles.button}>
             <Text style={styles.buttonText}>Home</Text>

@@ -50,7 +50,7 @@ export default function ProgressTracker() {
               ? 0
               : ((caloriesConsumed / calorieGoal) * 100).toFixed(2) + '%';
           }}
-          progress={caloriesConsumed / calorieGoal}
+          progress={isNaN(+caloriesConsumed) ? 0 : caloriesConsumed / calorieGoal}
           allowFontScaling={true}
         />
         <Text>
