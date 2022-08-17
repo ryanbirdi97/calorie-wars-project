@@ -188,7 +188,6 @@ const styles = StyleSheet.create({
     height: undefined,
     marginTop: 15,
     resizeMode: 'contain',
-    //backgroundColor: 'yellow',
   },
   welcomemsg: {
     flex: 0.18,
@@ -214,7 +213,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'stretch',
     width: '80%',
-    //backgroundColor: 'blue',
   },
   inputBox: {
     backgroundColor: '#EDF2F4',
@@ -231,7 +229,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
-    //backgroundColor: 'pink',
   },
   loginButton: {
     alignItems: 'center',
