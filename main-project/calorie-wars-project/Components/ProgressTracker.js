@@ -39,7 +39,11 @@ export default function ProgressTracker() {
   return (
     <View style={styles.progressTracker}>
       <View style={styles.progressCircles}>
-        <Text>{'\n\n' + Math.round(caloriesConsumed) + '/' + '' + calorieGoal + ' kcal:'}</Text>
+        <Text>
+          {typeof caloriesConsumed === 'number'
+            ? '\n\n' + Math.round(caloriesConsumed) + '/' + calorieGoal + ' kcal:'
+            : '\n\n0/' + calorieGoal + ' kcal:'}
+        </Text>
         <Progress.Circle
           size={80}
           color="#DA1E37"
@@ -54,8 +58,8 @@ export default function ProgressTracker() {
         />
         <Text>
           {typeof stepsWalked === 'number'
-            ? '\n\n' + stepsWalked + '/' + '' + stepGoal + ' steps:'
-            : '\n\n0/' + '' + stepGoal}
+            ? '\n\n' + stepsWalked + '/' + stepGoal + ' steps:'
+            : '\n\n0/' + stepGoal}
         </Text>
         <Progress.Circle
           size={80}

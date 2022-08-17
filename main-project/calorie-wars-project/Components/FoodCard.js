@@ -53,8 +53,8 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
   return (
     <View style={styles.foodCard}>
       <Text style={styles.foodName}>{capitalizeFirstLetter(food.name)}</Text>
-      <Text>Amount: {food.grams}g</Text>
-      <Text>Calories: {Math.round(food.calories)}</Text>
+      <Text style={styles.textElems}>{Math.round(food.calories)} kcal</Text>
+      <Text style={styles.textElems}>{food.grams} (g)</Text>
       {fromLog ? (
         <></>
       ) : (
@@ -71,6 +71,7 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
 }
 
 const styles = StyleSheet.create({
+  textElems: { textAlign: 'center', margin: 3 },
   foodCard: {
     backgroundColor: 'lightgrey',
     borderColor: '#DA1E37',

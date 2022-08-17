@@ -25,24 +25,23 @@ export default function Home() {
             setIsLoading={setIsLoading}
           />
         </View>
+        <TouchableOpacity
+          style={styles.barcodeButton}
+          onPress={() => {
+            setShowBarcodeScanner(showBarcodeScanner ? false : true);
+          }}
+        >
+          <Image
+            source={require('../assets/barcode_icon.png')}
+            resizeMode="contain"
+            style={{
+              width: 60,
+              height: 60,
+            }}
+          />
+        </TouchableOpacity>
         <View style={styles.box}>
           <AddCustomFood setIsLoading={setIsLoading} />
-
-          <TouchableOpacity
-            style={{ ...styles.button, backgroundColor: 'white' }}
-            onPress={() => {
-              setShowBarcodeScanner(showBarcodeScanner ? false : true);
-            }}
-          >
-            <Image
-              source={require('../assets/barcode_icon.png')}
-              resizeMode="contain"
-              style={{
-                width: 60,
-                height: 60,
-              }}
-            />
-          </TouchableOpacity>
         </View>
         {showBarcodeScanner ? (
           <Modal
@@ -91,6 +90,16 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     margin: 10,
     right: 10,
+  },
+  barcodeButton: {
+    backgroundColor: 'white',
+    alignItems: 'center',
+    borderRadius: 200,
+    borderColor: '#2B2D42', // brownish red
+    borderWidth: 1,
+    width: '25%',
+    left: 240,
+    bottom: 5,
   },
   buttonText: {
     color: 'white',
