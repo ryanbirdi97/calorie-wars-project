@@ -127,19 +127,7 @@ export default function Login() {
       >
         <View style={styles.container}>
           <Image source={require('../assets/calorie_wars_logo.png')} style={styles.logo} />
-          <Text style={styles.welcomemsg}>
-            <Text style={styles.welcomemsgHeader}>Welcome to Calorie Wars!</Text>
-            <Text style={styles.welcomemsgMain}>
-              {'\n'}An app where you can compete with your friends to reach your calorie goals
-            </Text>
-            <Text style={styles.welcomemsgMain}>
-              {'\n'}Earn points by being as close to your food calories goal as possible - Not above
-              or below
-            </Text>
-            <Text style={styles.welcomemsgMain}>
-              {'\n'}Earn points by smashing your steps goal - The more steps the better
-            </Text>
-          </Text>
+
           <View style={styles.inputContainer}>
             <TextInput
               placeholder="Email"
@@ -187,34 +175,14 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   logo: {
-    flex: 0.12,
-    alignItems: 'flex-start',
+    flex: 0.3,
     width: '90%',
     height: undefined,
     marginTop: 15,
     resizeMode: 'contain',
   },
-  welcomemsg: {
-    flex: 0.18,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 15,
-    color: '#2B2D42',
-    borderWidth: 1,
-    borderColor: '#2B2D42',
-    borderRadius: 20,
-    margin: 20,
-    backgroundColor: '#EDF2F4',
-  },
-  welcomemsgHeader: {
-    fontSize: 16,
-    fontWeight: '700',
-  },
-  welcomemsgMain: {
-    fontSize: 14,
-  },
   inputContainer: {
-    flex: 0.25,
+    flex: 0.2,
     justifyContent: 'center',
     alignItems: 'stretch',
     width: '80%',
@@ -229,11 +197,10 @@ const styles = StyleSheet.create({
     marginTop: 7,
   },
   buttonContainer: {
-    flex: 0.18,
+    flex: 0.35,
     width: '50%',
     justifyContent: 'center',
     alignItems: 'center',
-    marginTop: 20,
   },
   loginButton: {
     alignItems: 'center',
