@@ -48,7 +48,10 @@ const SearchResults = ({ searchResults, setIsLoading }) => {
                 dbRef
                   .collection('cals_step_log')
                   .doc(date)
-                  .set({ cals_consumed: cals_consumed + resultsObj.calories });
+                  .set({
+                    cals_consumed:
+                      (isNaN(+cals_consumed) ? 0 : +cals_consumed) + Number(resultsObj.calories),
+                  });
               });
           });
       })
