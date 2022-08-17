@@ -5,7 +5,9 @@ import { Pedometer } from 'expo-sensors';
 import { db, auth } from '../firebase';
 import formatDate from '../Utils/formatDate';
 
-export default function PedometerComp({ setIsLoading }) {
+export default function PedometerComp() {
+  console.log('inside pedometer comp');
+
   const [isAvailable, setIsAvailable] = useState('checking');
   const [stepCount, setStepCount] = useState(0);
 
@@ -47,12 +49,11 @@ export default function PedometerComp({ setIsLoading }) {
       .doc(date)
       .set(
         {
-          steps: { totalSteps: stepCount },
+          steps: stepCount,
         },
         { merge: true }
       )
       .then(() => {
-        setIsLoading(false);
         console.log('written to the db');
       });
   }, [stepCount]);

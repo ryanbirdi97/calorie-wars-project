@@ -1,10 +1,10 @@
 import { View, Button, TouchableOpacity, Text, TextInput, StyleSheet } from 'react-native';
 import { useState } from 'react';
 import { db, auth } from '../firebase';
-import { setStatusBarNetworkActivityIndicatorVisible } from 'expo-status-bar';
 import formatDate from '../Utils/formatDate';
 
-export default function AddCustomFood() {
+export default function AddCustomFood({ setIsLoading }) {
+  console.log('inside custom food');
   const [food, setFood] = useState('');
   const [amount, setAmount] = useState(undefined);
   const [calories, setCalories] = useState(undefined);
@@ -23,29 +23,39 @@ export default function AddCustomFood() {
     ) {
       dbRef
         .collection('foodlog')
-        .doc(email + '-foodlog-' + date)
+        .doc(date)
         .get()
         .then(() => {
           dbRef
             .collection('foodlog')
-            .doc(email + '-foodlog-' + date)
+            .doc(date)
             .set(
               {
                 [food]: {
                   name: food,
-                  grams: amount,
-                  calories: calories,
+                  grams: Number(amount),
+                  calories: Number(calories),
                 },
               },
               { merge: true }
             )
             .then(() => {
-              console.log('written to db');
-            })
-            .then(() => {
-              setFood('');
-              setAmount(undefined);
-              setCalories(undefined);
+              console.log('written to db (inside AddCustomFood.js)');
+              dbRef
+                .collection('cals_step_log')
+                .doc(date)
+                .get()
+                .then((result) => {
+                  const { cals_consumed } = result.data();
+                  dbRef
+                    .collection('cals_step_log')
+                    .doc(date)
+                    .set({ cals_consumed: cals_consumed + Number(calories) });
+                  setFood('');
+                  setAmount(undefined);
+                  setCalories(undefined);
+                  setIsLoading(true);
+                });
             });
         })
         .catch((err) => {

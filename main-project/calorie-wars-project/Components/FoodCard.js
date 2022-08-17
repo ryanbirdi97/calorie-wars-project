@@ -5,6 +5,8 @@ import 'firebase/firestore';
 import formatDate from '../Utils/formatDate';
 
 export default function FoodCard({ food, setIsLoading, fromLog = false }) {
+  //console.log('inside food card');
+
   const handleDelete = (food) => {
     const date = formatDate(); // 16-08-2022
     const email = auth.currentUser?.email;
@@ -13,11 +15,30 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
     db.collection('users')
       .doc(email)
       .collection('foodlog')
-      .doc(email + '-foodlog-' + date)
+      .doc(date)
       .update({ [food.name]: firebase.firestore.FieldValue.delete() })
       .then(() => {
         console.log('Item Deleted!');
-        setIsLoading(true);
+        // deleting the calories from curr calorie count
+        db.collection('users')
+          .doc(email)
+          .collection('cals_step_log')
+          .doc(date)
+          .get()
+          .then((result) => {
+            const { cals_consumed } = result.data();
+
+            console.log(cals_consumed, ' cals from handleDelete');
+            db.collection('users')
+              .doc(email)
+              .collection('cals_step_log')
+              .doc(date)
+              .set({ cals_consumed: cals_consumed - food.calories });
+            setIsLoading(true);
+          });
+      })
+      .catch((err) => {
+        console.log(err, ' from handleDelete promise rejection');
       });
   };
 

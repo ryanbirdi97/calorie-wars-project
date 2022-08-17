@@ -45,7 +45,10 @@ export default function ScanBarcode({
         onPress={() => {
           setShowBarcodeScanner(false);
         }}
-      ></TouchableOpacity>
+        style={styles.closeButton}
+      >
+        <Text style={styles.buttonText}>Close</Text>
+      </TouchableOpacity>
       <View style={styles.barcodeBox}>
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -59,7 +62,7 @@ export default function ScanBarcode({
 
 const styles = StyleSheet.create({
   container: {
-    flex: 0.5,
+    flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',

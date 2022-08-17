@@ -6,16 +6,18 @@ import FoodCard from './FoodCard';
 import formatDate from '../Utils/formatDate';
 
 export default function FoodLog({ isLoading, setIsLoading }) {
+  //console.log('inside food log');
+
   const [foodArr, setFoodArr] = useState([]);
 
-  if (isLoading) {
+  useEffect(() => {
     const date = formatDate(); // 16-08-2022
 
     const email = auth.currentUser?.email;
     db.collection('users')
       .doc(email)
       .collection('foodlog')
-      .doc(email + '-foodlog-' + date)
+      .doc(date)
       .get()
       .then((result) => {
         let data = Object.values(result.data());
@@ -23,7 +25,7 @@ export default function FoodLog({ isLoading, setIsLoading }) {
         setIsLoading(false);
       });
 
-    let totalCals = 0;
+    /* let totalCals = 0;
     for (let i = 0; i < foodArr.length; i++) {
       totalCals += foodArr[i].calories;
     }
@@ -33,15 +35,15 @@ export default function FoodLog({ isLoading, setIsLoading }) {
       .doc(date)
       .set(
         {
-          cals_consumed: { totalCalories: Math.round(totalCals) },
+          cals_consumed: Math.round(totalCals),
         },
         { merge: true }
       )
       .then(() => {
         setIsLoading(false);
         console.log('written to the db');
-      });
-  }
+      }); */
+  }, [isLoading]);
 
   return (
     <View>

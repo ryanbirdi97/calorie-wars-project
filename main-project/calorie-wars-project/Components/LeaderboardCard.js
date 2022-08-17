@@ -2,6 +2,8 @@ import { StyleSheet, Text, View } from 'react-native';
 import React from 'react';
 
 export default LeaderboardCard = ({ obj }) => {
+  console.log('inside leaderboard card');
+
   return (
     <View>
       <View style={styles.container}>
