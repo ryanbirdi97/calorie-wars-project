@@ -127,12 +127,14 @@ export default function AddCustomFood({ setIsLoading }) {
             style={styles.input}
             value={calories}
             onChangeText={(text) => {
-              setCalories(text);
+              let res = Math.round(+text);
+              setCalories(res);
             }}
           ></TextInput>
           {err ? <Text style={styles.errMsg}>Please comlpete form</Text> : <></>}
           <Button
             title="Submit"
+            color="#DA1E37"
             onPress={() => {
               handleSubmit();
             }}
@@ -147,11 +149,13 @@ export default function AddCustomFood({ setIsLoading }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#0782F9',
+    alignItems: 'center',
+    backgroundColor: '#DA1E37',
     width: '100%',
     padding: 15,
     borderRadius: 10,
-    alignItems: 'center',
+    borderColor: '#2B2D42',
+    borderWidth: 1,
   },
 
   buttonText: {
@@ -169,5 +173,8 @@ const styles = StyleSheet.create({
   errMsg: {
     color: 'red',
     fontWeight: 'bold',
+  },
+  submit: {
+    color: '#DA1E37',
   },
 });

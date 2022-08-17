@@ -22,7 +22,14 @@ const Tab = createMaterialBottomTabNavigator();
 export default function MainTabs() {
   return (
     <>
-      <Tab.Navigator initialRouteName={'ProfilePage'}>
+      <Tab.Navigator
+        initialRouteName={'ProfilePage'}
+        options={{
+          style: {
+            color: '#DA1E37',
+          },
+        }}
+      >
         <Tab.Screen
           name="Home"
           component={Home}
