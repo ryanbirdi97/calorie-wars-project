@@ -2,11 +2,12 @@ import { useNavigation } from '@react-navigation/core';
 import React, { useEffect, useState } from 'react';
 import firebase from 'firebase';
 import { db, auth } from '../firebase';
+import formatDate from '../Utils/formatDate';
 
 import { Text, TextInput, TouchableOpacity, View, StyleSheet, Image } from 'react-native';
 
 export default function Login() {
-  const date = new Date().toLocaleDateString().replace(/\//gi, '-');
+  const date = formatDate(); // 16-08-2022
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [page, setPage] = useState('Login');
@@ -74,6 +75,10 @@ export default function Login() {
           cals_consumed: 0,
           steps: 0,
         });
+
+        const newFoodLog = db.collection('users').doc(email).collection('foodlog').doc(date);
+
+        batch.set(newFoodLog, {});
 
         batch
           .commit()
