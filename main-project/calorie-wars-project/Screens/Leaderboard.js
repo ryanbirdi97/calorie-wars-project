@@ -6,7 +6,7 @@ export default Leaderboard = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Daily Calorie Wars Winners</Text>
-      <LeaderboardList />
+      {/*<LeaderboardList />*/}
     </View>
   );
 };
