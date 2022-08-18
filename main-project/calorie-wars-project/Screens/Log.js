@@ -58,9 +58,14 @@ export default Log = () => {
       .get()
       .then((result) => {
         let data = result.data();
-        let cals = Math.round(data.cals_consumed);
-        setCals(cals);
-        setSteps(data.steps);
+        if (data === undefined) {
+          setCals(0);
+          setSteps(0);
+        } else {
+          let cals = Math.round(data.cals_consumed);
+          setCals(cals);
+          setSteps(data.steps);
+        }
       })
       .catch((err) => {
         console.log(err, ' << log.js db req promise rejection');
@@ -80,7 +85,7 @@ export default Log = () => {
       </View>
       <View>
         {foodArr.length === 0 ? (
-          <Text>nothing logged on {selected}</Text>
+          <Text style={styles.nothing}>Nothing logged on: {selected}</Text>
         ) : (
           foodArr.map((food) => {
             return <FoodCard key={Math.round(Math.random() * 1000)} food={food} fromLog={true} />;
@@ -107,6 +112,7 @@ const styles = StyleSheet.create({
   list: {
     padding: 8,
   },
+  nothing: { textAlign: 'center' },
   kcal: { fontSize: 18, fontWeight: '500' },
   steps: { fontSize: 18, fontWeight: '500' },
 });

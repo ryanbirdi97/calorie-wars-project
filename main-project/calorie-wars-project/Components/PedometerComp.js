@@ -47,7 +47,7 @@ export default function PedometerComp() {
       .doc(date)
       .set(
         {
-          steps: stepCount,
+          steps: isNaN(stepCount) ? 1 : stepCount,
         },
         { merge: true }
       )

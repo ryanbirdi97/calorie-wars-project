@@ -15,11 +15,13 @@ import {
   View,
   StyleSheet,
   ScrollView,
+  LogBox,
 } from 'react-native';
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default function MainTabs() {
+  console.disableYellowBox = true;
   return (
     <>
       <Tab.Navigator initialRouteName={'ProfilePage'} barStyle={{ backgroundColor: '#8D99AE' }}>
