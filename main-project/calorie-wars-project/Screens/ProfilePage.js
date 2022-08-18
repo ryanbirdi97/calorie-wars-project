@@ -1,12 +1,23 @@
 import { useNavigation } from '@react-navigation/core';
 import React, { useEffect } from 'react';
 
-import { Text, TouchableOpacity, View, Image, StyleSheet, TextInput, Alert } from 'react-native';
+import {
+  Text,
+  TouchableOpacity,
+  View,
+  Image,
+  StyleSheet,
+  TextInput,
+  Alert,
+  LogBox,
+} from 'react-native';
 import { db, auth } from '../firebase';
 import { Provider as PaperProvider } from 'react-native-paper';
 import { useState } from 'react';
 
 export default function ProfilePage() {
+  console.disableYellowBox = true;
+
   const navigation = useNavigation();
 
   const [username, setUsername] = useState(null);
