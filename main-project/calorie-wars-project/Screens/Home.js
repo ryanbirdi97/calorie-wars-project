@@ -15,6 +15,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
 
   const [modalVisible, setModalVisible] = useState(false);
+  console.disableYellowBox = true;
 
   return (
     <ScrollView style={styles.container}>

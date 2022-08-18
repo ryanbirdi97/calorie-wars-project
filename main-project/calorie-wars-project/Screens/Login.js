@@ -25,6 +25,8 @@ export default function Login() {
   const navigation = useNavigation();
   const batch = db.batch();
 
+  console.disableYellowBox = true;
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
