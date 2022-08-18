@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
 import React, { useState, useCallback, useLayoutEffect, useEffect } from 'react';
-import { GiftedChat } from 'react-native-gifted-chat';
+import { GiftedChat, Bubble } from 'react-native-gifted-chat';
 import { auth, db } from '../firebase';
 
 export default function Chat() {
@@ -46,11 +46,36 @@ export default function Chat() {
     });
   }, []);
 
+  function renderBubble(props) {
+    return (
+      <Bubble
+        {...props}
+        wrapperStyle={{
+          right: {
+            backgroundColor: '#DA1E37',
+            borderBottomRightRadius: 0,
+            borderBottomLeftRadius: 15,
+            borderTopRightRadius: 15,
+            borderTopLeftRadius: 15,
+          },
+          left: {
+            backgroundColor: '#8D99AE',
+            borderBottomRightRadius: 15,
+            borderBottomLeftRadius: 15,
+            borderTopRightRadius: 15,
+            borderTopLeftRadius: 0,
+          },
+        }}
+      />
+    );
+  }
+
   return (
     <GiftedChat
       messages={messages}
       showAvatarForEveryMessage={true}
       renderUsernameOnMessage={true}
+      renderBubble={renderBubble}
       isTyping={true}
       onSend={(messages) => onSend(messages)}
       user={{
