@@ -141,5 +141,6 @@ const styles = StyleSheet.create({
   },
   baseText: {
     fontWeight: '700',
+    color: 'white',
   },
 });

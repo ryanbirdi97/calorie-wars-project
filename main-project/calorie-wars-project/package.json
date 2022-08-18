@@ -34,7 +34,8 @@
     "react-native-vector-icons": "^9.2.0",
     "react-native-web": "0.17.7",
     "uuidv4": "^6.2.13",
-    "react-native-svg": "12.3.0"
+    "react-native-svg": "12.3.0",
+    "expo-font": "~10.1.0"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

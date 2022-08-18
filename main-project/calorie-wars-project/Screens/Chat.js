@@ -66,6 +66,7 @@ export default function Chat() {
             borderTopLeftRadius: 0,
           },
         }}
+        textStyle={{ left: {} }}
       />
     );
   }
