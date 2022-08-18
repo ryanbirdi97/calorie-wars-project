@@ -32,12 +32,12 @@ export default function FoodCard({ food, setIsLoading, fromLog = false }) {
               .doc(email)
               .collection('cals_step_log')
               .doc(date)
-              .set({ cals_consumed: cals_consumed - food.calories });
+              .set({ cals_consumed: cals_consumed - food.calories }, { merge: true });
             db.collection('users')
               .doc(email)
               .collection('leaderboard')
               .doc(email + '-leaderboard')
-              .set({ cals_consumed: cals_consumed - food.calories });
+              .set({ cals_consumed: cals_consumed - food.calories }, { merge: true });
             setIsLoading(true);
           });
       })
