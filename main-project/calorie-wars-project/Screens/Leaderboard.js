@@ -6,7 +6,7 @@ export default Leaderboard = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Daily Calorie Wars Winners</Text>
-      <LeaderboardList />
+      {/*<LeaderboardList />*/}
     </View>
   );
 };
@@ -16,13 +16,14 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'flex-start',
     alignItems: 'stretch',
-    marginTop: 50,
-    marginLeft: 5,
-    marginRight: 5,
-    marginBottom: 5,
+    backgroundColor: 'white',
   },
   header: {
     flex: 1,
+    marginTop: 60,
+    marginLeft: 5,
+    marginRight: 5,
+    marginBottom: 5,
     alignSelf: 'center',
     fontSize: 25,
     fontWeight: '700',
