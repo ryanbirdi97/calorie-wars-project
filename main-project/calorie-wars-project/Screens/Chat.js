@@ -59,14 +59,14 @@ export default function Chat() {
             borderTopLeftRadius: 15,
           },
           left: {
-            backgroundColor: '#8D99AE',
+            backgroundColor: '#585a5c',
             borderBottomRightRadius: 15,
             borderBottomLeftRadius: 15,
             borderTopRightRadius: 15,
             borderTopLeftRadius: 0,
           },
         }}
-        textStyle={{ left: {} }}
+        textStyle={{ left: { color: 'white' } }}
       />
     );
   }
