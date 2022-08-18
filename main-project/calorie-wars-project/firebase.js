@@ -3,6 +3,7 @@ import 'firebase/firestore';
 import 'firebase/auth';
 
 const firebaseConfig = {
+
   apiKey: 'AIzaSyAza4Op7C-30UFz8iaiafJH2jq_2ayp3Vc',
   authDomain: 'calorie-wars-2.firebaseapp.com',
   projectId: 'calorie-wars-2',

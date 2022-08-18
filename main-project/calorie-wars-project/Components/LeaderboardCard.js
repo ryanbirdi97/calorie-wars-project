@@ -20,11 +20,15 @@ export default LeaderboardCard = ({ obj }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#f1faee',
-    margin: 5,
-    padding: 5,
-    borderColor: 'black',
-    borderWidth: 2,
+    backgroundColor: '#EDF2F4',
+    margin: 4,
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderColor: '#2B2D42',
+    borderRadius: 5,
+    borderWidth: 1,
     fontSize: 12,
     flexDirection: 'row',
     justifyContent: 'space-between',

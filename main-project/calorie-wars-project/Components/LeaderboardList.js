@@ -121,18 +121,18 @@ export default LeaderboardList = () => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 9.5,
+    flex: 15,
     margin: 5,
     padding: 2,
-    backgroundColor: '#dee2e6',
-    borderColor: 'black',
-    borderWidth: 2,
   },
   cardHeader: {
-    backgroundColor: '#9d0208',
-    margin: 5,
-    padding: 5,
-    borderColor: 'black',
+    backgroundColor: '#DA1E37',
+    margin: 4,
+    paddingTop: 12,
+    paddingBottom: 12,
+    paddingLeft: 5,
+    paddingRight: 5,
+    borderColor: '#2B2D42',
     borderWidth: 2,
     fontSize: 12,
     flexDirection: 'row',
