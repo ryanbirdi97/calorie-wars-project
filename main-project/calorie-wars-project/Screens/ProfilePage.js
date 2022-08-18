@@ -172,7 +172,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <PaperProvider>
+    <View style={styles.pageContainer}>
       <View>
         <Text style={styles.updateProfile}>Email: {email}</Text>
       </View>
@@ -186,12 +186,11 @@ export default function ProfilePage() {
           secureTextEntry
         />
 
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handlePassword} style={styles.button}>
-            <Text style={styles.buttonText}>Password</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={handlePassword} style={styles.passwordButton}>
+          <Text style={styles.passwordButtonText}>Password</Text>
+        </TouchableOpacity>
       </View>
+
       <View style={styles.Avatar}>
         <TouchableOpacity
           onPress={() => {
@@ -322,17 +321,17 @@ export default function ProfilePage() {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.container}>
+      <View style={styles.userContainer}>
         <Image
           source={{
             uri: imageUri,
           }}
           style={styles.avatarstyling}
         />
-        <Text style={styles.messagetext}>Enter your avatar url or select from above images.</Text>
+        <Text style={styles.messagetext}>Paste an avatar url or select from the above images</Text>
 
         <View style={styles.textstyle}>
-          <Text style={styles.label}>Avatar</Text>
+          <Text style={styles.label}>Avatar:</Text>
 
           <TextInput
             placeholder="New Avatar"
@@ -345,7 +344,7 @@ export default function ProfilePage() {
         </View>
 
         <View style={styles.textstyle}>
-          <Text style={styles.label}>Name</Text>
+          <Text style={styles.label}>Name:</Text>
           <TextInput
             placeholder="Name"
             value={username}
@@ -355,9 +354,11 @@ export default function ProfilePage() {
             style={styles.input}
           />
         </View>
+      </View>
 
+      <View style={styles.dataContainer}>
         <View style={styles.textstyle}>
-          <Text style={styles.label}>Calorie Goal</Text>
+          <Text style={styles.label}>Calorie Goal:</Text>
 
           <TextInput
             placeholder="Set-Calorie-Goals"
@@ -367,7 +368,7 @@ export default function ProfilePage() {
           />
         </View>
         <View style={styles.textstyle}>
-          <Text style={styles.label}>Step Goal</Text>
+          <Text style={styles.label}>Step Goal:</Text>
 
           <TextInput
             placeholder="Set-Step-Goals"
@@ -376,61 +377,69 @@ export default function ProfilePage() {
             style={styles.input}
           />
         </View>
-
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            onPress={() =>
-              Alert.alert(
-                'About Calorie Wars',
-                '\nWelcome to Calorie Wars!\nAn app where you can compete with your friends to reach your calorie goals.\nEarn points by being as close to your food calories goal as possible - Not above or below.\nEarn points by smashing your steps goal - The more steps the better',
-                [
-                  {
-                    text: 'Back to Profile Page',
-                    style: 'cancel',
-                  },
-                ],
-                { cancelable: false }
-              )
-            }
-            style={styles.button}
-          >
-            <Text style={styles.buttonText}>About App</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleSubmit} style={styles.button}>
-            <Text style={styles.buttonText}>Home</Text>
-          </TouchableOpacity>
-        </View>
-        <View style={styles.buttonContainer}>
-          <TouchableOpacity onPress={handleSignOut} style={styles.button}>
-            <Text style={styles.buttonText}>Sign out</Text>
-          </TouchableOpacity>
-        </View>
       </View>
-    </PaperProvider>
+
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          onPress={() =>
+            Alert.alert(
+              'About Calorie Wars',
+              '\nWelcome to Calorie Wars!\nAn app where you can compete with your friends to reach your calorie goals.\nEarn points by being as close to your food calories goal as possible - Not above or below.\nEarn points by smashing your steps goal - The more steps the better',
+              [
+                {
+                  text: 'Back to Profile Page',
+                  style: 'cancel',
+                },
+              ],
+              { cancelable: false }
+            )
+          }
+          style={styles.loginButton}
+        >
+          <Text style={styles.loginButtonText}>About</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleSubmit} style={styles.loginButton}>
+          <Text style={styles.loginButtonText}>Home</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={handleSignOut} style={styles.loginButton}>
+          <Text style={styles.loginButtonText}>Sign out</Text>
+        </TouchableOpacity>
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 30,
+  pageContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  userContainer: {
+    flex: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 7,
+    marginBottom: 40,
+  },
+  dataContainer: {
+    flex: 4.5,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   messagetext: { marginTop: 10 },
   updateProfile: {
     textAlign: 'center',
-    marginTop: 25,
-    marginBottom: 10,
+    marginTop: 45,
   },
   input: {
     flex: 3,
-    backgroundColor: 'white',
+    backgroundColor: '#EDF2F4',
     paddingHorizontal: 8,
     paddingVertical: 8,
     borderRadius: 10,
+    borderColor: '#2B2D42',
+    borderWidth: 1,
     marginTop: 15,
     height: 32,
     width: '40%',
@@ -446,40 +455,12 @@ const styles = StyleSheet.create({
     marginRight: 15,
     marginLeft: 15,
   },
-  buttonContainer: {
-    width: '36%',
+  emailAlign: { textAlign: 'center', marginBottom: 5 },
+  Avatar: {
+    flex: 3.5,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  emailAlign: { textAlign: 'center', marginBottom: 5 },
-  button: {
-    backgroundColor: '#0782F9',
-    width: '90%',
-    padding: 8,
-    borderRadius: 10,
-    alignItems: 'center',
-    marginTop: 5,
-  },
-  buttonOutline: {
-    backgroundColor: 'white',
-    marginTop: 5,
-    borderColor: '#0782F9',
-    borderWidth: 2,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  buttonOutlineText: {
-    color: '#0782F9',
-    fontWeight: '700',
-    fontSize: 16,
-  },
-  Avatar: {
-    flex: 5,
     flexDirection: 'row',
-    marginLeft: 10,
   },
   avatarstyling: {
     width: 60,
@@ -487,7 +468,8 @@ const styles = StyleSheet.create({
     margin: 5,
     borderRadius: 15,
     borderWidth: 1,
-    borderColor: 'grey',
+    borderColor: '#2B2D42',
+    borderWidth: 1,
   },
   textstyle: {
     flex: 1,
@@ -496,32 +478,62 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   password: {
-    flex: 1,
+    flex: 3,
     flexDirection: 'row',
-    marginBottom: 30,
-    marginLeft: 15,
-    marginRight: 15,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 15,
   },
   inputPassword: {
     flex: 3,
-    backgroundColor: 'white',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#EDF2F4',
+    borderColor: '#2B2D42',
+    borderWidth: 1,
     paddingHorizontal: 8,
     paddingVertical: 8,
     borderRadius: 10,
     height: 32,
     width: '40%',
     marginRight: 15,
+    marginLeft: 10,
     fontSize: 16,
   },
-  buttonPassword: {
-    flex: 1,
-    color: 'white',
+  passwordButton: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#8D99AE',
+    padding: 7,
+    margin: 10,
+    borderRadius: 10,
+    borderColor: '#2B2D42',
+    borderWidth: 1,
+  },
+  passwordButtonText: {
+    color: '#2B2D42',
+    fontWeight: '700',
+    fontSize: 14,
+  },
+  buttonContainer: {
+    flex: 3.5,
+    flexDirection: 'row',
+    width: '100%',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+  },
+  loginButton: {
+    alignItems: 'center',
+    backgroundColor: '#DA1E37',
+    width: '30%',
+    padding: 10,
+    borderRadius: 10,
+    borderColor: '#2B2D42',
+    borderWidth: 1,
+  },
+  loginButtonText: {
+    color: '#2B2D42',
     fontWeight: '700',
     fontSize: 16,
-    backgroundColor: '#0782F9',
-    width: '90%',
-    borderRadius: 10,
-    textAlign: 'center',
-    height: 18,
   },
 });
