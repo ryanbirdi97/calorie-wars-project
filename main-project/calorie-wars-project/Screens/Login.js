@@ -13,6 +13,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  LogBox,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
