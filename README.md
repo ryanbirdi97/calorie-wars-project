@@ -1,20 +1,9 @@
 # Calorie Wars Project
 React Native App for IOS and Android
 
-# Tech Used:
-
-- React Native Expo
-- Expo Sendors (Pedometer / Barcode)
-- Firebase Authentication
-- Cloud Firestore
-- React Native Navigation
-- React Native Gifted Chat
-
-
 # 1. Introduction
 
 Calorie Wars - A gamified health accountability mobile app. Our mission is to try and promote healthy eating and physical movement by creating a sense of friendly competition and accountability amongst a group of friends. It is aimed at anyone looking for a fun way to stay healthy.
-
 
 # Features:
 
@@ -26,6 +15,16 @@ Calorie Wars - A gamified health accountability mobile app. Our mission is to tr
 - A week food log where users can see their food log from the past seven days.
 - A live chatroom for users to communicate with each other.
 - Profile page for users to change their avatar, usernames and adjust step and calorie goals.
+
+# Tech Used:
+
+- React Native Expo
+- Expo Sendors (Pedometer / Barcode)
+- Firebase Authentication
+- Cloud Firestore
+- React Native Navigation
+- React Native Gifted Chat
+- 
 
 ### Cloning & Set-up
 
