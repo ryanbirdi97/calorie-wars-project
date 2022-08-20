@@ -1,5 +1,5 @@
-# calorie-wars-project
-React Native App
+# Calorie Wars Project
+React Native App for IOS and Android
 
 # Tech Used:
 
